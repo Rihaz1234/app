@@ -1,0 +1,15 @@
+/* new variable define */
+@import "src/assets/scss/modules/variables";
+@import "src/assets/scss/modules/mixins";
+
+.message-modal {
+    border: 2px solid $alert-tech
+}
+
+.message-modal button {
+    min-width: 6rem;
+}
+
+::ng-deep .mat-dialog-container {
+    padding-bottom: 0 !important;
+}

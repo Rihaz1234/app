@@ -1,0 +1,51 @@
+<div class="table-responsive text-nowrap container-fluid admin-table-layout user-management-table custom-table head-border">
+    <ls-table [config]="config" [data]="userData" [columns]="columns" [tableSort]="true">
+        <ng-template lsWidgetName="actionsHeading" let-row>
+            <button mat-flat-button color="accent" type="button" (click)="openAddUserManagementDialog()">
+        <mat-icon>add</mat-icon>
+        {{ "buttons.btn_add_user" | translate }}
+      </button>
+        </ng-template>
+        <ng-template lsWidgetName="isActive" let-row>
+            <mat-slide-toggle class="ms-2" [checked]="row?.isActive" (change)="toggleSwitch(row, $event)"></mat-slide-toggle>
+        </ng-template>
+        <ng-template lsWidgetName="userName" let-row>
+            <span [matTooltip]="row.userName" matTooltipPosition="below" class="text-truncate d-block" [matTooltipDisabled]="row.userName.length < 40">
+            {{row.userName}}
+          </span>
+        </ng-template>
+        <ng-template lsWidgetName="email" let-row>
+            {{row?.email || "-"}}
+        </ng-template>
+        <ng-template lsWidgetName="phoneNo" let-row>
+            {{row?.phoneNo || "-"}}
+        </ng-template>
+        <ng-template lsWidgetName="roles" let-row>
+            <label class="spa-label" *ngIf="row['roles'][0] === 'SPAC'">SPA</label>
+            <label class="physician-label" *ngIf="row['roles'][0] === 'SPP'">PHYSICIAN</label
+      >
+    </ng-template>
+    <ng-template lsWidgetName="actions" let-row>
+      <button
+        mat-mini-fab
+        color="primary"
+        (click)="openEditUserManagement(row)"
+        class="d-flex justify-content-center align-items-center btn-boxed btn-no-shadow me-4"
+      >
+        <mat-icon class="justify-content-center">edit</mat-icon>
+      </button>
+      <button
+        type="button"
+        mat-flat-button
+        color="primary" [disabled]="!row?.isActive"
+        class="me-3"
+        [ngClass]="(!row['isActive'])?'':'cursor-pointer'"
+
+        (click)="confirmResetPassword(row)"
+      >
+        <mat-icon class="justify-content-center">refresh</mat-icon>
+        {{ "buttons.btn_reset_password" | translate }}
+      </button>
+    </ng-template>
+  </ls-table>
+</div>

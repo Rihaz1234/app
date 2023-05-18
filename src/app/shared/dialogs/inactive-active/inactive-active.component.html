@@ -1,0 +1,28 @@
+<mat-card class="dialog-header">
+  <h1 mat-dialog-title>
+    <!--{{ "shared_label.active_inactive.label_are_you_sure" | translate }}-->
+    {{(mode === 'INACTIVE' ? ("shared_label.active_inactive.decativate" | translate) : "shared_label.active_inactive.activate" | translate) +" "+("shared_label.active_inactive.administrator" | translate)}}
+  </h1>
+  <button class="me-2"  mat-button mat-dialog-close (click)="onCancel()" *ngIf="userData?.roles?.indexOf('SPA') === -1">
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-card>
+
+<mat-dialog-content class="mat-dialog-popup">
+  <div class="my-4">
+    <label>
+      <!--Are you sure you want to make this Admin {{ mode }}?-->
+      <!--                All the Admins created by them will also become INACTIVE.-->
+      <p>{{"shared_label.active_inactive.select_confirm"|translate}}</p>
+      {{"shared_label.active_inactive.note"|translate}} <i>{{"shared_label.active_inactive.message"|translate}} {{mode === 'INACTIVE' ? ("shared_label.active_inactive.deactivated"|translate) :("shared_label.active_inactive.activated"|translate)}}</i>
+    </label>
+  </div>
+</mat-dialog-content>
+<div mat-dialog-actions align="end">
+  <button mat-flat-button type="button" class="fill-btn" color="warn" (click)="onCancel()">
+    Cancel
+  </button>
+  <button mat-flat-button type="button" class="fill-btn" color="primary" (click)="onConfirm()">
+    Confirm
+  </button>
+</div>

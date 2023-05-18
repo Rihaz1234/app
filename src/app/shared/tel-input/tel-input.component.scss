@@ -1,0 +1,20 @@
+@import "src/assets/scss/modules/tel-input";
+
+::ng-deep.mat-menu-after.mat-menu-panel {
+  /*max-width: 450px !important;*/
+  max-height: 300px !important;
+  /*margin-top: 10px;*/
+  /*position: absolute;*/
+
+  .country-list-button {
+    display: flex;
+    justify-content: flex-start;
+
+    .label-wrapper {
+      display: block;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+  }
+}

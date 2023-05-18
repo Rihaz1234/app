@@ -1,0 +1,16 @@
+@import "src/assets/scss/modules/variables";
+
+.text-input-box {
+  border-radius: $border-radius;
+  border-color: $white;
+  width: 55px;
+  background-color: $white;
+  color: $select-label-color;
+}
+.text-value{
+  width: 4.5rem;
+  margin: auto;
+  text-align: center;
+
+}
+.ack-column{margin: auto; justify-content: center; font-weight: normal;}

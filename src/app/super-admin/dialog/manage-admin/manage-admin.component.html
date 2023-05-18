@@ -1,0 +1,21 @@
+<mat-card class="dialog-header">
+  <h1 mat-dialog-title>
+    {{ serviceProviderData["id"] }} &nbsp;|&nbsp;
+    {{ "super_admin.manage_admin.label_spa" | translate }}
+    &nbsp;{{ "super_admin.manage_admin.label_for_spa" | translate }}
+    {{serviceProviderName}}
+  </h1>
+  <button mat-button mat-dialog-close class="me-3">
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-card>
+
+<mat-dialog-content class="px-0">
+  <div class="container-fluid">
+    <app-data-table-manage-admin class="manage-admin-table custom-table" [endUrl]="endUrl"
+      (addAdminCallBack)="openAddAdminDialog()" (editCallBack)="openEditAdminDialog($event)"
+      source="SPA"  (sortChange)="onSortChange($event)"></app-data-table-manage-admin>
+    <app-data-table-cloned-view *ngIf="adminClone?.length" class="manage-admin-table manage-cloneview-table custom-table"
+                                [adminUsers]="adminClone"></app-data-table-cloned-view>
+  </div>
+</mat-dialog-content>

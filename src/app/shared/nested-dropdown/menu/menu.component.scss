@@ -1,0 +1,17 @@
+@import "src/assets/scss/modules/variables";
+
+$select-width : 280px;
+.nested-menu-item {
+    line-height: 2rem;
+    height: 2rem;
+    color: $select-option-color;
+    font-size: 0.8rem;
+    font-weight: 700 !important;
+    width: 100%;
+    min-width: 200px;
+    max-width: $select-width;
+    &:hover{
+        background-color: white;
+    }
+    text-transform: capitalize !important;
+}

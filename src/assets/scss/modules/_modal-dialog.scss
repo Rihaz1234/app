@@ -1,0 +1,252 @@
+/***** modal dialog ******/
+
+.mat-dialog-container {
+  position: relative;
+  padding: 0 !important;
+  padding-bottom: 1.5rem !important;
+  overflow: unset !important;
+  outline: 0;
+  background: $dark-color-option !important;
+}
+
+.mat-dialog-content {
+  margin: 0 0 !important;
+  padding: 1rem;
+}
+
+.mat-dialog-content:focus-visible {
+  outline: none !important;
+}
+
+/*bottom button css */
+.mat-dialog-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-right: 1rem;
+  margin-left: 1rem;
+  margin-bottom: 0rem !important;
+}
+
+.dialog-header {
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  background-color: $modal-dailog-headstrip-color;
+  width: 100%;
+  border-radius: $border-radius 0 0 !important;
+  padding: 0.5rem 0 0.5rem 1rem !important;
+  border-radius: 4px 4px 0px 0px !important;
+
+  h1 {
+    margin: 0rem;
+    padding: 0rem;
+    font-size: 1rem;
+    font-weight: $font-weight-700;
+  }
+
+  .mat-dialog-close {
+    margin-right: 1rem;
+  }
+
+  .mat-button-base {
+    padding: 0rem;
+    min-width: inherit;
+    background-color: transparent;
+    line-height: $size-20;
+    box-shadow: $none !important;
+
+    .mat-button-focus-overlay {
+      opacity: 0 !important;
+    }
+
+    &:hover {
+      .mat-button-focus-overlay {
+        opacity: 0 !important;
+      }
+    }
+  }
+}
+
+.mat-dialog-popup {
+  .dialog-form {
+    padding: 1rem 0;
+
+    .formfield-control {
+      width: 100%;
+    }
+
+    .formfield-control:not(.mat-form-field-disabled) {
+      .mat-form-field-flex {
+        background-color: $white;
+      }
+    }
+
+    .matlabel {
+      color: $label-color;
+      opacity: 0.8;
+      display: block;
+      font-size: $size-12;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: $font-weight-700;
+      margin-bottom: 0.2rem;
+      margin-top: 0.2rem;
+    }
+
+    button {
+      svg {
+        fill: $select-label-color;
+      }
+    }
+
+    .mat-datepicker-toggle {
+      button {
+        box-shadow: none !important;
+        background-color: transparent;
+      }
+    }
+
+    .mat-form-field-subscript-wrapper {
+      padding: 0;
+    }
+  }
+
+  /***** assign modal dialog section *****/
+
+  /*&.assign-group-dialog {
+    .mat-form-field.selectfilter {
+      float: right;
+     &.mat-form-field-appearance-fill {
+        .mat-form-field-flex {
+          background-color: $light-blue-bg;
+        }
+        .mat-form-field-label {
+          color: $select-label-color;
+        }
+        .mat-select-value {
+          color: $select-option-color;
+        }
+
+      .mat-select-arrow-wrapper {
+          &:after{color: $select-label-color;}
+        }
+      }
+    }
+  }*/
+
+
+}
+
+/***** assign modal dialog section *****/
+.mat-dialog-actions {
+  .mat-stroked-button {
+    width: 10rem;
+    border-radius: 1.5rem;
+    color: $white;
+  }
+}
+
+/***** modal dialog ******/
+
+
+.add-event-container {
+  padding: 5rem 0;
+
+  @include media-breakpoint-down(md) {
+    padding: 2rem 0;
+  }
+
+  @media only screen and (max-height: 767px) {
+    padding: 2rem 0;
+
+  }
+
+  .mat-dialog-popup {
+    overflow: hidden;
+    max-height: 100vh;
+
+    .dialog-form {
+      padding-bottom: 0;
+    }
+
+    .scroll-assist {
+      max-height: calc(100vh - 320px);
+
+      @media only screen and (max-height: 767px) {
+        max-height: calc(100vh - 220px);
+
+      }
+    }
+
+
+  }
+
+}
+
+/***** Feature Alert *****/
+.mat-dialog-popup.Forwardalert-popup {
+  padding: 0.8rem 2rem 0;
+
+  .dialog-form {
+    .matlabel {
+      text-transform: capitalize;
+      color: $label-color;
+      opacity: 1;
+      margin-bottom: 0;
+    }
+
+    .alert-type-list {
+      h4 {
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+      }
+    }
+
+    .alertcheckbox {
+      margin-bottom: 0.6rem;
+
+      .mat-checkbox-inner-container {
+        margin-right: 1rem;
+      }
+    }
+
+    .formfield-control {
+      .mat-form-field-label-wrapper {
+        top: 0;
+        padding-top: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .mat-form-field-label {
+          height: 100%;
+          top: 0px;
+          margin: 0px;
+          display: flex;
+          align-items: center;
+          transform: inherit;
+        }
+
+      }
+
+      &.mat-form-field-can-float {
+        &.mat-form-field-should-float {
+          .mat-form-field-label {
+            top: -0.5rem;
+            font-size: $size-12;
+            display: none;
+          }
+          .mat-select-value {
+            top: 0;
+            position: relative;
+            font-weight: 600;
+          }
+        }
+      }
+
+    }
+
+
+  }
+}

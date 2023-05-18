@@ -1,0 +1,155 @@
+@import "src/assets/scss/modules/variables";
+.dialog-header {
+  background: $bg-button-color;
+  min-height: 45px;
+
+  &.patientalert-dialog-header {
+    padding-bottom: 0 !important;
+  }
+}
+
+.mat-typography {
+  margin: 10px 20px !important;
+}
+.menu-tab-icon {
+  color: $bg-button-color;
+}
+td .table-row {
+  text-align: center;
+  color: white !important;
+  background: $bg-primary-color;
+  border-radius: 0.25rem;
+
+  font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+  line-height: 16px;
+  align-items: center;
+  letter-spacing: 0.05em;
+  border: none;
+  padding: 5px 10px;
+}
+.select-btn-notif {
+  background: rgba(107, 35, 35, 0.7);
+}
+
+.select-btn {
+  padding: 5px 10px;
+  background: $select-label-color;
+  border-radius: 8px;
+  margin: 7px 7px 0px 0px;
+  height: 40px;
+  font-weight: 600;
+  text-transform: uppercase;
+  &.select-btn-notif {
+    background: rgba(107, 35, 35, 0.4) !important;
+  }
+}
+
+.select-btn-active {
+  background: $tab-bg-color !important;
+  padding: 5px 10px;
+  background: $select-label-color;
+  border-radius: 8px 8px 0px 0px;
+  margin: 7px 7px 0px 0px;
+  height: 55px;
+  font-weight: 600;
+  &.select-btn-active-notif {
+    background: rgba(107, 35, 35, 0.4) !important;
+  }
+}
+
+.close-icon {
+  position: absolute;
+  top: 7px;
+  right: 1px;
+  color: $white;
+  padding: 8px 10px 0px 0px;
+}
+.header-tab-icon {
+  margin-right: 5px;
+}
+
+.display-flex {
+  display: flex;
+}
+@media only screen and (max-width: 1100px) {
+  .select-btn-active {
+    border-radius: 8px !important;
+    margin: 7px 7px 7px 0px !important;
+    height: 40px !important;
+  }
+}
+@media (min-width: 992px) and (max-width: 1214px) {
+  .btn-group-area {
+    margin-left: 0 !important;
+    button {
+      padding: 4px 12px;
+    }
+  }
+}
+
+
+@media (min-width: 768px) and (max-width: 1200px) {
+  .btn-group-area {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 0 -0.2rem !important;
+    button {
+      //width: calc(33.33% - 0.5rem);
+      width: calc(150px - 0.5rem);
+      @media (min-width:768px) and (max-width: 991px) {
+        width: calc(138px - 0.5rem);
+      }
+      margin: 0 0.2rem 0.4rem !important;
+      display: flex;
+      height: 2.5rem;
+      border-radius: 4px;
+      font-size: $size-12;
+    }
+  }
+}
+
+
+
+
+
+
+@media only screen and (max-width: 767px) {
+  #patientAlertSettings {
+    height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-bottom: 1.5rem;
+    .dialog-header {
+      padding: 0.5rem 0.5rem 0 !important;
+    }
+
+    .patient-details {
+      justify-content: center;
+    }
+
+    .close-icon {
+      padding: 0;
+      right: 0;
+    }
+  }
+
+  .btn-group-area {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 0 -0.2rem !important;
+    button {
+      width: calc(50% - 0.5rem);
+      margin: 0 0.2rem 0.4rem !important;
+      display: flex;
+      height: 2.5rem;
+      border-radius: 4px;
+      font-size: $size-12;
+    }
+  }
+}
+
+

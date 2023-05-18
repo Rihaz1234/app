@@ -1,0 +1,19 @@
+.sort-col {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+//.sort-icons {
+//  position: absolute;
+//  margin-left: 10px;
+//}
+
+.arrow {
+  font-size: 14px;
+}
+.arrow-hide {
+  opacity: 0.2;
+}
+.arrow.desc {
+  transform: rotate(180deg);
+}

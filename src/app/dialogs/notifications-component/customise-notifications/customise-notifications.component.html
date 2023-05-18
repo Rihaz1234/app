@@ -1,0 +1,330 @@
+<div class="row">
+  <div class="col-md-6" style="margin-top: 10px">
+    <label class="settings-for-floor">Settings for Floor10-Room 200</label>
+  </div>
+  <div class="col-md-6" style="text-align: end; margin-top: 10px">
+    <button
+      type="button"
+      class="btn-primary btn-alert"
+      (click)="openAlertSettings()"
+    >
+      <svg
+        width="20"
+        height="16"
+        viewBox="0 0 20 20"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M3.54912 13.8279C2.6173 12.2571 2.29097 10.4001 2.6314 8.60571C2.97184 6.8113 3.95563 5.20288 5.39803 4.08249C6.84044 2.9621 8.64224 2.4068 10.4651 2.52087C12.2879 2.63494 14.0065 3.41053 15.2979 4.702C16.5894 5.99347 17.365 7.71198 17.4791 9.53484C17.5932 11.3577 17.0379 13.1595 15.9175 14.6019C14.7971 16.0443 13.1887 17.0281 11.3943 17.3686C9.59988 17.709 7.74291 17.3827 6.17207 16.4509L6.17209 16.4508L3.58173 17.1909C3.47456 17.2215 3.36115 17.2229 3.25325 17.195C3.14536 17.167 3.0469 17.1107 2.96809 17.0319C2.88927 16.9531 2.83297 16.8546 2.80501 16.7467C2.77705 16.6388 2.77846 16.5254 2.80908 16.4182L3.54918 13.8279L3.54912 13.8279Z"
+          stroke="white"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+      Alert Settings
+    </button>
+  </div>
+</div>
+<div class="inside-div" style="overflow: auto">
+  <div style="margin-top: 10px">
+    <table>
+      <thead>
+        <th scope="" class="table-header" style="padding-left: 50px">
+          NOTIFICATIONS
+        </th>
+        <th scope="" class="table-header" style="padding-left: 25px">
+          THRESHOLD
+        </th>
+        <th scope="" class="table-header">PRIORITY</th>
+        <th scope="" class="table-header">DELAY TIME</th>
+        <th scope="" class="table-header">MODIFIED</th>
+      </thead>
+      <tbody *ngFor="let item of customizedNotificationsArr">
+        <hr
+          class="hr-line"
+          [ngStyle]="{
+            width:
+              item['notificationType'] === 'Vital signs notifications'
+                ? '328%'
+                : '0px'
+          }"
+        />
+        <tr>
+          <td colspan="10">
+            <label class="hr-below-text">{{ item["notificationType"] }}</label>
+          </td>
+        </tr>
+        <tr
+          *ngFor="let rowItem of item['notificationTypeData']"
+          class="tbody-row-inner"
+        >
+          <td class="table-row-alert-text">
+            <label class="switch">
+              <input type="checkbox" checked />
+              <span class="slider round"></span> </label
+            >&nbsp;&nbsp;
+            {{ rowItem["alertValue"] }}
+          </td>
+          <td>
+            <div
+              *ngIf="item['notificationType'] === 'Vital signs notifications'"
+            >
+              <div class="row">
+                <div class="col-md-7">
+                  <label class="row-text-small" style="font-size: 10px"
+                    >>{{ rowItem["upperThreshold"] }}</label
+                  >
+                  &nbsp;&nbsp;<label
+                    class="row-text-small"
+                    style="font-size: 12px"
+                    >OR</label
+                  >
+                  &nbsp;&nbsp;
+                  <label class="row-text-small" style="font-size: 10px"
+                    >>{{ rowItem["lowerThreshold"] }}</label
+                  >
+                </div>
+                <div class="col-md-2">
+                  <div style="margin-left: -30px">
+                    <svg
+                      width="40"
+                      height="30"
+                      viewBox="0 0 40 37"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <g filter="url(#filter0_d)">
+                        <rect
+                          x="5"
+                          y="4"
+                          width="30"
+                          height="27"
+                          rx="4"
+                          fill="#1C8BCA"
+                        />
+                        <path
+                          d="M15.5 20.125V22H17.375L22.905 16.47L21.03 14.595L15.5 20.125ZM24.355 15.02C24.55 14.825 24.55 14.51 24.355 14.315L23.185 13.145C22.99 12.95 22.675 12.95 22.48 13.145L21.565 14.06L23.44 15.935L24.355 15.02Z"
+                          fill="white"
+                        />
+                        <rect
+                          x="5.5"
+                          y="4.5"
+                          width="29"
+                          height="26"
+                          rx="3.5"
+                          stroke="url(#paint0_linear)"
+                          stroke-opacity="0.4"
+                        />
+                      </g>
+                      <defs>
+                        <filter
+                          id="filter0_d"
+                          x="0"
+                          y="0"
+                          width="40"
+                          height="37"
+                          filterUnits="userSpaceOnUse"
+                          color-interpolation-filters="sRGB"
+                        >
+                          <feFlood
+                            flood-opacity="0"
+                            result="BackgroundImageFix"
+                          />
+                          <feColorMatrix
+                            in="SourceAlpha"
+                            type="matrix"
+                            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                          />
+                          <feOffset dy="1" />
+                          <feGaussianBlur stdDeviation="2.5" />
+                          <feColorMatrix
+                            type="matrix"
+                            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.16 0"
+                          />
+                          <feBlend
+                            mode="normal"
+                            in2="BackgroundImageFix"
+                            result="effect1_dropShadow"
+                          />
+                          <feBlend
+                            mode="normal"
+                            in="SourceGraphic"
+                            in2="effect1_dropShadow"
+                            result="shape"
+                          />
+                        </filter>
+                        <linearGradient
+                          id="paint0_linear"
+                          x1="14.4737"
+                          y1="4"
+                          x2="37.2042"
+                          y2="18.2422"
+                          gradientUnits="userSpaceOnUse"
+                        >
+                          <stop stop-color="white" />
+                          <stop
+                            offset="1"
+                            stop-color="white"
+                            stop-opacity="0"
+                          />
+                        </linearGradient>
+                      </defs>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="item['notificationType'] === 'Event notifications'">
+              <label
+                class="row-text-small"
+                style="font-size: 10px; opacity: 0.5"
+                >{{ rowItem["threshold"] }}</label
+              >
+            </div>
+          </td>
+          <td class="priority-text">
+            <div class="row" style="align-items: baseline">
+              <div class="col-md-6">
+                <div style="display: contents">
+                  <svg
+                    *ngIf="rowItem['priority'] === 'HIGH'"
+                    width="16"
+                    height="12"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <rect width="16" height="16" rx="8" fill="#FF4C4C" />
+                  </svg>
+
+                  <svg
+                    *ngIf="rowItem['priority'] === 'MED'"
+                    width="16"
+                    height="12"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <rect width="16" height="16" rx="8" fill="#FFBF00" />
+                  </svg>
+
+                  <svg
+                    *ngIf="rowItem['priority'] === 'LOW'"
+                    width="16"
+                    height="12"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <rect width="16" height="16" rx="8" fill="#17D468" />
+                  </svg>
+                </div>
+                &nbsp;&nbsp;
+                {{ rowItem["priority"] }}
+              </div>
+              <div class="col-md-6">
+                <div
+                  *ngIf="
+                    item['notificationType'] === 'Vital signs notifications'
+                  "
+                  style="margin-left: -30px"
+                >
+                  <svg
+                    width="40"
+                    height="30"
+                    viewBox="0 0 40 37"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <g filter="url(#filter0_d)">
+                      <rect
+                        x="5"
+                        y="4"
+                        width="30"
+                        height="27"
+                        rx="4"
+                        fill="#1C8BCA"
+                      />
+                      <path
+                        d="M15.5 20.125V22H17.375L22.905 16.47L21.03 14.595L15.5 20.125ZM24.355 15.02C24.55 14.825 24.55 14.51 24.355 14.315L23.185 13.145C22.99 12.95 22.675 12.95 22.48 13.145L21.565 14.06L23.44 15.935L24.355 15.02Z"
+                        fill="white"
+                      />
+                      <rect
+                        x="5.5"
+                        y="4.5"
+                        width="29"
+                        height="26"
+                        rx="3.5"
+                        stroke="url(#paint0_linear)"
+                        stroke-opacity="0.4"
+                      />
+                    </g>
+                    <defs>
+                      <filter
+                        id="filter0_d"
+                        x="0"
+                        y="0"
+                        width="40"
+                        height="37"
+                        filterUnits="userSpaceOnUse"
+                        color-interpolation-filters="sRGB"
+                      >
+                        <feFlood
+                          flood-opacity="0"
+                          result="BackgroundImageFix"
+                        />
+                        <feColorMatrix
+                          in="SourceAlpha"
+                          type="matrix"
+                          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                        />
+                        <feOffset dy="1" />
+                        <feGaussianBlur stdDeviation="2.5" />
+                        <feColorMatrix
+                          type="matrix"
+                          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.16 0"
+                        />
+                        <feBlend
+                          mode="normal"
+                          in2="BackgroundImageFix"
+                          result="effect1_dropShadow"
+                        />
+                        <feBlend
+                          mode="normal"
+                          in="SourceGraphic"
+                          in2="effect1_dropShadow"
+                          result="shape"
+                        />
+                      </filter>
+                      <linearGradient
+                        id="paint0_linear"
+                        x1="14.4737"
+                        y1="4"
+                        x2="37.2042"
+                        y2="18.2422"
+                        gradientUnits="userSpaceOnUse"
+                      >
+                        <stop stop-color="white" />
+                        <stop offset="1" stop-color="white" stop-opacity="0" />
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <label class="priority-text">{{ rowItem["delayTime"] }}</label>
+          </td>
+          <td>
+            <label class="priority-text" style="width: 139px">{{
+              rowItem["modified"]
+            }}</label>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,43 @@
+<mat-card class="dialog-header">
+    <div class="assign-header">
+        <h1 mat-dialog-title>
+            {{'profile-module.select_hospital' | translate}}
+        </h1>
+    </div>
+    <!--<button mat-button mat-dialog-close>
+        <mat-icon>close</mat-icon>
+    </button>-->
+</mat-card>
+
+<mat-dialog-content class="mat-dialog-popup hospital-group-dialog">
+    <div class="hospital-group-content">
+        <form>
+            <div class="row align-items-center">
+                <div class="col-sm-6">
+                    <h2>
+                        {{'profile-module.select_the_clinical_facility' | translate}}
+                    </h2>
+                </div>
+                <div class="col-sm-6">
+                    <mat-form-field appearance="fill" class="whiteselect selectfilter">
+                        <mat-label> {{'profile-module.select_a_clinical_facility' | translate}}</mat-label>
+                        <mat-select class="search-filter-select">
+                            <mat-option value="option1"> Apollo INR</mat-option>
+                            <mat-option value="option2">Forties Hospital
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-flat-button mat-dialog-close color="warn" class="fill-btn">
+        {{'profile-module.button.cancel' | translate}}
+    </button>
+    <button mat-flat-button mat-dialog-close color="primary" class="fill-btn">
+        {{'profile-module.button.done' | translate}}
+    </button>
+</mat-dialog-actions>

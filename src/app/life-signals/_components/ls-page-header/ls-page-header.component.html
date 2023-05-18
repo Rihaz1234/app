@@ -1,0 +1,97 @@
+<mat-card class="topbar-card">
+  <div class="row align-items-center">
+    <div class="col-6 col-md-5">
+      <div class="button-row">
+        <div class="d-flex align-items-center justify-content-start" *ngIf="type === 'active_patients'"><button
+            mat-flat-button class="breadcrum-button" (click)="goBack()">
+            <mat-icon>arrow_back_ios</mat-icon>
+          </button>
+          <span class="title-bar">{{ "active-patients-module.page-heading" | translate }}</span>
+        </div>
+        <div class="d-flex align-items-center justify-content-start" *ngIf="type === 'admit_patients'"> <button
+            mat-flat-button class="breadcrum-button" (click)="goBack()">
+            <mat-icon>arrow_back_ios</mat-icon>
+          </button>
+          <span class="title-bar">{{ "admit-patients-module.page-heading" | translate }}</span>
+        </div>
+        <div class="d-flex align-items-center justify-content-start" *ngIf="type === 'discharge_patients'"> <button
+            mat-flat-button class="breadcrum-button" (click)="goBack()">
+            <mat-icon>arrow_back_ios</mat-icon>
+          </button>
+          <span class="title-bar">{{ "discharge-patients-module.page-heading" | translate }}</span>
+        </div>
+        <div class="d-flex align-items-center justify-content-start" *ngIf="type === 'manage_groups'"> <button
+            mat-flat-button class="breadcrum-button" (click)="goBack()">
+            <mat-icon>arrow_back_ios</mat-icon>
+          </button>
+          <span class="title-bar">{{ "manage-group-module.page-heading" | translate }}</span>
+        </div>
+        <div class="d-flex align-items-center justify-content-start" *ngIf="type === 'parameter_alerts'"><button
+            mat-flat-button class="breadcrum-button" (click)="goBack()">
+            <mat-icon>arrow_back_ios</mat-icon>
+          </button>
+          <span class="title-bar">{{ "parameter-alerts-module.page_heading" | translate }}</span>
+        </div>
+        <div class="d-flex align-items-center justify-content-start" *ngIf="type === 'arrhythmia_alerts'"><button
+                mat-flat-button class="breadcrum-button" (click)="goBack()">
+          <mat-icon>arrow_back_ios</mat-icon>
+        </button>
+          <span class="title-bar">{{ "home_alerts.label_arrhythmia_alerts" | translate }}</span>
+        </div>
+        <div class="d-flex align-items-center justify-content-start" *ngIf="type === 'technical_alerts'"><button
+            mat-flat-button class="breadcrum-button" (click)="goBack()">
+            <mat-icon>arrow_back_ios</mat-icon>
+          </button>
+          <span class="title-bar">{{ "alert_config_module.technical_alert" | translate }}</span>
+        </div>
+        <div class="d-flex align-items-center justify-content-start" *ngIf="type === 'alert_configuration'"><button
+            mat-flat-button class="breadcrum-button" (click)="goBack()">
+            <mat-icon>arrow_back_ios</mat-icon>
+          </button>
+          <span class="title-bar">{{ "alert_config_module.page-heading" | translate }}</span>
+        </div>
+        <div class="d-flex align-items-center justify-content-start" *ngIf="type === 'additional_devices'"> <button
+            mat-flat-button class="breadcrum-button" (click)="goBack()">
+            <mat-icon>arrow_back_ios</mat-icon>
+          </button>
+          <span class="title-bar">{{ "additional_devices.page-heading" | translate }}</span>
+        </div>
+        <div class="d-flex align-items-center justify-content-start" *ngIf="type === 'manage_relays'"><button
+            mat-flat-button class="breadcrum-button" (click)="goBack()">
+            <mat-icon>arrow_back_ios</mat-icon>
+          </button>
+          <span class="title-bar">{{ "manage_relays_module.page-heading" | translate }}</span>
+        </div>
+        <div class="d-flex align-items-center justify-content-start" *ngIf="type === 'manage_users'"> <button
+            mat-flat-button class="breadcrum-button" (click)="goBack()">
+            <mat-icon>arrow_back_ios</mat-icon>
+          </button>
+          <span class="title-bar">{{ "manage_users_module.page-heading" | translate }}</span>
+        </div>
+        <div class="d-flex align-items-center justify-content-start" *ngIf="type === 'profile'"><button mat-flat-button
+            class="breadcrum-button" (click)="goBack()">
+            <mat-icon>arrow_back_ios</mat-icon>
+          </button>
+          <span class="title-bar">{{ "shared.profile" | translate }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-7 d-flex justify-content-end align-items-center">
+      <ng-content [select]="page-header"></ng-content>
+      <figure class="rightside-image">
+        <img *ngIf="type === 'active_patients'"  src="assets/icons/current-patients.png" alt="current patients" />
+        <img *ngIf="type === 'admit_patients'"  src="assets/icons/admit-patients.png" alt="admit patients" />
+        <img *ngIf="type === 'discharge_patients'"  src="assets/icons/discharge-patients.png" alt="discharge patients" />
+        <img *ngIf="type === 'manage_groups'"  src="assets/icons/patient-group-management.png" alt="patient group management" />
+        <img *ngIf="type === 'parameter_alerts'"  src="assets/icons/parameter-alerts.png" alt="parameter alerts" />
+        <img *ngIf="type === 'arrhythmia_alerts'"  src="assets/icons/arrhythmia-alerts.png" alt="arrhythmia alerts" />
+        <img *ngIf="type === 'technical_alerts'"  src="assets/icons/technical-alerts.png" alt="technical alerts" />
+        <img *ngIf="type === 'manage_relays'"  src="assets/icons/managerelay.png" alt="managerelay" />
+        <img *ngIf="type === 'alert_configuration'"  src="assets/icons/notif-icon.png" alt="notif icon" />
+        <img *ngIf="type === 'additional_devices'"  src="assets/icons/miscelaneous.png" alt="miscelaneous" />
+        <img *ngIf="type === 'manage_users'"  src="assets/icons/manageuser.png" alt="manageuser" />
+
+      </figure>
+    </div>
+  </div>
+</mat-card>

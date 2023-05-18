@@ -1,0 +1,228 @@
+<ls-page-header type="active_patients">
+    <ng-container page-actions>
+        <div class="d-flex justify-content-end me-4">
+            <div class="d-lg-flex d-md-none d-sm-none d-none my-2">
+                <button mat-flat-button color="accent" class="mx-1" [disabled]="selectedPatients?.selected?.length !== 0" (click)="openAdmitPatientModalWith({key: 'add-new-patient', value: ''})" *ngIf="isClinicianCheck()">
+                    {{ "active-patients-module.button.admit_patient" | translate }}
+                </button>
+            </div>
+            <div class="d-block d-lg-none my-2 ">
+                <button mat-icon-button [matMenuTriggerFor]="menu" class="border">
+                    <mat-icon class="justify-content-center">more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu" class="mobile-menu overflow-hidden d-block d-lg-none">
+                    <button mat-menu-item (click)="openAdmitPatientModalWith({key: 'add-new-patient', value: ''})" [disabled]="selectedPatients?.selected?.length !== 0" *ngIf="isGcorScCheck()">
+                        {{ "active-patients-module.button.admit_patient" | translate }}
+                    </button>
+                </mat-menu>
+            </div>
+        </div>
+    </ng-container>
+</ls-page-header>
+<div class="px-3">
+    <div class="table-scroll without-tab-table comman-table-users head-border">
+        <ls-table (sortChange)="onSortChange($event)" [config]="config" [selection]="selectedPatients" [data]="activePatients" [columns]="activePatient_Columns" (page)="onPageChange($event)" [error]="error" [isSelected]="isSelected" [Id]="'patientId'" (selected)="onPatientsSelected($event)"
+            [selectOnlyActive]="true">
+<!--            <ng-container table-header>-->
+<!--                <div class="my-3 row">-->
+<!--                    <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-5 col-xxl-4">-->
+<!--                        <mat-form-field class="selectfilter no-label me-4" appearance="fill">-->
+<!--                            <mat-label>{{ "active-patients-module.select_filter" | translate }}-->
+<!--                            </mat-label>-->
+<!--                            <mat-select [(ngModel)]="searchObject.keyword" class="search-filter-select" (selectionChange)="resetAndSearch()">-->
+<!--                                <mat-option [value]="null">{{"active-patients-module.select_filter"|translate}}</mat-option>-->
+<!--                                <mat-option [value]="filter?.value" *ngFor="let filter of filterStrings">{{ filter?.text }}-->
+<!--                                </mat-option>-->
+<!--                            </mat-select>-->
+<!--                        </mat-form-field>-->
+<!--                    </div>-->
+
+<!--                    <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-5 col-xxl-4">-->
+<!--                        <mat-form-field class="search-form-field" appearance="fill">-->
+<!--                            <mat-label>{{ "active-patients-module.search" | translate }}-->
+<!--                            </mat-label>-->
+<!--                            <input [class.disabled]="!searchObject.keyword" [disabled]="!searchObject.keyword" autocomplete="off" [(ngModel)]="searchObject.string" matInput type="text" (ngModelChange)="search()" id="searchString" (keypress)="checkCharacters($event)" />-->
+<!--                            <mat-icon class="clear-icon" *ngIf="searchObject.string" (click)="clear()">close-->
+<!--                            </mat-icon>-->
+<!--                            <mat-icon matSuffix class="default-cursor">search</mat-icon>-->
+<!--                        </mat-form-field>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </ng-container>-->
+            <ng-container table-header>
+                <div class="my-3 row align-items-end position-relative ps-0 ps-lg-5">
+                    <label class="mat-label filter-label d-lg-flex d-none  align-items-center">{{ "active-patients-module.filter" | translate }}</label>
+                    <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8 col-xxl-7 select-col discharge-select-dropdown">
+                        <div class="row">
+                            <div class="col-12 col-sm-6 mt-0 mt-md-2 mt-lg-0 ">
+                                <app-nested-dropdown class="nested-selectfilter bg-selectfilter" [selectedValue]="filterObject.pGroupId" key="groupId" displayKey="name" [label]="'discharge-patients-module.location' | translate" (selected)="searchByGroup('LOCATION', $event)" [options]="locationGroups$ | async"
+                                                     [showSelect]="true">
+                                </app-nested-dropdown>
+                            </div>
+                            <div class="col-12 col-sm-6 mt-0 mt-md-2 mt-lg-0">
+                                <app-nested-dropdown class="nested-selectfilter bg-selectfilter" [selectedValue]="filterObject.cGroupId" key="groupId" displayKey="name" [label]="'discharge-patients-module.clinical_conditions' | translate" (selected)="searchByGroup('CLINICAL', $event)" [options]="clinicalGroups$ | async"
+                                                     [showSelect]="true">
+                                </app-nested-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 col-xxl-4 mt-2 mt-lg-0">
+                        <mat-form-field class="search-form-field" appearance="fill" floatLabel="never">
+                            <mat-label>{{ "discharge-patients-module.search" | translate }}
+                            </mat-label>
+                            <input [(ngModel)]="searchObject.string" matInput type="search" (keyup)="search()"
+                                   id="searchString" autocomplete="off" />
+                            <mat-icon class="clear-icon" *ngIf="searchObject.string" (click)="clear()">close
+                            </mat-icon>
+                            <mat-icon matSuffix class="default-cursor">search</mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </ng-container>
+            <ng-template lsWidgetName="firstname" let-row>
+                <div class="d-flex justify-content-start align-items-center">
+                    <div class="me-2">{{ row?.name }}</div>
+                    <mat-icon fontSet="material-icons-outlined" style="cursor: pointer;" (click)="patientViewMore(row)">info</mat-icon>
+                </div>
+            </ng-template>
+            <ng-template lsWidgetName="groups" let-row>
+                <mat-list type="button" class="taglist pt-0 small-tags" *ngIf="row?.cGroup || row?.pGroup" (click)="openAssignGroupModal(row)">
+                    <mat-list-item type="button" *ngIf="row?.pGroup" class="mx-1 small-tag remote-tag" [class.default-cursor]="!isGcorScCheck()">
+                        {{ row?.pGroup?.name }}
+                    </mat-list-item>
+                    <mat-list-item type="button" *ngIf="row?.cGroup" class="mx-1 small-tag sepsis-tag" [class.default-cursor]="!isGcorScCheck()">
+                        {{ row?.cGroup?.name }}
+                    </mat-list-item>
+                </mat-list>
+                <button mat-flat-button type="button" color="primary" class="assign-btn" *ngIf="!row?.cGroup && !row?.pGroup && isGcorScCheck()" (click)="openAssignGroupModal(row)">
+                        {{ "active-patients-module.button.assign_group" | translate }}
+                </button>
+                <span *ngIf="!row?.cGroup && !row?.pGroup && !isGcorScCheck()">
+                    {{"parameter-alerts-module.unassigned" |translate}}
+                </span>
+            </ng-template>
+            <ng-template lsWidgetName="biosensorStatus" let-row>
+                <div class="d-flex justify-content-center align-items-center" *ngIf="!row.activePatch">
+                    <mat-icon class="stop-monitoring mx-1 btn-boxed btn-no-shadow">
+                        clear
+                    </mat-icon>
+                </div>
+                <div class="d-flex justify-content-center align-items-center" *ngIf="row.activePatch">
+                    <mat-icon color="warn" class="mx-1 btn-boxed btn-no-shadow" *ngIf="!row.biosensorStatus">
+                        close</mat-icon>
+                    <mat-icon class="tick-icon mx-1 btn-boxed btn-no-shadow" *ngIf="row.biosensorStatus === monitoringStatus.STREAMING">
+                        check</mat-icon>
+                    <button mat-mini-fab class="monitoring-icon mx-1 btn-boxed btn-no-shadow" [disabled]="!isScOrGc()" (click)="openStopMonitoringDialog(row.patientId)" *ngIf="row.biosensorStatus === monitoringStatus.STREAMING">
+                            <mat-icon>stop</mat-icon>
+                        </button>
+                    <mat-icon class="stop-monitoring mx-1 btn-boxed btn-no-shadow" *ngIf="row.biosensorStatus === monitoringStatus.FINALIZE_IN_PROGRESS">
+                        clear
+                    </mat-icon>
+                    <button mat-mini-fab class="start-monitoring mx-1 btn-boxed btn-no-shadow" color="primary" *ngIf="row.biosensorStatus === monitoringStatus.FINALIZE_IN_PROGRESS">
+                            <mat-icon>play_arrow</mat-icon>
+                        </button>
+                </div>
+            </ng-template>
+            <ng-template lsWidgetName="activePatchHeading">
+                <img class="me-1" alt="bio sensor icon" src="assets/icons/biosensor.svg"/> {{'active-patients-module.table.id' | translate}}
+            </ng-template>
+            <ng-template lsWidgetName="activePatch" let-row>
+                <div class="d-flex justify-content-center align-items-center">
+                    <img alt="bio sensor icon" src="assets/icons/biosensor.svg"  />
+                    <div class="me-3 biosensor-id">
+                        {{ row.activePatch || "-" }}
+                    </div>
+                    <mat-icon fontSet="material-icons-outlined" class="cursor-pointer" (click)="openBiosensorModal(row?.patientId, row)">add_circle_outline</mat-icon>
+                </div>
+            </ng-template>
+            <ng-template lsWidgetName="deviceIds" let-row>
+                <div class="d-flex justify-content-center align-items-center">
+                    <span>{{ getThirdPartyDevices(row.deviceIds) }}</span>
+                </div>
+            </ng-template>
+            
+                <!-- Pause Notification -->
+                <!-- <button mat-mini-fab color="primary" class="btn-boxed boxed-height btn-no-shadow  me-2">  <img alt="Push Notification" src="assets/icons/pause-notification.svg"  /></button> -->
+                <!-- <button mat-mini-fab color="primary" class="btn-boxed boxed-height btn-no-shadow  me-2">  <img alt="Push Notification" src="assets/icons/pause-notification-disable.svg"  /></button> -->
+                <!-- <button mat-flat-button color="primary" class="btn-no-shadow mx-auto me-2" *ngIf="isClinicianCheck() || isPhy" [disabled]="!row.activePatch" (click)="addNewEvent(row)">
+                    {{ "active-patients-module.button.add_event_note" | translate }}
+                </button> -->
+
+
+
+            <ng-template lsWidgetName="patientDetails" let-row>
+                <div class="d-flex justify-content-start align-items-center">
+                    <div class="me-2">{{row?.patientId}}</div>                    
+                </div>
+                <div class="d-flex justify-content-start align-items-center bold-text">
+                  <strong>  <div class="me-2">{{ row?.name }}</div>   </strong>                 
+                </div>
+            </ng-template>  
+
+            <ng-template lsWidgetName="location" let-row>
+                <div class="d-flex justify-content-start align-items-center">
+                    <div class="me-2">{{ row?.name }}</div>                   
+                </div>
+            </ng-template> 
+
+            <ng-template lsWidgetName="reportTime" let-row>
+                <div class="d-flex justify-content-start align-items-center">
+                    <div class="me-2">date</div>                    
+                </div>
+                <div class="d-flex justify-content-start align-items-center">
+                    <div class="me-2">time</div>                    
+                </div>
+            </ng-template> 
+
+            <ng-template lsWidgetName="prescriber" let-row>
+                <div class="d-flex justify-content-start align-items-center">
+                    <div class="me-2">{{ row?.name }}</div>                    
+                </div>
+          </ng-template> 
+
+            <ng-template lsWidgetName="interpreter" let-row>
+                <div class="d-flex justify-content-start align-items-center">
+                    <div class="me-2">{{ row?.name }}</div>                    
+                </div>
+            </ng-template> 
+
+            <ng-template lsWidgetName="reportType" let-row>
+                <div class="d-flex justify-content-start align-items-center">
+                    <div class="me-2">{{ row?.name }}</div>                    
+                </div>
+            </ng-template>     
+
+            <ng-template lsWidgetName="actions" let-row>
+                    <button mat-icon-button [matMenuTriggerFor]="patientMenu" class="shadow-none">
+                    <mat-icon class="justify-content-center">more_vert</mat-icon>
+                </button>
+                <mat-menu #patientMenu="matMenu" class="setting-card-menu profile-card-menu" xPosition="before">
+                    <button mat-menu-item *ngIf="isClinicianCheck()" (click)="openAdmitPatientModalWith({key:'edit-active-patient', value:row?.patientId})">{{ "active-patients-module.button.edit" | translate}}</button>
+                    <button mat-menu-item *ngIf="isScOrGc()" (click)="openDischargeGroupDialog(row?.patientId, [], row)">{{ "active-patients-module.button.discharge" | translate}}</button>
+                </mat-menu>
+            </ng-template>
+            
+            <ng-template lsWidgetName="view" let-row>
+                <a type="button">
+                    <img src="assets/icons/pdf.png">
+                </a>
+                <a type="button"> 
+                    <img src="assets/icons/ecg.png">
+                </a>
+            </ng-template>
+            <ng-template lsWidgetName="print" let-row>               
+                <mat-icon>check</mat-icon>
+                <a type="button">
+                    <img src="assets/icons/print.png">
+                </a>
+           
+            </ng-template>
+            <ng-template lsWidgetName="download" let-row>
+                <mat-icon>check</mat-icon>
+                <a type="button">
+                    <img src="assets/icons/download.png">
+                </a>
+            </ng-template>
+        </ls-table>
+    </div>
+</div>

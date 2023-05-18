@@ -1,0 +1,14 @@
+<div [formGroup]="form">
+  <mat-form-field class="tel-input" appearance="none">
+    <lac-mat-country-selector
+      matPrefix
+      [selectorFor]="input"
+      [showDialCode]="true"
+      [disableSearch]="true"
+      [preferredCountries]="preferredCountries"
+      searchPlaceholder="Search..."
+    >
+    </lac-mat-country-selector>
+    <lac-mat-tel-input #input formControlName="value" autocomplete="off"> </lac-mat-tel-input>
+  </mat-form-field>
+</div>

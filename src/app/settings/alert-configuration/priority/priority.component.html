@@ -1,0 +1,207 @@
+<ls-table [(config)]="config" [columns]="columns" [data]="priorityAlertSettings" class="head-border fixed-header-relative">
+  <ng-template lsWidgetName="alerts" let-priorityAlertConfig>
+    <span class="mx-3">
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="16" cy="16" r="8" [attr.fill]="priorityHexCode[priorityAlertConfig.alert.toUpperCase()]" />
+        <circle *ngIf="priorityAlertConfig.alert.toUpperCase() !== 'LOW'" cx="16" cy="16" r="12"
+          [attr.stroke]="priorityHexCode[priorityAlertConfig.alert.toUpperCase()]" stroke-width="2"
+          stroke-dasharray="4 4" />
+      </svg>
+    </span>
+    <span>
+      {{ priorityAlertConfig.alert }}
+    </span>
+  </ng-template>
+  <ng-template lsWidgetName="alert_freqExtraHeader" let-technicalAlertConfig>
+    <div class="d-flex align-items-center justify-content-center">
+      <div class="d-flex ack-column align-items-center text-center">
+        {{ "alert_config_module.acknowledge" | translate }}
+      </div>
+      <div class="d-flex ack-column align-items-center text-center">
+        {{ "alert_config_module.unacknowledge" | translate }}
+      </div>
+    </div>
+  </ng-template>
+  <ng-template lsWidgetName="alert_freq" let-priorityAlertConfig>
+    <div class="d-flex align-items-center justify-content-center">
+      <div class="d-flex ack-column  align-items-center">
+        <div class=" d-flex align-items-center">
+          <div *ngIf="!editPriority[priorityAlertConfig?.index]"
+            class="text-value align-items-center">
+
+            {{ priorityAlertConfig.Frequency_Ack }} {{ (priorityAlertConfig.unit !== 'Mins') ?
+            ('alert_config_module.mins' | translate) : priorityAlertConfig.unit}}
+          </div>
+          <div *ngIf="editPriority[priorityAlertConfig?.index]">
+            <input  (keypress)="numericsOnly(priorityAlertConfig.key, $event)"
+            (paste)="alertService.checkForSpecialCharacters($event)"
+              digitOnly type="number" matInput autocomplete="off" class="text-input-box text-center py-1" (change)="
+                priorityParamInputChanged(
+                  priorityAlertConfig?.index,
+                  'Frequency_Ack',
+                  priorityAlertMinMax[priorityAlertConfig.key]
+                )
+              " [min]="
+                priorityAlertMinMax[priorityAlertConfig.key]['MIN'][
+                  'Frequency_Ack'
+                ]
+              " [max]="
+                priorityAlertMinMax[priorityAlertConfig.key]['MAX'][
+                  'Frequency_Ack'
+                ]
+              " [(ngModel)]="priorityAlertConfig.Frequency_Ack" />
+          </div>
+          <ng-container *ngIf="isEditAccess">
+            <span class="ms-2">
+              <span *ngIf="!editPriority[priorityAlertConfig?.index]">
+                <button mat-mini-fab color="primary" class="btn-boxed btn-no-shadow"
+                  (click)="showHideEdit(priorityAlertConfig?.index, 'priorityACK')">
+                  <mat-icon>edit</mat-icon>
+                </button>
+              </span>
+              <span *ngIf="editPriority[priorityAlertConfig?.index]">
+                <button mat-mini-fab color="primary" class="btn-boxed btn-no-shadow"
+                  (click)="showHideEdit(priorityAlertConfig?.index, 'priorityACK')">
+                  <mat-icon>done</mat-icon>
+                </button>
+              </span>
+            </span>
+          </ng-container>
+        </div>
+      </div>
+      <div class="d-flex ack-column  align-items-center">
+        <div class=" d-flex align-items-center">
+          <div *ngIf="!editPrio[priorityAlertConfig?.index]" class="text-value align-items-center">
+
+            {{ priorityAlertConfig.Frequency_UnAck }} {{ (priorityAlertConfig.unit !== 'Mins') ?
+            ('alert_config_module.mins' | translate) : priorityAlertConfig.unit }}
+          </div>
+          <div *ngIf="editPrio[priorityAlertConfig?.index]">
+            <input  (keypress)="numericsOnly(priorityAlertConfig.key, $event)"
+            (paste)="alertService.checkForSpecialCharacters($event)"
+              digitOnly matInput autocomplete="off" class="text-input-box text-center py-1" type="number" (change)="
+                priorityParamInputChanged(
+                  priorityAlertConfig?.index,
+                  'Frequency_UnAck',
+                  priorityAlertMinMax[priorityAlertConfig.key]
+                )
+              " [min]="
+                priorityAlertMinMax[priorityAlertConfig.key]['MIN'][
+                  'Frequency_UnAck'
+                ]
+              " [max]="
+                priorityAlertMinMax[priorityAlertConfig.key]['MAX'][
+                  'Frequency_UnAck'
+                ]
+              " [(ngModel)]="priorityAlertConfig.Frequency_UnAck" />
+          </div>
+          <ng-container *ngIf="isEditAccess">
+            <span class="ms-2">
+              <span *ngIf="!editPrio[priorityAlertConfig?.index]">
+                <button mat-mini-fab color="primary" class="btn-boxed btn-no-shadow"
+                  (click)="showHideEdit(priorityAlertConfig?.index, 'priorityNACK')">
+                  <mat-icon>edit</mat-icon>
+                </button>
+              </span>
+              <span *ngIf="editPrio[priorityAlertConfig?.index]">
+                <button mat-mini-fab color="primary" class="btn-boxed btn-no-shadow"
+                  (click)="showHideEdit(priorityAlertConfig?.index, 'priorityNACK')">
+                  <mat-icon>done</mat-icon>
+                </button>
+              </span>
+            </span>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template lsWidgetName="alert_breakthroughExtraHeader" let-technicalAlertConfig>
+    <div class="d-flex align-items-center justify-content-center">
+      <div class="d-flex ack-column align-items-center justify-content-center">
+        {{ "alert_config_module.acknowledge" | translate }}
+      </div>
+      <div class="d-flex ack-column align-items-center justify-content-center">
+        {{ "alert_config_module.unacknowledge" | translate }}
+      </div>
+    </div>
+  </ng-template>
+  <ng-template lsWidgetName="alert_breakthrough" let-priorityAlertConfig>
+    <div class="d-flex align-items-center justify-content-center">
+      <div class="d-flex ack-column  align-items-center">
+        <div class=" d-flex align-items-center">
+          <div *ngIf="!editBreakThrough[priorityAlertConfig?.index]"
+            class="text-value align-items-center">
+            <span>&#177; </span>
+            {{ priorityAlertConfig.Percentage_Ack }} {{ priorityAlertConfig.percentage }}
+          </div>
+          <div *ngIf="editBreakThrough[priorityAlertConfig?.index]">
+            <input  (keypress)="numericsOnly(priorityAlertConfig.key, $event)"
+            (paste)="alertService.checkForSpecialCharacters($event)"
+              digitOnly matInput autocomplete="off" class="text-input-box text-center py-1" type="number" (change)="
+                priorityParamInputChanged(
+                  priorityAlertConfig?.index,
+                  'Percentage_Ack',
+                  priorityAlertMinMax[priorityAlertConfig.key]
+                )
+              " [min]="
+                priorityAlertMinMax[priorityAlertConfig.key]['MIN'][
+                  'Percentage_Ack'
+                ]
+              " [(ngModel)]="priorityAlertConfig.Percentage_Ack" />
+          </div>
+          <ng-container *ngIf="isEditAccess">
+            <span class="ms-2">
+              <button *ngIf="!editBreakThrough[priorityAlertConfig?.index]" mat-mini-fab color="primary"
+                class="btn-boxed btn-no-shadow" (click)="showHideEdit(priorityAlertConfig?.index, 'breakThroughACK')">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button *ngIf="editBreakThrough[priorityAlertConfig?.index]" mat-mini-fab color="primary"
+                class="btn-boxed btn-no-shadow" (click)="showHideEdit(priorityAlertConfig?.index, 'breakThroughACK')">
+                <mat-icon>done</mat-icon>
+              </button>
+            </span>
+          </ng-container>
+        </div>
+      </div>
+      <div class="d-flex ack-column  align-items-center">
+        <div class="d-flex align-items-center">
+          <div *ngIf="!editBreaksThrough[priorityAlertConfig?.index]"
+            class="text-value align-items-center">
+            <span>&#177; </span>
+            {{ priorityAlertConfig.Percentage_UnAck }} {{ priorityAlertConfig.percentage }}
+          </div>
+          <div *ngIf="editBreaksThrough[priorityAlertConfig?.index]">
+            <input  (keypress)="numericsOnly(priorityAlertConfig.key, $event)"
+            (paste)="alertService.checkForSpecialCharacters($event)"
+              digitOnly matInput autocomplete="off" class="text-input-box text-center py-1" type="number" (change)="
+                priorityParamInputChanged(
+                  priorityAlertConfig?.index,
+                  'Percentage_UnAck',
+                  priorityAlertMinMax[priorityAlertConfig.key]
+                )
+              " [min]="
+                priorityAlertMinMax[priorityAlertConfig.key]['MIN'][
+                  'Percentage_UnAck'
+                ]
+              " [(ngModel)]="priorityAlertConfig.Percentage_UnAck" />
+          </div>
+          <ng-container *ngIf="isEditAccess">
+            <span class="ms-2">
+              <button mat-mini-fab color="primary" class="btn-boxed btn-no-shadow"
+                (click)="showHideEdit(priorityAlertConfig?.index, 'breakThroughNACK')"
+                *ngIf="!editBreaksThrough[priorityAlertConfig?.index]">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button *ngIf="editBreaksThrough[priorityAlertConfig?.index]" mat-mini-fab color="primary"
+                class="btn-boxed btn-no-shadow" (click)="showHideEdit(priorityAlertConfig?.index, 'breakThroughNACK')">
+                <mat-icon>done</mat-icon>
+              </button>
+            </span>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template lsWidgetName="spacer">
+  </ng-template>
+</ls-table>

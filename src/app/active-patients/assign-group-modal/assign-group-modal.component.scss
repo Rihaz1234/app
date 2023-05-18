@@ -1,0 +1,84 @@
+/* new variable define */
+@import "src/assets/scss/modules/variables";
+@import "src/assets/scss/modules/_mixins.scss";
+
+/** modal popup */
+
+.mat-dialog-popup {
+  &.assign-group-dialog {
+    .assign-group-content {
+      padding: 1rem 0;
+
+      .align-items-center {
+        background-color: $bg-table-row-color;
+        border-radius: 4px;
+        height: 3rem;
+        padding: 0 $size-12;
+        margin: auto auto 1rem;
+        width: 100%;
+
+        @media only screen and (max-width: 1199px) {
+          height: auto;
+          padding: 1rem 0.5rem;
+        }
+
+        &:last-child {
+          margin-bottom: 0rem;
+        }
+
+        h2 {
+          font-size: 1rem;
+          margin: 0rem;
+          padding: 0rem;
+        }
+      }
+
+      .mat-form-field.selectfilter {
+        float: right;
+        margin-top: 0.5rem;
+        width: 100%;
+        max-width: 280px;
+
+        @media only screen and (max-width:767px) {
+          max-width: 100%;
+        }
+
+        &.disabled-field {
+          pointer-events: none;
+          opacity: $opacity-disabled;
+        }
+      }
+    }
+  }
+}
+
+.assign-header {
+  .list-item {
+    font-size: 1rem;
+
+    h1 {
+      line-height: 1.5rem;
+    }
+
+    strong {
+      line-height: 1.5rem;
+    }
+
+    span {
+      font-size: 10px;
+
+      &.time-group {
+        font-size: $base-font-size;
+        color: $blue-color-group;
+        @media only screen and (max-width:767px) {
+          font-size: $size-12;
+        }
+      }
+    }
+
+    &:last-child {
+      padding-right: 0;
+      padding-left: 0;
+    }
+  }
+}

@@ -1,0 +1,346 @@
+<mat-card class="dialog-header">
+  <h1 mat-dialog-title *ngIf="clinicalFacilityData === undefined; else edit">
+    {{
+    'clinical_facility.add_clinical_facility.label_add_facility'
+    | translate
+    }}
+  </h1>
+  <ng-template #edit>
+    <h1 mat-dialog-title>
+      {{
+      'clinical_facility.add_clinical_facility.label_edit_facility'
+      | translate
+      }}
+    </h1>
+  </ng-template>
+</mat-card>
+
+<mat-dialog-content class="mat-dialog-popup">
+  <form [formGroup]="facilityForm" class="dialog-form ServiceProviderForm " id="addServiceProviderForm" autocomplete="off">
+    <fieldset class="scheduler-border">
+      <legend class="scheduler-border">
+        <div>
+          <img src="assets/icons/facility-icon.svg" alt="facility" />
+          <label class="facility-details-label">
+            {{
+            'clinical_facility.add_clinical_facility.label_clicnical_facility'
+            | translate
+            }}
+          </label>
+        </div>
+      </legend>
+      <div *ngIf="clinicalFacilityData !== undefined">
+        <mat-label for="facility-name" [class.disabled]="clinicalFacilityData" class="matlabel">
+          {{ 'shared_label.label_id' | translate }}
+        </mat-label>
+        <mat-form-field appearance="fill" class="formfield-control" [class.disabled]="clinicalFacilityData">
+          <input matInput formControlName="user_id" [readonly]="clinicalFacilityData"/>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-label for="facility-name" [class.disabled]="clinicalFacilityData" class="matlabel">
+          {{ 'shared_label.label_name' | translate }}
+          <span class="required-star">*</span>
+        </mat-label>
+        <mat-form-field appearance="fill" class="formfield-control" [class.disabled]="clinicalFacilityData" [ngClass]="facilityForm.get('name').hasError('pattern') && facilityForm.get('name').touched ? 'error-msg': ''">
+          <input matInput formControlName="name" autocomplete="off" [readonly]="clinicalFacilityData" maxlength="64"/>
+          <mat-error *ngIf="hasError('name', 'required') && submitted"  >
+            {{ 'error_message.err_name_required' | translate }}
+          </mat-error>
+          <mat-error *ngIf="hasError('name','pattern')">
+            {{ 'error_message.err_name_pattern' | translate }}
+          </mat-error>
+          <mat-error *ngIf="hasError('name','maxlength') && !hasError('name','pattern')"  >
+            {{ 'error_message.err_name_range' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div>
+        <div class="row">
+          <div class="col-md-6">
+            <mat-label for="select-country" class="matlabel">
+              {{
+              'clinical_facility.add_clinical_facility.label_country'
+              | translate
+              }}
+              <span class="required-star">*</span>
+            </mat-label>
+            <mat-form-field appearance="fill" class="formfield-control">
+              <mat-select formControlName="country" (selectionChange)="getStatesByCountry($event)" [placeholder]="'placeholders.plc_select' | translate">
+                <mat-option *ngFor="let country of countryArray" value="{{ getCountryValues(country) }}">
+                  {{ country['name'] }} 
+                  ({{ country['flag'] }})</mat-option>
+              </mat-select>
+              <mat-error *ngIf="hasError('country', 'required') && submitted" >
+                {{'error_message.err_field_required'|translate}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-label for="select-state" class="matlabel">
+              {{
+              'clinical_facility.add_clinical_facility.label_state'
+              | translate
+              }}
+              <span class="required-star" *ngIf="statesOfCountry.length > 0">*</span>
+            </mat-label>
+            <mat-form-field appearance="fill" class="formfield-control" [hideRequiredMarker]="true">
+              <input matInput formControlName="state" minlength="2" maxlength="64" [matAutocomplete]="state"
+                     [required]="statesOfCountry.length > 0" (ngModelChange)="stateChange(facilityForm.value.state)"/>
+              <mat-autocomplete #state="matAutocomplete" (optionSelected)="getCityByStateAndCountry($event)">
+                <mat-option *ngFor="let state of filteredResults(statesOfCountry, 'name', facilityForm.value.state)" value="{{ state['name'] }}">{{ state['name'] }}
+                </mat-option>
+              </mat-autocomplete>
+<!--              <mat-select formControlName="state" [required]="statesOfCountry.length > 0" (selectionChange)="-->
+<!--									getCityByStateAndCountry($event)-->
+<!--								">-->
+<!--                <mat-option *ngFor="let state of statesOfCountry" value="{{ getStateValues(state) }}">{{ state['name']-->
+<!--                  }}</mat-option>-->
+<!--              </mat-select>-->
+              <mat-error *ngIf="hasError('state', 'required') && submitted" >
+                {{'error_message.err_field_required'|translate}}
+              </mat-error>
+              <mat-error *ngIf="!hasError('state', 'minlength') && hasError('state', 'pattern')"  >
+                {{'error_message.invalid_state'|translate}}
+              </mat-error>
+              <mat-error *ngIf="hasError('state', 'minlength')"  >
+                {{'error_message.city_len_err'|translate}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="row">
+          <div class="col-md-6">
+            <mat-label for="city-line-1" class="matlabel">
+              {{
+              'clinical_facility.add_clinical_facility.label_city'
+              | translate
+              }}
+            </mat-label>
+            <mat-form-field appearance="fill" class="formfield-control" [hideRequiredMarker]="true">
+              <input matInput id="city-line-1" formControlName="city" minlength="2" maxlength="64" [matAutocomplete]="city"/>
+              <mat-autocomplete #city="matAutocomplete">
+                <mat-option *ngFor="let city of filteredResults(citiesOfStateAndCountry, 'name', facilityForm.value.city)" value="{{ city['name'] }}">{{ city['name'] }}
+                </mat-option>
+              </mat-autocomplete>
+              <mat-error *ngIf="hasError('city', 'required') && submitted"  >
+                {{'error_message.err_field_required'|translate}}
+              </mat-error>
+              <mat-error *ngIf="!hasError('city', 'minlength') && hasError('city', 'pattern')"  >
+                {{'error_message.invalid_city'|translate}}
+              </mat-error>
+              <mat-error *ngIf="hasError('city', 'minlength')"  >
+                {{'error_message.city_len_err'|translate}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-label for="zip-code" class="matlabel">
+              {{
+              'clinical_facility.add_clinical_facility.label_zip_code'
+              | translate
+              }}
+            </mat-label>
+            <mat-form-field appearance="fill" class="formfield-control">
+              <input matInput formControlName="zipCode" autocomplete="off" maxlength="12"/>
+              <mat-error *ngIf="(hasError('zipCode', 'maxlength') || hasError('zipCode', 'minlength')) && !hasError('zipCode','pattern') " >
+                {{'error_message.err_zipcode_range' | translate}}
+              </mat-error>
+              <mat-error
+                *ngIf="hasError('zipCode','pattern') " >
+                {{'error_message.err_zipcode_alphanumeric_only'| translate}}
+              </mat-error>
+            </mat-form-field>
+
+          </div>
+        </div>
+      </div>
+      <div>
+        <mat-label for="facility-address-line-1" class="matlabel">
+          {{ 'shared_label.label_address' | translate }}
+          <span class="required-star">*</span>
+        </mat-label>
+        <mat-form-field appearance="fill" class="formfield-control" [ngClass]="facilityForm.get('address').hasError('pattern') && facilityForm.get('address').touched ? 'error-msg': ''">
+          <mat-label *ngIf="!facilityForm.get('address')?.value">{{
+            'placeholders.plc_enter_here' | translate
+            }}</mat-label>
+          <input matInput formControlName="address" autocomplete="off" maxlength="128"/>
+          <mat-error *ngIf="hasError('address','required') && submitted">
+            {{'error_message.err_field_required'|translate}}
+          </mat-error>
+          <mat-error *ngIf="hasError('address','pattern')">
+            {{'error_message.err_valid_address'|translate}}
+          </mat-error>
+          <mat-error *ngIf="(hasError('address','minlength') || hasError('address','maxlength')) && !hasError('address','pattern')">
+            {{'error_message.err_address_range' | translate}}
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div>
+        <div class="row">
+          <div class="col-md-6">
+            <mat-label for="select-country" class="matlabel">
+              {{'clinical_facility.add_clinical_facility.label_group_hospital'| translate}}
+            </mat-label>
+            <mat-form-field appearance="fill" class="formfield-control">
+              <mat-select formControlName="groupHospital" [placeholder]="'placeholders.plc_select' | translate">
+                <mat-option [value]="true">
+                  {{ 'clinical_facility.add_clinical_facility.yes'| translate }}
+                </mat-option>
+                <mat-option [value]="false">
+                  {{ 'clinical_facility.add_clinical_facility.no'| translate }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="hasError('groupHospital', 'required') && submitted" >
+                {{'error_message.err_field_required'|translate}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-label for="select-state" class="matlabel">
+              {{'clinical_facility.add_clinical_facility.label_no_beds' | translate}}
+              <span class="required-star">*</span>
+            </mat-label>
+            <mat-form-field appearance="fill" class="formfield-control">
+              <input matInput type="number" formControlName="numberOfBeds" [min]="bedsMin" [max]="bedsMax"/>
+              <mat-error *ngIf="hasError('numberOfBeds', 'required') && submitted" >
+                {{'error_message.err_field_required'|translate}}
+              </mat-error>
+              <mat-error *ngIf="hasError('numberOfBeds', 'min') || hasError('numberOfBeds', 'max')"  >
+                {{'error_message.invalid_beds_num'|translate}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="row">
+          <div class="col-md-6">
+            <mat-label for="select-state" class="matlabel">
+              {{
+              'clinical_facility.add_clinical_facility.label_select_storage_type'
+              | translate
+              }}
+              <span class="required-star">*</span>
+            </mat-label>
+            <mat-form-field appearance="fill" class="formfield-control">
+              <mat-select formControlName="dataStorageMode" id="select-storage"
+                          [placeholder]="'placeholders.plc_select' | translate">
+                <mat-option value="archived">Archived</mat-option>
+                <mat-option value="standard">Standard</mat-option>
+              </mat-select>
+              <mat-error *ngIf="hasError('dataStorageMode', 'required') && submitted" >
+                {{ 'error_message.err_name_required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6 d-flex align-items-end">
+            <section class="example-section check-authentication align-bottom">
+              <mat-checkbox class="example-margin" formControlName="multiFactorAuthEn">
+                {{'clinical_facility.add_clinical_facility.label_mfa'| translate}}
+              </mat-checkbox>
+            </section>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+    <fieldset class="scheduler-border">
+      <legend class="scheduler-border">
+        <div>
+          <mat-icon class="material-icons-outlined">account_circle</mat-icon>
+          <label class="facility-details-label">{{
+            'clinical_facility.add_clinical_facility.label_primary_contact' | translate
+            }}</label>
+        </div>
+      </legend>
+      <div>
+        <div class="row">
+          <div class="col-md-6">
+            <mat-label for="sp-contact-person-fname" class="matlabel">{{ 'shared_label.label_first_name' | translate }}
+              <span class="required-star">*</span>
+            </mat-label>
+            <mat-form-field appearance="fill" class="formfield-control" [ngClass]="facilityForm.get('firstName').hasError('pattern') && facilityForm.get('firstName').touched ? 'error-msg': ''" >
+              <input matInput formControlName="firstName" autocomplete="off" (keypress)="charsOnly('firstName', $event)" />
+              <mat-error *ngIf="hasError('firstName', 'required') && submitted" >
+                {{
+                'error_message.err_first_name_required'
+                | translate
+                }}
+              </mat-error>
+              <mat-error *ngIf="hasError('firstName','pattern')">
+                {{ 'error_message.err_first_name_char_only' | translate }}
+              </mat-error>
+              <mat-error *ngIf="hasError('firstName','maxlength') && !hasError('firstName','pattern')">
+                {{ 'error_message.err_first_name_range' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-label for="sp-contact-person-lname" class="matlabel">{{ 'shared_label.label_last_name' | translate }}
+              <span class="required-star">*</span>
+            </mat-label>
+            <mat-form-field appearance="fill" class="formfield-control" [ngClass]="facilityForm.get('lastName').hasError('pattern') && facilityForm.get('lastName').touched ? 'error-msg': ''" >
+              <input matInput formControlName="lastName" autocomplete="off" (keypress)="charsOnly('lastName', $event)" />
+              <mat-error *ngIf="hasError('lastName', 'required') && submitted" >
+                {{
+                'error_message.err_last_name_required'
+                | translate
+                }}
+              </mat-error>
+              <mat-error *ngIf="hasError('lastName','pattern')">
+                {{ 'error_message.err_last_name_char_only' | translate }}
+              </mat-error>
+              <mat-error *ngIf="hasError('lastName','maxlength') && !hasError('lastName','pattern')" >
+                {{ 'error_message.err_last_name_range' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="row">
+          <div class="col-md-6">
+            <mat-label for="sp-contact-email" class="matlabel pt-email">{{ 'shared_label.label_email_id' | translate }}
+              <!--<span class="required-star">**</span>-->
+            </mat-label>
+            <mat-form-field appearance="fill" class="formfield-control">
+              <input matInput formControlName="email" autocomplete="off" [maxlength]="320"/>
+              <mat-error *ngIf="hasError('email', 'email')">
+                {{
+                'error_message.err_invalid_email' | translate
+                }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-label for="sp-contact-person-phone" class="matlabel">{{ 'shared_label.label_phone_no' | translate }}
+              <!--<span class="required-star">**</span>-->
+            </mat-label>
+            <app-tel-input formControlName="phoneNo"></app-tel-input>
+            <mat-error class="mt-2" *ngIf="hasError('phoneNo', 'phoneNumberInvalid')" >
+              {{"errors.err_invalid_phone_no" | translate}}
+            </mat-error>
+          </div>
+        </div>
+        <!--<mat-error *ngIf="submitted && !facilityForm.getRawValue()?.email && !facilityForm.getRawValue()?.phoneNo">
+          {{ "manage_users_module.edituser.message1" | translate }}
+        </mat-error>-->
+      </div>
+    </fieldset>
+    <div class="required-text">
+      <span>* {{ 'error_message.err_mandatory' | translate }}</span>
+    </div>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button type="button" mat-flat-button class="fill-btn" (click)="onClose()" color="warn">
+    {{ 'buttons.btn_cancel' | translate }}
+  </button>
+  <button type="button" color="primary" mat-flat-button class="fill-btn" (click)="saveFacility()" >
+    {{ 'buttons.btn_save' | translate }}
+  </button>
+</mat-dialog-actions>

@@ -1,0 +1,90 @@
+<div class="container-fuild">
+    <app-patient-details [patientData]="patientData" [updated]="lastUpdated"></app-patient-details>
+    <div class="loading-indicator" *ngIf="loader">
+        <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+    </div>
+    <div *ngIf="!loader" class="inside-div head-border  comman-table-users bg-thead-color">
+        <ls-table class="fixed-header-relative" [(config)]="config" [columns]="columns" [data]="technicalAlertSettings">
+            <ng-template lsWidgetName="enabled" let-config>
+                <span class="d-flex align-items-center">
+                <mat-slide-toggle [(ngModel)]="config.Enabled" class="ms-1 me-2" (change)="toggle(config?.index)"
+                                  [disabled]="!isEditAccess">
+                </mat-slide-toggle>
+                </span>
+            </ng-template>
+            <ng-template lsWidgetName="alerts" let-config>
+                {{ config.alert }}
+            </ng-template>
+            <ng-template lsWidgetName="alert_freqExtraHeader" let-technicalAlertConfig>
+                <div class="d-flex  align-items-center justify-content-center">
+                    <div class="d-flex ack-column align-items-center justify-content-center">
+                        {{ "alert_config_module.acknowledge" | translate }}
+                    </div>
+                    <div class="d-flex ack-column align-items-center justify-content-center">
+                        {{ "alert_config_module.unacknowledge" | translate }}
+                    </div>
+                </div>
+            </ng-template>                                           
+            <ng-template lsWidgetName="alert_freq" let-technicalAlertConfig>
+                <div class="d-flex  align-items-center justify-content-center">
+                    <div class="d-flex ack-column justify-content-center align-items-center">
+                        <div class="nowrap-align d-flex justify-content-center align-items-center">
+                            <div *ngIf="!editAlertFrequency[technicalAlertConfig?.index]" class="text-value align-items-center justify-content-start">
+                                {{ technicalAlertConfig.Frequency_Ack }} {{ (technicalAlertConfig.units !== 'Mins') ? ('alert_config_module.mins'|translate) : technicalAlertConfig.units }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex ack-column justify-content-center align-items-center">
+                        <div class="nowrap-align d-flex justify-content-center align-items-center">
+                            <div *ngIf="!editAlertFrequencyUnAck[technicalAlertConfig?.index]" class="text-value align-items-center justify-content-start">
+                                {{ technicalAlertConfig.Frequency_UnAck }} {{ (technicalAlertConfig.units !== 'Mins') ? ('alert_config_module.mins'|translate) : technicalAlertConfig.units }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template lsWidgetName="modified" let-config>
+                <span *ngIf="masterData?.modifiedDateTime">
+                    {{ masterData.modifiedDateTime+ '+0000' | date: "MMM dd, yyyy " + timeFmt : timeZone }}
+                </span><br/>
+                <span *ngIf="!isBlank(masterData.modifiedBy)">by {{ masterData.modifiedBy }}</span>
+            </ng-template>
+        </ls-table>
+
+</div>
+</div>
+<mat-dialog-actions class="row px-1" *ngIf="!loader && isEditAccess">
+    <div class="col-lg-6">
+        <button
+                mat-flat-button
+                class="btn reset_btn_bg mb-2 mb-md-0 px-2"
+                (click)="openDialog()"
+                *ngIf="isShowResetButton"
+        >
+            <mat-icon class="fw-normal"> refresh </mat-icon>
+            <span class="btn-clr ps-1">{{
+                "alert_config_module.reset_to_default" | translate
+                }}</span>
+        </button>
+    </div>
+    <div class="col-lg-6 text-end">
+        <ng-template [ngIf]="showActionButtons">
+            <button
+                    mat-flat-button
+                    color="warn"
+                    class="fill-btn"
+                    (click)="handleAlertSettingsEditCancel()"
+            >
+                <span>{{ "alert_config_module.cancel" | translate }}</span></button
+            >&nbsp;
+            <button
+                    mat-flat-button
+                    color="primary"
+                    class="fill-btn"
+                    (click)="handleAlertSettingsSave()"
+            >
+                <span>{{ "alert_config_module.save" | translate }}</span>
+            </button>
+        </ng-template>
+    </div>
+</mat-dialog-actions>

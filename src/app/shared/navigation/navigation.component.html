@@ -1,0 +1,30 @@
+<span class="menu-items" *ngIf="getRole('SA')">
+    <a routerLinkActive="active-link" routerLink="/super-admin">Service Provider Listing</a>
+  </span>
+  <span *ngIf="getRole('SPA') || getRole('SPAC')">
+    <span class="menu-items">
+      <a routerLinkActive="active-link" routerLink="/service-provider-admin/user-management">User Management</a>
+    </span>
+    <span class="menu-items">
+      <a routerLinkActive="active-link" routerLink="/service-provider-admin/clinical-facility-management">Clinical
+        Facility Management</a>
+    </span>
+  </span>
+  <span *ngIf="
+        getRole('CFA') ||
+        getRole('CFAC') ||
+        getRole('SC') ||
+        getRole('GC') ||
+        getRole('PHY')
+      ">
+    <span class="menu-items">
+      <a routerLink="/summary" [ngClass]="(router.url.includes('/summary')) ? 'active-link' : ''">Home</a>
+    </span>
+    <span class="menu-items">
+      <a [class.disabled]="isDisable" routerLink="/dashboard" [ngClass]="(router.url.includes('/dashboard')) ? 'active-link' : ''">Monitoring Dashboard</a>
+    </span>
+    <span class="menu-items">
+      <a routerLink="/settings" [ngClass]="(router.url.includes('/settings')) ? 'active-link' : ''">Settings</a>
+    </span>
+  </span>
+

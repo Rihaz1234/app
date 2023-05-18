@@ -1,0 +1,49 @@
+@import "src/assets/scss/modules/variables";
+@import "src/assets/scss/modules/mixins";
+
+::ng-deep .footer-add-relay {
+  border-radius: $border-radius;
+  background-color: $bg-table-row-color;
+}
+
+.add-relay-btn-label {
+  margin-bottom: 0;
+  font-size: 18px;
+  text-transform: uppercase;
+}
+
+.edit-box {
+  background-color: $white;
+  width: 100px;
+  border-radius: $border-radius;
+}
+
+::ng-deep table.mat-table {
+  padding-bottom: 1rem;
+}
+
+table.mat-table thead th.mat-column-actions {
+  text-align: center !important;
+}
+
+.location-info {
+  width: 140px;
+  justify-content: flex-end;
+}
+
+button.btn-boxed.mat-mini-fab {
+  vertical-align: top;
+  img.downloadicon {
+    height: 1rem;
+    width: 1rem;
+  }
+
+}
+
+
+
+/*::ng-deep {
+  .scroll-assist {
+    max-height: calc(100vh - 300px) !important;
+  }
+}*/

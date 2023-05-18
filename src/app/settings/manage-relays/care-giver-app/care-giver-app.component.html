@@ -1,0 +1,36 @@
+<div class="loading-indicator" *ngIf="loader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>
+
+<div *ngIf="!loader" class="bg-thead-color with-tab-table comman-table-users head-border">
+    <ls-table [config]="config" [columns]="columns" (page)="onPage($event)" (sortChange)="onSortChange($event)" [data]="relayList$ | async" [isSelected]="isSelected" [Id]="'relayId'">
+        <ng-template lsWidgetName="cgId" let-data>
+            <div class="mx-1">{{data.relayId}}</div>
+        </ng-template>
+        <ng-template lsWidgetName="firstName" let-data>
+            {{data.firstName}}
+        </ng-template>
+        <ng-template lsWidgetName="email" let-data>
+            <div class="mx-3">
+                <small class="pt-1">{{ data?.email }}</small><br>
+                <small class="pt-1">{{ data?.phoneNo }}</small>
+            </div>
+        </ng-template>
+
+        <ng-template lsWidgetName="biosensorID" let-row>
+            <div class="d-flex justify-content-center align-items-center">
+                <div class="me-2 biosensor-id">
+                    {{ row.activePatch || "-" }}
+                </div>
+            </div>
+        </ng-template>
+        <ng-template lsWidgetName="createdDateTime" let-row>
+            {{ row?.createdDateTime | date: "MMM d, yyyy" : timeZone }} /
+            <span class="fw-bold">{{ row?.createdDateTime | date: timeFmt : timeZone }}</span>
+        </ng-template>
+        <ng-template lsWidgetName="lastActive" let-row>
+            {{ row?.lastActive | date: "MMM d, yyyy" : timeZone }} /
+            <span class="fw-bold">{{ row?.lastActive | date: timeFmt : timeZone }}</span>
+        </ng-template>
+    </ls-table>
+</div>

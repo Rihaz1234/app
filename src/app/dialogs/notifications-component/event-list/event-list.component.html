@@ -1,0 +1,107 @@
+<div class="container-fluid">
+    <app-patient-details [patientData]="patientData" [tab]="'eventList'" (addEvent)="addNewEvent()" (acknowledgeAllEvents)="openConfirmDialog()" [activeEvents]="selectedEvents.length" [eventEditAccess]="editAccess" [updated]="lastUpdated"></app-patient-details>
+    <!--  <div class="loading-indicator" *ngIf="loader">-->
+    <!--    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>-->
+    <!--  </div>-->
+    <div class="loading-indicator" *ngIf="loader">
+        <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+    </div>
+    <ls-paginator (page)="onPage($event)" class="sticky-paginator"
+                  [length]="config?.page?.length" [pageSize]="config?.page?.pageSize" [pageLength]="patientEventList?.length" [pageIndex]="config?.page?.pageIndex"
+                  showFirstLastButtons [tableState] = config?.tableState >
+    </ls-paginator>
+    <div class="inside-div table-responsive-md head-border comman-table-users bg-thead-color" *ngIf="!loader">
+        <div class="event-scroll-assist">
+        <table class="mat-table" aria-label="Table">
+            <thead>
+                <tr class="thead-row">
+                    <th class="text-start event-col text-uppercase">
+                         <mat-checkbox [disabled]="!unAcknowledged" (change)="checkAll($event)" [checked]="(selectedEvents.length !==0) && (selectedEvents.length === unAcknowledged)" [indeterminate]="(selectedEvents.length !==0) && (selectedEvents.length < unAcknowledged)"></mat-checkbox>
+                        <span class="ps-4">
+                          {{ "alert_config_module.symptoms_title" | translate}}
+                        </span>
+                        <img src="../../../../assets/icons/sort-icon.svg" alt="sort-icon" width="20" height="17" />
+                    </th>
+                    <th class="text-start">{{ "alert_config_module.activity_title" | translate}}</th>
+                    <th class="text-start">{{ "alert_config_module.note" | translate}}</th>
+                    <th class="text-start">{{ "alert_config_module.event_time" | translate}}</th>
+                    <th class="text-start">{{ "alert_config_module.log" | translate}}</th>
+                    <th class="d-flex justify-content-center">
+                        {{ "alert_config_module.status" | translate}}
+                        <div style="display: contents">
+                            <img src="../../assets/icons/sort-icon.svg" alt="sort-icon" width="24" height="20" />
+                        </div>
+                        <!--          <button mat-flat-button type="button" color="primary" class="my-1" (click)="openConfirmDialog()">-->
+                        <!--            {{ "alert_config_module.acknowledge_all" | translate}}-->
+                        <!--          </button>-->
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr class="tbody-row tbody-row-lower" *ngFor="let event of patientEventList; let i = index">
+                    <td class="event-col">
+                        <div class="d-flex align-items-center">
+                            <mat-checkbox class="pe-4" [disabled]="event?.ack || event?.mandatoryNote" [(ngModel)]="event.checked" [checked]="event.checked" (change)="onCheckboxChange($event, event.id)"></mat-checkbox>
+                            <span *ngIf="event?.alertType" class="event-label">{{ event.alertType }}</span>
+                            <span *ngIf="!event?.alertType && event?.symptoms?.length" class="event-label">
+                                <span *ngFor="let symptom of event?.symptoms;let i=index">
+                                    <span *ngIf="i!==0">, </span><span>{{symptom}}</span>
+                                </span>
+                            </span>
+                            <span *ngIf="!event?.alertType && !event?.symptoms?.length && editAccess">
+                            <button  mat-flat-button type="button" color="primary" (click)="editEvent(event)">
+                               {{ "alert_config_module.add_event.add_label" | translate}}
+                            </button>
+                            </span>
+                            <span *ngIf="!event?.alertType && !event?.symptoms?.length && !editAccess" class="ps-2">
+                                  -
+                            </span>
+                        </div>
+                    </td>
+                    <td>
+                        <span *ngIf="event?.activity?.length"  class="event-label">
+                            <span *ngFor="let activity of event?.activity;let i=index">
+                                <span *ngIf="i!==0">, </span><span *ngIf="activity">{{activity}}</span>
+                            </span>
+                        </span>
+                        <span *ngIf="!event?.activity?.length">
+                            -
+                        </span>
+                    </td>
+                    <td class="px-2">
+                        <img class="cursor-pointer note-icon" *ngIf="event?.notes" src="../../../../assets/icons/note.png" (click)="recordedNote(event)">
+                        <mat-icon class="cursor-pointer" *ngIf="!event?.notes && !event?.ack" fontSet="material-icons-outlined" (click)="addNote(event)">note_add</mat-icon>
+                        <span *ngIf="!event?.notes && event?.ack" class="ps-2"> -</span>
+                    </td>
+                    <td>
+                        <span>
+                            {{ event.alertTime*1000  | date: "MMM dd, " + timeFmt :timeZone }}
+                        </span>
+                    </td>
+                    <td class="px-2">
+                        <span *ngIf="!event?.acknowledgedOn" class="ps-2"> - </span>
+                        <span class="ackdata" *ngIf="event?.acknowledgedOn"> {{ event?.acknowledgedOn*1000 | date: "MMM dd, " + timeFmt :timeZone }}</span> 
+                        <span class="ackdata" *ngIf="event?.acknowledgedBy">by {{ event?.acknowledgedBy}}</span>
+                    </td>
+                    <td class="text-center px-2">
+                        <button *ngIf="event?.ack === false" mat-flat-button type="button" color="primary" (click)="acknowledge(event)">
+            {{ "alert_config_module.alertfreq_acknowledge" | translate}}
+          </button>
+                        <button *ngIf="event?.ack === true" [disabled]="true" mat-flat-button type="button" color="primary">
+            {{ "alert_config_module.acknowledge" | translate}}
+          </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="text-center my-3" *ngIf="eventListCount === 0">
+            <strong>{{ "alert_config_module.messages.no_data" | translate}}</strong>
+        </div>
+        <button (click)="downloadLog()" mat-flat-button type="button" color="primary" class="my-2 text-uppercase">
+             <mat-icon>save_alt</mat-icon>
+             {{ "alert_config_module.download_log" | translate}}
+        </button>
+    </div>
+</div>
+</div>

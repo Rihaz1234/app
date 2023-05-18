@@ -1,0 +1,648 @@
+<ls-page-header type="additional_devices"></ls-page-header>
+<div class="px-3 my-2 mt-3">
+  <div class="mx-md-2 mb-3 d-md-flex align-items-center">
+    <span class="pe-3  me-0 fw-bold settings-txt head-setting">
+      {{ "additional_devices.settings_for" | translate }} :
+    </span>
+    <span class="mx-2 head-setting-right" *ngIf="this.role === 'CFA'">
+      {{ facility }}
+    </span>
+    <!--            <mat-select disabled="true" placeholder="Location" class="mat-sel1">-->
+    <!--                <mat-option *ngFor="let setting of settings" [value]="setting">-->
+    <!--                    {{setting}}-->
+    <!--                </mat-option>-->
+    <!--            </mat-select>-->
+    <!--      <mat-form-field appearance="fill" class="whiteselect drop-down-selectfilter selectfilter">-->
+    <!--      <mat-select (selectionChange)="getMiscSettingsGrp()"-->
+    <!--        [placeholder]="'additional_devices.medical_condition' | translate" class=""-->
+    <!--        [(ngModel)]="miscellaneousSettings.groupId">-->
+    <!--        <mat-option *ngFor="let group of groups" [value]="group.groupId">-->
+    <!--          {{ group.name }}-->
+    <!--        </mat-option>-->
+    <!--      </mat-select>-->
+    <!--    </mat-form-field>-->
+    <div class="justify-content-md-start justify-content-between d-flex selectfilter-comman ">
+      <app-nested-dropdown *ngIf="groupsView" class="nested-selectfilter bg-selectfilter me-2 me-md-0 mx-md-2"
+        [selectedValue]="locationGroupId" key="groupId" displayKey="name"
+        [label]="'alert_config_module.location' | translate" (selected)="getMiscSettingsGrp($event, 'LOCATION')"
+        [options]="locationGroups" [noSelection]="true">
+      </app-nested-dropdown>
+      <app-nested-dropdown *ngIf="groupsView" class="nested-selectfilter bg-selectfilter mx-md-2"
+        [selectedValue]="clinicalGroupId" key="groupId" displayKey="name"
+        [label]="'alert_config_module.medical_condition' | translate"
+        (selected)="getMiscSettingsGrp($event, 'CLINICAL')" [options]="clinicalGroups" [noSelection]="true">
+      </app-nested-dropdown>
+    </div>
+  </div>
+  <div class="loading-indicator" *ngIf="loader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+  </div>
+  <div *ngIf="!loader">
+    <div class="my-0 button-card-area">
+      <button mat-button class="btn" [ngClass]="
+            selectedTab === 'spo2' ? 'select-btn-active' : 'select-btn'
+          " (click)="selectTab('spo2')">
+        {{ "additional_devices.spo2_bp_settings" | translate }}
+      </button>
+      <button mat-button class="btn" [ngClass]="selectedTab === 'ecg' ? 'select-btn-active' : 'select-btn'"
+        (click)="selectTab('ecg')">
+        {{ "additional_devices.ecg_filter" | translate }}
+      </button>
+      <button mat-button class="btn" [ngClass]="
+            selectedTab === 'biosensor' ? 'select-btn-active' : 'select-btn'
+          " (click)="selectTab('biosensor')">
+        {{ "additional_devices.biosensor_reconfiguration" | translate }}
+      </button>
+      <button mat-button class="btn" [ngClass]="
+            selectedTab === 'other' ? 'select-btn-active' : 'select-btn'
+          " (click)="selectTab('other')">
+        {{ "additional_devices.other_settings" | translate }}
+      </button>
+    </div>
+
+
+    <div class="additional-table bg-thead-color tab-table-low comman-table-users head-border"
+      *ngIf="groups?.length || editAccessCFA">
+      <ng-template [ngIf]="selectedTab === 'spo2'">
+        <div class="table-container scroll-assist   table-responsive-sm px-2">
+          <table class="mat-table custom-table" aria-label="Table">
+            <thead>
+              <tr>
+                <th scope="col" class="col-header fw-bold py-3 pe-2"></th>
+                <th class="col-header fw-bold py-3 px-2 text-start">
+                  {{ "additional_devices.settings" | translate }}
+                </th>
+                <th class="col-header fw-bold py-3 pe-2">{{ "additional_devices.default_devices" | translate }}</th>
+                <th class="col-header fw-bold py-3 pe-2" [colSpan]="3"></th>
+                <th></th>
+                <th class="col-header fw-bold py-3 pe-2" [colSpan]="3"></th>
+                <th class="col-header fw-bold py-3 pe-2" [colSpan]="2"></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody class="border-0">
+              <tr *ngIf="spo2Settings?.Setting"
+                [ngClass]="!spo2Settings.Setting.Enable ? 'row-disabled' : ''">
+                <td class="vw-5">
+                  <span class="align-middle">
+                    <mat-slide-toggle *ngIf="editAccessCFA ||(editAccessSC &&!isBlank(miscellaneousSettings.groupId))"
+                      class="align-middle me-3" [(ngModel)]="spo2Settings.Setting.Enable"
+                      (change)="disableEdit($event, 'spo2', 'SPO2')">
+                    </mat-slide-toggle>
+                  </span>
+                </td>
+                <td class="text-start align-items-center fw-bold">
+                  <span class="align-middle">
+                    {{ "additional_devices.SPO2"| translate }}
+                    {{ "additional_devices.device_txt" | translate }}
+                  </span>
+                </td>
+                <td>{{ '-' }}</td>
+                <td class="align-middle text-center" >
+                  <mat-select  style="width: 120px" [(ngModel)] ="spo2Settings.Setting.Mode" (ngModelChange)="updated(true)"
+                    [disabled]="!spo2Settings?.Setting?.Enable && !editOnTime && !editOnTime">
+                      <mat-option value="Continuous">CONTINUOUS</mat-option>
+                      <mat-option value="Periodic">INTERVAL</mat-option>
+                  </mat-select>
+                  <!-- <mat-error *ngIf="newPatientForm.get('gender').hasError('required') && submitted">
+                      {{"active-patients-module.errors.required" | translate}}
+                  </mat-error> -->
+                 </td>
+                <td class="col-header fw-bold text-center">
+                  {{"additional_devices.on_time" | translate}}
+                </td>
+                <td class="align-middle text-center ontime-card">
+                  <span *ngIf="!editOnTime">
+                    {{ (spo2Settings.Setting.Mode === 'Periodic') ? spo2Settings?.Setting?.OnTime : ' -- ' }} Mins
+                  </span>
+                  <span *ngIf="editOnTime" class="d-flex align-items-center justify-content-center">
+                    <input (keypress)="numericsOnly($event)" (paste)="checkForSpecialCharacters($event)" matInput
+                      placeholder="Enter" type="number" [min]="minOn" [max]="maxOn" class="edit-box"
+                      [(ngModel)]="spo2Settings.Setting.OnTime" autocomplete="off"
+                      (ngModelChange)="updated()" />
+                    <div class="ms-1"> Mins</div>
+                  </span>
+                </td>
+                <td class="text-start px-0 edit-Time">
+                  <span *ngIf="!editOnTime">
+                    <button mat-mini-fab color="primary" class="btn-boxed btn-no-shadow" (click)="showEditOnTime()"
+                      [disabled]="!spo2Settings.Setting.Enable || spo2Settings.Setting.Mode=='Continuous'"
+                      *ngIf="editAccessCFA || (editAccessSC && !isBlank(miscellaneousSettings.groupId))">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                  </span>
+                  <span *ngIf="editOnTime">
+                    <button mat-mini-fab color="primary" class="btn-boxed btn-no-shadow"
+                      *ngIf="onTimeValid(spo2Settings?.Setting?.OnTime)"
+                      (click)="hideEditOnTime()">
+                      <mat-icon>done</mat-icon>
+                    </button>
+                    <mat-error *ngIf="!onTimeValid(spo2Settings?.Setting?.OnTime)">
+                      *{{ "additional_devices.invalid" | translate }}
+                    </mat-error>
+                  </span>
+                </td>
+                <td></td>
+                <td class="col-header fw-bold text-end">{{ "additional_devices.off_time" | translate }}</td>
+                <td class="align-middle text-center ontime-card">
+                  <span *ngIf="!editOffTime">
+                    {{ (spo2Settings.Setting.Mode === 'Periodic') ? spo2Settings?.Setting?.OffTime : ' -- ' }} Mins
+                  </span>
+                  <span *ngIf="editOffTime" class="d-flex justify-content-center align-items-center">
+                    <input (keypress)="numericsOnly($event)" (paste)="checkForSpecialCharacters($event)" matInput
+                      placeholder="Enter" type="number" [min]="minOff" [max]="maxOff" class="edit-box"
+                      [(ngModel)]="spo2Settings.Setting.OffTime" autocomplete="off"
+                      (ngModelChange)="updated()" />
+                    <div class="ms-1"> Mins</div>
+                  </span>
+                </td>
+                <td class="text-start px-0 edit-Time">
+                  <span *ngIf="!editOffTime">
+                    <button mat-mini-fab color="primary" class="btn-boxed btn-no-shadow" (click)="showEditOffTime()"
+                      [disabled]="!spo2Settings.Setting.Enable || spo2Settings.Setting.Mode=='Continuous'"
+                      *ngIf="editAccessCFA || (editAccessSC && !isBlank(miscellaneousSettings.groupId))">
+                      <mat-icon class="fw-normal">edit</mat-icon>
+                    </button>
+                  </span>
+                  <span *ngIf="editOffTime">
+                    <button mat-mini-fab color="primary" class="btn-boxed btn-no-shadow"
+                      *ngIf="offTimeValid(spo2Settings?.Setting?.OffTime)"
+                      (click)="hideEditOffTime()">
+                      <mat-icon class="fw-normal">done</mat-icon>
+                    </button>
+                    <mat-error *ngIf="!offTimeValid(spo2Settings?.Setting?.OffTime)">
+                      *{{ "additional_devices.invalid" | translate }}
+                    </mat-error>
+                  </span>
+                </td>
+                <td class="col-header fw-bold text-end">{{"additional_devices.duty_cycle" | translate}}</td>
+                <td class="align-middle text-center">
+                  {{ spo2Settings?.Setting?.DutyCycle }}%
+                </td>
+              </tr>
+              <tr *ngIf="miscellaneousSettings?.thirdPartyDeviceSettings[1]"
+                [ngClass]="!miscellaneousSettings.thirdPartyDeviceSettings[1]?.isActive ? 'row-disabled' : ''">
+                <td class="vw-5">
+                  <span class="align-middle">
+                    <mat-slide-toggle *ngIf="editAccessCFA ||(editAccessSC &&!isBlank(miscellaneousSettings.groupId))"
+                      class="align-middle me-3" [(ngModel)]="miscellaneousSettings.thirdPartyDeviceSettings[1].isActive"
+                      (change)="disableEdit($event, 'spo2', 'BP')">
+                    </mat-slide-toggle>
+                  </span>
+                </td>
+                <td class="text-start align-items-center fw-bold">
+                  <span class="align-middle">{{"additional_devices." +
+                    miscellaneousSettings?.thirdPartyDeviceSettings[1].type | translate}} {{
+                    "additional_devices.device_txt" | translate }}
+                  </span>
+                </td>
+                <td>{{ miscellaneousSettings?.thirdPartyDeviceSettings[1]?.defaultDevice || '-' }}</td>
+                <td></td>
+                <td class="col-header fw-bold text-center">
+                  {{"additional_devices.interval" | translate}}
+                </td>
+                <td class="align-middle text-center ontime-card">
+                  <span *ngIf="!editInterval">
+                    {{ miscellaneousSettings?.thirdPartyDeviceSettings[1].interval }} Mins
+                  </span>
+                  <span *ngIf="editInterval" class="d-flex align-items-center justify-content-center">
+                    <input (keypress)="numericsOnly($event)" (paste)="checkForSpecialCharacters($event)" matInput
+                      placeholder="Enter" type="number" min="1" max="7200" class="edit-box"
+                      [(ngModel)]="miscellaneousSettings?.thirdPartyDeviceSettings[1].interval" autocomplete="off"
+                      (ngModelChange)="updated()" />
+                    <div class="ms-1"> Mins</div>
+                  </span>
+                </td>
+                <td class="text-start px-0 edit-Time">
+                  <span *ngIf="!editInterval">
+                    <button mat-mini-fab color="primary" class="btn-boxed btn-no-shadow" (click)="toggleInterval()"
+                      [disabled]="!miscellaneousSettings?.thirdPartyDeviceSettings[1].isActive"
+                      *ngIf="editAccessCFA ||(editAccessSC && !isBlank(miscellaneousSettings.groupId))">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                  </span>
+                  <span *ngIf="editInterval">
+                    <button mat-mini-fab color="primary" class="btn-boxed btn-no-shadow"
+                      *ngIf="invalidInt(miscellaneousSettings?.thirdPartyDeviceSettings[1].interval)"
+                      (click)="toggleInterval()">
+                      <mat-icon>done</mat-icon>
+                    </button>
+                    <mat-error *ngIf="!invalidInt(miscellaneousSettings?.thirdPartyDeviceSettings[1].interval)">
+                      *{{ "additional_devices.invalid" | translate }}
+                    </mat-error>
+                  </span>
+                </td>
+                <td></td>
+                <td class="col-header fw-bold" colspan="5"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </ng-template>
+      <ng-template [ngIf]="selectedTab === 'ecg'">
+        <div class="table-container1 px-2 py-4 table-responsive-sm">
+          <table class="mat-table" style="padding-top: 20px !important" aria-label="Table">
+            <tbody>
+              <tr [ngClass]="
+                    !miscellaneousSettings.ecgFilterSettings.isActive
+                      ? 'row-disabled'
+                      : ''
+                  ">
+                <td class="text-start align-items-center ps-3 ">
+                  <span class="align-middle d-inline-flex">
+                    <mat-slide-toggle *ngIf="
+                          editAccessCFA ||
+                          (editAccessSC &&
+                            !isBlank(miscellaneousSettings.groupId))
+                        " (change)="updated()" class="toggle-btn me-3" [(ngModel)]="
+                          miscellaneousSettings.ecgFilterSettings.isActive
+                        ">
+                    </mat-slide-toggle>
+                  </span>
+                  <span class="align-middle mx-4 fw-bold">{{
+                    "additional_devices.ecg_filter" | translate
+                    }}</span>
+                </td>
+                <td class="text-end">
+                  <mat-form-field appearance="fill" class="whiteselect selectfilter select-value me-4">
+                    <mat-select [disabled]="
+                        !miscellaneousSettings.ecgFilterSettings.isActive ||
+                        (!editAccessCFA &&
+                          (!editAccessSC ||
+                            isBlank(miscellaneousSettings.groupId)))
+                      " placeholder="Settings" class="mat-sel" [(ngModel)]="
+                        miscellaneousSettings.ecgFilterSettings.ecgFilterSetting
+                      " (ngModelChange)="updated()">
+                      <mat-option *ngFor="let setting of ecgSettings" [value]="setting">
+                        {{ setting }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </ng-template>
+      <ng-template [ngIf]="selectedTab === 'biosensor'">
+        <div class="table-container scroll-assist px-2 table-responsive-sm biosensor-table">
+          <table class="mat-table" aria-label="Table">
+            <thead>
+              <tr>
+                <th scope="col" class="fw-bold py-3" *ngFor="let col of headerColumnsBiosensor">
+                  {{ col | translate }}
+                </th>
+              </tr>
+            </thead>
+            <tbody style="padding-top: 10px !important; border: none" *ngIf="!isBlank(miscellaneousSettings)">
+              <tr *ngFor="
+                    let biosensorSetting of miscellaneousSettings.bioSensorConfigSettings
+                  " [ngClass]="!biosensorSetting.isActive ? 'row-disabled' : ''">
+                <td>
+                  <div class="text-start d-flex align-items-center togglestart">
+                    <div *ngIf="editAccessCFA" class="align-middle d-flex">
+                      <mat-slide-toggle class="toggle-btn me-3" [(ngModel)]="biosensorSetting.isActive"
+                        (change)="disableEdit($event, 'biosensor', 0)">
+                      </mat-slide-toggle>
+                    </div>
+                    <div *ngIf="editAccessCFA" class="row-head align-middle fw-bold">
+                      {{ "additional_devices.biosensor_network_reconfiguration" | translate }}
+                    </div>
+                    <div *ngIf="!editAccessCFA" class="biosensor-row-head fw-bold">
+                      <span *ngIf="biosensorSetting.isActive">{{
+                        "additional_devices.enabled_txt" | translate
+                        }}</span><span *ngIf="!biosensorSetting.isActive">{{
+                        "additional_devices.disabled_txt" | translate
+                        }}</span> {{ "additional_devices.biosensor_network_reconfiguration" | translate }}
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div *ngIf="!editPass1"><span
+                      class="biosensorSetting-card d-flex align-items-center justify-content-start">{{
+                      biosensorSetting.relayPassword.replace(regex, "*") }}
+                      <button mat-mini-fab color="primary" class="btn-boxed btn-no-shadow mx-2"
+                        [disabled]="!biosensorSetting.isActive" *ngIf="editAccessCFA" (click)="editPass1 = !editPass1;">
+                        <mat-icon>edit</mat-icon>
+                      </button>
+                    </span>
+                  </div>
+                  <div *ngIf="editPass1" class="d-flex justify-content-start align-items-center">
+                    <span class="biosensorSetting-card d-flex align-items-center justify-content-start"><input matInput
+                        placeholder="Enter" type="text" maxlength="32" class="edit-box1"
+                        [(ngModel)]="biosensorSetting.relayPassword" (ngModelChange)="updated()" autocomplete="off" />
+                      <button mat-mini-fab color="primary" class="btn-boxed btn-no-shadow mx-2"
+                        (click)="editPass1 = !editPass1">
+                        <mat-icon>done</mat-icon>
+                      </button>
+                    </span>
+                  </div>
+                </td>
+                <td>
+                  <div *ngIf="!editSsid2"><span
+                      class="biosensorSetting-card d-flex align-items-center justify-content-start">
+                      {{ biosensorSetting.hospitalSSID }}
+                      <button mat-mini-fab color="primary" class="btn-boxed btn-no-shadow mx-2"
+                        [disabled]="!biosensorSetting.isActive" *ngIf="editAccessCFA" (click)="editSsid2 = !editSsid2;">
+                        <mat-icon>edit</mat-icon>
+                      </button>
+                    </span>
+                  </div>
+                  <div *ngIf="editSsid2" class="d-flex justify-content-start align-items-center">
+                    <span class="biosensorSetting-card d-flex align-items-center justify-content-start"> <input matInput
+                        placeholder="Enter" type="text" maxlength="32" class="edit-box2"
+                        [(ngModel)]="biosensorSetting.hospitalSSID" (ngModelChange)="updated()" autocomplete="off" />
+                      <button mat-mini-fab color="primary" class="btn-boxed btn-no-shadow mx-2"
+                        (click)="editSsid2 = !editSsid2">
+                        <mat-icon>done</mat-icon>
+                      </button>
+                    </span>
+                  </div>
+                </td>
+                <td>
+                  <div *ngIf="!editPass2"><span
+                      class="biosensorSetting-card d-flex align-items-center justify-content-start">
+                      {{ biosensorSetting.hospitalPassword.replace(regex, "*") }}
+                      <button mat-mini-fab color="primary" class="btn-boxed btn-no-shadow mx-2"
+                        [disabled]="!biosensorSetting.isActive" *ngIf="editAccessCFA" (click)="editPass2 = !editPass2;">
+                        <mat-icon>edit</mat-icon>
+                      </button>
+                    </span>
+                  </div>
+                  <div *ngIf="editPass2" class="d-flex justify-content-start align-items-center">
+                    <span class="biosensorSetting-card d-flex align-items-center justify-content-start"><input matInput
+                        placeholder="Enter" type="text" maxlength="32" class="edit-box1"
+                        [(ngModel)]="biosensorSetting.hospitalPassword" (ngModelChange)="updated()" autocomplete="off" />
+                      <button mat-mini-fab color="primary" class="btn-boxed btn-no-shadow mx-2"
+                        (click)="editPass2 = !editPass2">
+                        <mat-icon>done</mat-icon>
+                      </button>
+                    </span>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </ng-template>
+      <ng-template [ngIf]="selectedTab === 'other'">
+        <div class="table-container1 scroll-assist px-2 py-4 table-responsive-sm">
+          <table class="mat-table" aria-label="Table">
+            <tbody>
+              <tr [ngClass]="
+                    !miscellaneousSettings.otherSettings.autoGeneratePatientId
+                      ? 'row-disabled'
+                      : ''
+                  ">
+                <td class="text-start facility-name">
+                  <span class="py-2 fw-bold" *ngIf="editAccessCFA">
+                    {{
+                    "additional_devices.auto_generation_of_patient_id"
+                    | translate
+                    }}</span>
+                  <span *ngIf="!editAccessCFA" class="biosensor-row-head d-flex align-items-center py-2">
+                    {{
+                    "additional_devices.auto_generation_of_patient_id"
+                    | translate
+                    }}
+
+                    <span class="mx-1" *ngIf="miscellaneousSettings.otherSettings.autoGeneratePatientId">
+                      {{ "additional_devices.enabled_txt" | translate }}
+                    </span>
+                    <span class="mx-1" *ngIf="!miscellaneousSettings.otherSettings.autoGeneratePatientId">
+                      {{ "additional_devices.disabled_txt" | translate }}
+                    </span>
+                  </span>
+                </td>
+
+
+                <td class="text-end">
+                  <mat-form-field appearance="fill" class="whiteselect selectfilter select-value me-5"
+                    *ngIf="editAccessCFA">
+                    <mat-select (selectionChange)="updated()" [placeholder]="'additional_devices.select' | translate"
+                      class="othersettings-select me-3"
+                      [(ngModel)]="miscellaneousSettings.otherSettings.autoGeneratePatientId">
+                      <mat-option *ngFor="let setting of settings" [value]="setting.value">
+                        {{ setting.option }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </td>
+              </tr>
+              <tr [ngClass]="
+                    !miscellaneousSettings.otherSettings.enableAccessToSPPHY
+                      ? 'row-disabled'
+                      : 'row-enabled'
+                  ">
+                <td class="text-start facility-name">
+                  <span class="py-2 fw-bold" *ngIf="editAccessCFA">
+                    {{
+                    "additional_devices.access_to_service_provider_physician"
+                    | translate
+                    }}</span>
+                  <span *ngIf="!editAccessCFA" class="biosensor-row-head d-flex align-items-center py-2">
+                    {{
+                    "additional_devices.access_to_service_provider_physician"
+                    | translate
+                    }}
+                    <span class="mx-1" *ngIf="
+                          miscellaneousSettings.otherSettings.enableAccessToSPPHY
+                        ">{{ "additional_devices.enabled_txt" | translate }}</span>
+                    <span class="mx-1" *ngIf="
+                          !miscellaneousSettings.otherSettings.enableAccessToSPPHY
+                        ">{{ "additional_devices.disabled_txt" | translate }}</span>
+                  </span>
+                </td>
+                <td class="text-end">
+                  <mat-form-field appearance="fill" class="whiteselect selectfilter select-value me-5"
+                    *ngIf="editAccessCFA">
+                    <mat-select (selectionChange)="updated()" [placeholder]="'additional_devices.select' | translate"
+                      class="othersettings-select me-3"
+                      [(ngModel)]="miscellaneousSettings.otherSettings.enableAccessToSPPHY">
+                      <mat-option *ngFor="let setting of settings" [value]="setting.value">
+                        {{ setting.option }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </td>
+              </tr>
+              <tr *ngIf="editAccessCFA">
+                <td class="facility-name text-start ms-3 align-middle fw-bold">
+                  {{ "additional_devices.facility_name" | translate }}
+                </td>
+                <td class="txt-input-container justify-content-end align-items-center">
+                  <label *ngIf="invalidFacilityName()" class="error-text my-1 d-block mx-3">
+                    {{ "additional_devices.invalid_name" | translate }}
+                  </label>
+                  <span class="d-flex justify-content-end">
+                    <input maxlength="40" [placeholder]="'additional_devices.enter_text' | translate"
+                      [disabled]="!editFacilityName" type="text" [(ngModel)]="facilityName" class="text-input"
+                      (keyup)="updated()" (keypress)="charsOnly($event)" (paste)="onPaste($event)" />
+                    <button mat-mini-fab color="primary" class="btn-boxed btn-no-shadow mx-2" *ngIf="editFacilityName"
+                      (click)="editFacilityName = !editFacilityName;">
+                      <mat-icon>done</mat-icon>
+                    </button>
+                    <button mat-mini-fab color="primary" class="btn-boxed btn-no-shadow mx-2" *ngIf="!editFacilityName"
+                      (click)="editFacilityName = !editFacilityName;">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                  </span>
+                </td>
+              </tr>
+              <tr *ngIf="editAccessCFA">
+                <td class="facility-name text-start fw-bold">
+                  {{ "additional_devices.customized_logo" | translate }}
+                </td>
+                <td class="txt-input-container justify-content-end align-items-center">
+                  <span class="d-flex justify-content-end">
+                    <div>
+                      <label *ngIf="invalidFormat" class="error-text my-2 d-block mx-4">
+                        {{ "additional_devices." + invalid_msg | translate }}
+                      </label>
+                    <input hidden placeholder="Choose File" #fileInput type="file" accept="image/*" class="text-input"
+                      (change)="upload($event)" (click)="reload($event)" /></div>
+                    <input *ngIf="isBlank(imgUrl)" [placeholder]="'additional_devices.choose_file' | translate"
+                      type="text" [(ngModel)]="fileName" class="text-input" disabled />
+                    <img *ngIf="!isBlank(imgUrl)" [src]="imgUrl" alt="logo default" height="32" class="logo-default" />
+                    <button *ngIf="isBlank(imgUrl)" mat-mini-fab color="primary" class="btn-boxed btn-no-shadow mx-2"
+                      (click)="fileInput.click()">
+                      <mat-icon>add</mat-icon>
+                    </button>
+                    <span *ngIf="!isBlank(imgUrl)">
+                      <button mat-mini-fab color="primary" class="btn-boxed btn-no-shadow mx-2"
+                        (click)="fileInput.click()">
+                        <mat-icon>edit</mat-icon>
+                      </button>
+                      <button mat-mini-fab color="primary" class="btn-boxed btn-no-shadow mx-2" (click)="delete()">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </span>
+                  </span>
+                </td>
+              </tr>
+              <tr *ngIf="editAccessCFA">
+                <td class="facility-name text-start fw-bold">
+                  {{ "additional_devices.patient_barcode_parsing" | translate }}
+                </td>
+                <td class="txt-input-container justify-content-end align-items-center">
+                  <span class="d-flex justify-content-end">
+                    <input hidden placeholder="Choose File" #fileInput type="file" accept="image/*"
+                      class="text-input" />
+                    <input *ngIf="isBlank(patientBarCode)" [placeholder]="'additional_devices.choose_file' | translate"
+                      type="text" class="text-input" disabled />
+                    <img *ngIf="!isBlank(patientBarCode)" [src]="patientBarCode" alt="logo default" height="32"
+                      class="logo-default" />
+                    <button *ngIf="isBlank(patientBarCode)" mat-mini-fab color="primary"
+                      class="btn-boxed btn-no-shadow mx-2" (click)="fileInput.click()" disabled>
+                      <mat-icon>add</mat-icon>
+                    </button>
+                    <span *ngIf="!isBlank(patientBarCode)">
+                      <button mat-mini-fab color="primary" class="btn-boxed btn-no-shadow mx-2"
+                        (click)="fileInput.click()">
+                        <mat-icon>edit</mat-icon>
+                      </button>
+                      <button mat-mini-fab color="primary" class="btn-boxed btn-no-shadow mx-2" (click)="delete()">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </span>
+                  </span>
+                </td>
+              </tr>
+              <tr *ngIf="editAccessCFA">
+                <td class="text-start facility-name">
+                  <span class="py-2 fw-bold">
+                    {{
+                    "additional_devices.patient_identification" | translate}}
+                  </span>
+                </td>
+                <td class="text-end">
+                  <mat-form-field appearance="fill" class="whiteselect selectfilter select-value me-5">
+                    <mat-select (selectionChange)="updated()" [placeholder]="'additional_devices.select' | translate"
+                      class="othersettings-select me-3" disabled>
+                      <mat-option *ngFor="let patientId of patientIdentification" [value]="patientId">
+                        {{ patientId }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </td>
+              </tr>
+              <tr *ngIf="editAccessCFA">
+                <td class="text-start facility-name">
+                  <span class="py-2 fw-bold">
+                    {{
+                    "additional_devices.mandatory_note_param_alert" | translate}}
+                  </span>
+                </td>
+                <td class="text-end">
+                  <mat-form-field appearance="fill" class="whiteselect selectfilter select-value me-5">
+                    <mat-select (selectionChange)="updated()" [placeholder]="'additional_devices.select' | translate"
+                      class="othersettings-select me-3" disabled>
+                      <mat-option *ngFor="let setting of settings" [value]="setting.option">
+                        {{ setting.value }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </td>
+              </tr>
+              <tr *ngIf="editAccessCFA"
+                [ngClass]="!miscellaneousSettings.otherSettings.emr ? 'row-disabled' : 'row-enabled'">
+                <td class="text-start facility-name fw-bold">
+                  {{ "additional_devices.emr" | translate }}
+                </td>
+                <td class="text-end">
+                  <mat-form-field appearance="fill" class="whiteselect selectfilter select-value me-5"
+                    *ngIf="editAccessCFA">
+                    <mat-select (selectionChange)="updated()" [placeholder]="'additional_devices.select' | translate"
+                      class="othersettings-select me-3"
+                      [(ngModel)]="miscellaneousSettings.otherSettings.emr">
+                      <mat-option value="">{{ "additional_devices.none" | translate }}</mat-option>
+                      <mat-option *ngFor="let emrId of emrList" [value]="emrId">
+                        {{ emrId }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </ng-template>
+      <div *ngIf="miscellaneousSettings?.bioSensorConfigSettings">
+        <span class="error-text m-3" *ngIf="submitted &&
+          !(miscellaneousSettings?.bioSensorConfigSettings[0]?.relayPassword.trim() &&
+          miscellaneousSettings?.bioSensorConfigSettings[0]?.hospitalSSID.trim() &&
+          miscellaneousSettings?.bioSensorConfigSettings[0]?.hospitalPassword.trim() )">
+          {{ "additional_devices.messages.ssid_password_error_msg" | translate }}
+        </span>
+      </div>
+      <div class="container-fluid">
+        <div class="row my-2" *ngIf="editAccessCFA || (editAccessSC && !isBlank(miscellaneousSettings.groupId)
+          && (selectedTab === 'spo2' || selectedTab === 'ecg'))">
+          <div class="col-md-4">
+            <button mat-flat-button class="reset-btn px-2 my-1" (click)="confirmReset()">
+              <mat-icon class="fw-normal"> refresh </mat-icon>
+              <span class="ps-1">{{
+                "additional_devices.reset_to_default" | translate
+                }}</span>
+            </button>
+          </div>
+          <div class="col-md-8 text-center text-md-end">
+            <span *ngIf="valuesUpdated">
+              <button mat-flat-button class="px-4 fill-btn my-1" color="warn" (click)="cancel()">
+                {{ "additional_devices.cancel" | translate }}
+              </button>
+              <button mat-flat-button [disabled]="invalidonoff() || invalidFormat" class="px-4 fill-btn my-1"
+                color="primary" (click)="updateSettings()">
+                {{ "additional_devices.save"| translate }}
+              </button> </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="groups?.length === 0 && !loader && !editAccessCFA" class="table-container">
+      <div class="text-center my-4 py-4">
+        {{"alert_config_module.messages.no_groups" | translate}}
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,68 @@
+/* new variable define */
+
+@import "src/assets/scss/modules/variables";
+@import "src/assets/scss/modules/mixins";
+
+.clear-icon {
+  position: absolute;
+  margin-top: 0.3rem;
+  right: 0rem;
+}
+.search-form-field {
+  input {
+    text-transform: uppercase;
+  }
+}
+
+.biosensor-id {
+  width: 3.5rem;
+  text-align: center;
+}
+
+.indicator-icon {
+  display: flex;
+  text-decoration: $none;
+  margin-right: 0.5rem;
+}
+
+.close-icon-cell {
+  color: $red-font-color;
+  @extend .indicator-icon;
+}
+
+.tick-icon {
+  color: $green-font-color;
+  @extend .indicator-icon;
+}
+
+.stop-monitoring {
+  color: $red-font-color;
+  @extend .indicator-icon;
+}
+.monitoring-icon {
+  border-radius: 50% !important;
+  color: $white;
+  background: #A55E64;
+  height: 2rem!important;
+}
+
+/*.active-table {
+  ::ng-deep .scroll-assist {
+    max-height: calc(100vh - 360px) !important;
+  }
+
+} */
+
+table.mat-table thead {
+  background-color: $tab-bg-color !important;
+}
+.btn-boxed.px-2{min-width: auto;}
+
+/**** meadia query button *****/
+.button-group {
+  button {
+    @media (min-width: 992px) and (max-width: 1050px) {
+      padding: 0px 0.65rem;
+    }
+  }
+}

@@ -1,0 +1,20 @@
+@import "src/assets/scss/modules/variables";
+@import "src/assets/scss/modules/_mixins.scss";
+
+.navbar {
+  background: $bg-topbar-color;
+  box-shadow: $box-shadow-card;
+  height: 70px;
+}
+.title {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  letter-spacing: 0.25px;
+  margin-left: 20px;
+  color: $light-blue-color;
+}
+.page-icon {
+  height: 46px;
+  width: 46px;
+}

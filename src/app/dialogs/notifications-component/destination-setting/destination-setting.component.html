@@ -1,0 +1,32 @@
+<mat-dialog-content class="alert-dialog-content">
+    <app-patient-details [patientData]="patientData"></app-patient-details>
+    <div class="loading-indicator" *ngIf="loader">
+        <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+    </div>
+    <div class="inside-div head-border alert-destination-table comman-table-users bg-thead-color" *ngIf="!loader">
+        <app-alert-destination [alertType]="'Clinical'" [alertDestinationSettings]="alertDestinationSettings.Setting" [alertDestinationSettingsCopy]="alertDestinationSettingsCopy.Setting" (updateDestination)="valueUpdated($event, 'clinical')"
+        [userData]="alertDestinationSettings?.UserData"></app-alert-destination>
+        <app-alert-destination [alertType]="'Technical'" [alertDestinationSettings]="alertDestinationSettings.SettingTech" [alertDestinationSettingsCopy]="alertDestinationSettingsCopy.SettingTech" (updateDestination)="valueUpdated($event, 'tech')"
+                               [userData]="alertDestinationSettings?.UserData"></app-alert-destination>
+    </div>
+    </mat-dialog-content>
+<mat-dialog-actions class="row px-1" >
+    <div class="col-lg-6">
+        <button mat-flat-button class="reset_btn_bg mb-2 mb-md-0 px-2" (click)="openDialog()" *ngIf="!loader && isShowResetButton" >
+          <mat-icon class="fw-normal"> refresh </mat-icon>
+          <span class="ps-1">{{
+            "alert_config_module.reset_to_default" | translate
+            }}</span>
+        </button>
+      </div>
+    <div class="col-lg-6 text-end">
+        <ng-template [ngIf]="showActionButtons">
+            <button mat-flat-button color="warn" class="fill-btn" (click)="handleAlertSettingsEditCancel()">
+                <span>{{ "alert_config_module.cancel" | translate }}</span>
+            </button>
+            <button mat-flat-button color="primary" class="fill-btn" (click)="handleAlertSettingsSave()">
+                <span>{{ "alert_config_module.save" | translate }}</span>
+            </button>
+        </ng-template>
+    </div>
+</mat-dialog-actions>

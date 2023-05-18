@@ -1,0 +1,189 @@
+@import "variables";
+
+.mat-select-disabled {
+  opacity: $opacity-disabled;
+
+  .mat-select-placeholder {
+    color: $white;
+    opacity: $opacity-disabled;
+  }
+}
+
+.mat-pseudo-checkbox {
+  color: $select-label-color !important;
+  opacity: 0.8;
+}
+
+.select-group,
+.mat-select {
+  border-radius: $border-radius;
+  background-color: $white;
+
+  .mat-form-field-underline {
+    display: none !important;
+  }
+
+  .mat-form-field-flex {
+    border-radius: $border-radius !important;
+    padding: 0 0.75rem !important;
+  }
+
+  &.mat-form-field-appearance-fill .mat-select-arrow-wrapper {
+    transform: translateY(0);
+  }
+}
+
+.select-group,
+.mat-select-disabled {
+  opacity: 0.7;
+
+  .mat-select-placeholder {
+    opacity: 0.7;
+    color: $select-label-color !important;
+  }
+}
+
+
+.select,
+.mat-select {
+  border-radius: $border-radius;
+  background-color: $white;
+
+  .mat-form-field-underline {
+    display: none !important;
+  }
+
+  .mat-form-field-flex {
+    border-radius: $border-radius !important;
+    padding: 0 0.75rem !important;
+  }
+
+  &.mat-form-field-appearance-fill .mat-select-arrow-wrapper {
+    transform: translateY(0);
+  }
+}
+
+.search-filter-select {
+  // display: inline !important;
+  background-color: transparent;
+}
+
+
+
+/* drop dowm color changes */
+.mat-select-panel-wrap {
+  background-color: $base-font-color;
+  border-radius: $border-radius;
+
+  .mat-select-panel:not([class*="mat-elevation-z"]) {
+    background: $light-blue-bg;
+  }
+
+  .mat-option-text {
+    color: $select-option-color;
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+
+  .mat-option.mat-active {
+    background-color: $select-option-selected-bg !important;
+  }
+
+  .mat-option {
+    color: $select-option-color !important;
+    font-size: 0.9rem;
+  }
+
+  .mat-option.mat-selected:not(.mat-active):not(:hover) {
+    background: $select-option-selected-bg !important;
+  }
+
+  .mat-option:hover:not(.mat-option-disabled),
+  .mat-option:focus:not(.mat-option-disabled) {
+    background: rgba(0, 0, 0, .06);
+  }
+}
+
+/* select dropdown */
+
+/*Nesting group*/
+
+.mat-optgroup {
+  .mat-optgroup-label {
+    padding: 0rem;
+
+    .mat-button {
+      min-width: 100%;
+      padding: 0 1rem;
+      font-size: $size-12;
+      color: $select-option-color;
+      text-transform: capitalize;
+      font-family: $base-font-family;
+      font-weight: $font-weight-600;
+      text-align: left;
+
+      span {
+        font-size: $size-12;
+        color: $select-option-color !important;
+      }
+    }
+  }
+}
+
+/*Nesting group*/
+
+/* No label mat-select */
+.no-label {
+  &.mat-form-field-appearance-fill {
+    .search-filter-select {
+      .mat-select-value {
+        padding-top: 8px;
+      }
+
+      &.sortfilter-select {
+        .mat-select-value {
+          padding-top: 12px;
+        }
+      }
+    }
+  }
+
+  &.mat-form-field-can-float.mat-form-field-should-float {
+    .mat-form-field-label {
+      display: none;
+    }
+  }
+}
+
+/*** doctor search ****/
+.matselect-search {
+  .mat-select {
+    height: 2.9rem;
+    margin-top: 0.3rem;
+    border-bottom: 2px solid $label-color;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+
+    .mat-select-trigger {
+      height: 100%;
+      padding: 0px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 12;
+    }
+
+    .mat-select-value {
+      display: flex;
+      max-width: 100%;
+
+      span {
+        text-transform: capitalize;
+        font-weight: $font-weight-700;
+      }
+
+    }
+
+  }
+
+}

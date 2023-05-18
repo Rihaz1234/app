@@ -1,0 +1,41 @@
+
+<label class="toplabel d-block pb-0 pb-md-1 ps-0 ps-lg-2 pt-2 pt-sm-0">{{label | titlecase}}</label>
+<div #childrentrigger="matMenuTrigger" (menuOpened)="onMenuOpened()" [matMenuTriggerFor]="children" *ngIf="!disabled"
+  class="w100 nested-select d-flex flex-row align-items-center justify-content-between">
+  <div class="w100 d-flex menu-column text-truncate flex-column align-items-start">
+    <mat-label [class.normal-label]="(selectedItem)?!selectedItem[displayKey]:'true'">{{label | titlecase}}</mat-label>
+    <span class="select-value">{{selectedItem?.[displayKey] || (assignGroup ? null : ( noSelection ? ('active-patients-module.form_label.none' | translate) :(selectedValue === 'ROOT' ? 'Unassigned': (customLabel ? ('dashboard-module.custom_label' | translate) : 'active-patients-module.form_label.all' |translate))))}}</span>
+  </div>
+  <mat-icon matSuffix>expand_more</mat-icon>
+  <mat-menu #children="matMenu" class="nested-menu">
+    <button  mat-menu-item *ngIf="showSelect"
+      class="nested-menu-item" (click)="onClickedOption({})"
+      (mouseenter)="onSequence({option: {}, trigger: undefined, direction: 'ENTER', hasChildren: false})"
+      (mouseleave)="onSequence({option: {}, trigger: undefined, direction: 'LEAVE', hasChildren: false})">
+      {{ assignGroup ? ('active-patients-module.form_label.none' | translate) : ('active-patients-module.form_label.all' |translate)}}
+    </button>
+<!--    Unassigned Group Filter - Commenting it for now For functionality flow change-->
+
+    <button  mat-menu-item *ngIf="!assignGroup && !noSelection"
+             class="nested-menu-item" (click)="onClickedOption({groupId: 'ROOT', name: 'Unassigned'})"
+             (mouseenter)="onSequence({option: {groupId: 'ROOT', name: 'Unassigned'}, trigger: undefined, direction: 'ENTER', hasChildren: false})"
+             (mouseleave)="onSequence({option: {groupId: 'ROOT', name: 'Unassigned'}, trigger: undefined, direction: 'LEAVE', hasChildren: false})">
+      {{"parameter-alerts-module.unassigned" |translate}}
+    </button>
+    <span *ngIf="options?.length">
+    <ng-container *ngFor="let option of service?.getChildren('ROOT', options)">
+      <app-menu [disabled]="disabled" (sequence)="onSequence($event)" [options]="options" [key]="key" [option]="option"
+        [displayKey]="displayKey" (clickChild)="onClickedOption($event)"></app-menu>
+    </ng-container>
+    </span>
+  </mat-menu>
+</div>
+
+<div [class.disabled]="disabled" *ngIf="disabled"
+  class="nested-select d-flex flex-row align-items-center justify-content-between">
+  <div class="d-flex menu-column flex-column align-items-start">
+    <mat-label [class.normal-label]="!selectedItem?.[displayKey]">{{label | titlecase}}</mat-label>
+    <span class="select-value">{{selectedItem?.[displayKey] || (assignGroup ? null : ( noSelection ? ('active-patients-module.form_label.none' | translate) :'active-patients-module.form_label.all' |translate))}}</span>
+  </div>
+  <mat-icon matSuffix>expand_more</mat-icon>
+</div>

@@ -1,0 +1,46 @@
+<mat-card class="dialog-header">
+    <h1 mat-dialog-title>
+        {{ "manage_users_module.rename_roles_button" | translate }}
+    </h1>
+</mat-card>
+<mat-dialog-content class="mat-dialog-popup rename-roleModal">
+    <ls-table [(config)]="config" [columns]="columns" [data]="rolesdata">
+        <ng-template lsWidgetName="default" let-role>
+            <span class="mx-2">{{ role?.default }}</span>
+        </ng-template>
+        <ng-template lsWidgetName="current" let-role>
+            <div class="d-flex align-items-center">
+            <input matInput type="text" [(ngModel)]="role.current" class="input-field fw-bold"
+            [disabled]="!editCurrent[role?.index]" [ngClass]="{'disabled' : !editCurrent[role?.index]}">
+            <button mat-mini-fab color="primary" class="btn-boxed btn-no-shadow mx-2"
+            *ngIf="editCurrent[role?.index]" (click)="editRole(role?.index, false)">
+                <mat-icon>done</mat-icon>
+            </button>
+            <button mat-mini-fab color="primary" class="btn-boxed btn-no-shadow mx-2"
+                    *ngIf="!editCurrent[role?.index]" (click)="editRole(role?.index, true)">
+                <mat-icon>edit</mat-icon>
+            </button>
+            </div>
+        </ng-template>
+    </ls-table>
+</mat-dialog-content>
+<mat-dialog-actions class="mx-4">
+    <button
+            mat-flat-button
+            (click)="close()"
+            class="fill-btn"
+            color="warn"
+    >
+        {{ "manage_users_module.adduser.cancelbutton" | translate }}
+    </button>
+    <button
+            mat-flat-button
+            type="submit"
+            [disabled]="!valuesUpdated"
+            class="fill-btn"
+            (click)="onSubmit()"
+            color="primary"
+    >
+        {{ "manage_users_module.adduser.savebutton" | translate }}
+    </button>
+</mat-dialog-actions>

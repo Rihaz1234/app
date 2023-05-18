@@ -1,0 +1,36 @@
+@import "src/assets/scss/modules/variables";
+
+.error-text {
+  font-size: $base-font-size;
+  color: $err0r_text_color;
+}
+
+.mat-form-field {
+  width: 350px !important;
+  max-width: 90vw;
+  display: block;
+
+  @media (max-width: 767px) {
+    width: auto !important;
+    max-width: 100%;
+    display: block;
+  }
+
+}
+
+@media (max-width: 767px) {
+  .mat-dialog-popup {
+    .dialog-form {
+      padding-bottom:0;
+    }
+  }
+}
+
+.addRelayForm{
+  .mat-error {
+    text-overflow: inherit;
+    white-space: normal;
+    margin-top: -0.75rem;
+  }
+
+}

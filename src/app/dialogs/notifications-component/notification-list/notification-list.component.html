@@ -1,0 +1,199 @@
+<!--<app-patient-details [patientData]="patientData" [tab]="tab" [count]="count" [activeAlert]="anyActive()"-->
+<!--                     (acknowledgeAllType)="openConfirmDialog()"></app-patient-details>-->
+<div class="container-fluid p-3">
+    <div class="row">
+        <div class="col-md-8 col-lg-8 col-xl-7">
+            <div class="d-flex flex-wrap align-items-center patient-details">
+
+                <div class="patient-id px-2">
+                    <strong> <img src="assets/icons/biosensor.svg" alt="biosensor" class="header-tab-icon me-2"
+                            width="28" height="31" /> {{patientData?.patchId}}</strong>
+                    <span class="d-block pid">{{ "dashboard-module.pid" | translate }} {{ patientData?.patientId
+                        }}</span>
+                    <!--<span>{{ patientData?.doctorId }}</span>-->
+                </div>
+                <div class="px-2 me-auto w-max-20">
+                    <strong class="d-block pb-2 text-truncate">
+                        <span class="patient-name" *ngIf="patientData?.firstName"> {{ patientData?.firstName + "
+                            "}}</span>
+                        <span class="patient-name" *ngIf="patientData?.lastName">{{ patientData?.lastName }}</span>
+                    </strong>
+                    <!--<span class="time-group" *ngIf="patientData?.admitted">{{patientData?.admitted | date: "MMM dd, yyyy" }}</span>-->
+                    <span *ngIf="patientData?.pGroup" class="small-tag remote-tag">
+                        {{patientData.pGroup?.name}}<span *ngIf="patientData?.pGroup && patientData?.cGroup">,</span>
+                    </span>
+                    <span *ngIf="patientData?.cGroup" class="small-tag sepsis-tag">
+                        {{patientData.cGroup?.name}}
+                    </span>
+                </div>
+                <div class="justify-content-end py-1">
+                    <span class="mx-2">Current</span>
+                    <span class="alert-count"><strong>{{count.current}}</strong></span>
+                    <span class="mx-2 ms-3">Unacknowledged</span>
+                    <span class="alert-count"><strong>{{count.unAcknowledged}}</strong></span>
+                </div>
+            </div>
+        </div>
+        <div class="text-center  text-md-end col-md-4 col-lg-4 col-xl-5">
+            <label class="mx-2 py-1 time-stamp" *ngIf="lastUpdated">Last updated
+                {{ lastUpdated+ '+0000' | date: "MMM dd, yyyy / " + timeFmt : timeZone }}
+            </label>
+            <button (click)="openConfirmDialog()" [disabled]="!anyActive()" mat-flat-button type="button"
+                color="primary" class="mx-2 py-1 text-uppercase alert-acknowledged-btn ">
+                {{ "alert_config_module.acknowledge_all" | translate}}
+            </button>
+        </div>
+    </div>
+</div>
+<div class="loading-indicator" *ngIf="loader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>
+<div class="container-fluid">
+    <div class="inside-div head-border comman-table-users bg-thead-color" *ngIf="!loader">
+        <div class="table-responsive-sm alert-scroll-assist">
+            <table class="mat-table" aria-label="Table">
+                <thead>
+                    <tr>
+                        <th class="text-center">
+                            {{ "alert_config_module.alerts" | translate}}
+                            <div style="display: contents" (click)="sort('alertTime','desc')">
+                                <mat-icon [ngClass]="sortBy==='alertTime'? '': 'disabled'">filter_list</mat-icon>
+                            </div>
+                        </th>
+                        <th class="text-start">{{ "alert_config_module.time_duration" | translate}}</th>
+                        <th style="text-align: initial !important">
+                            {{ "alert_config_module.priority" | translate}}
+                        </th>
+                        <th class="text-start">
+                            {{ "alert_config_module.acknowledged_by" | translate}}
+                        </th>
+                        <th scope="" class="d-flex justify-content-center">
+                            {{ "alert_config_module.status" | translate}}
+                            <div style="display: contents">
+                                <img [ngClass]="sortBy==='status'? '': 'disabled'"
+                                    src="../../assets/icons/sort-icon.svg" alt="sort-icon" width="24" height="20" />
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody *ngFor="let alert of alertHistory; let i = index">
+                    <tr *ngIf="alert?.items?.length" class="tbody-row-head py-1" [ngStyle]="{
+            background:
+              alert.key === 'HR'
+                ? 'rgba(116, 255, 172, 0.4)'
+                : 'rgba(60, 209, 255, 0.2)'
+          }">
+                        <td class="tbody-head-text" [ngStyle]="{
+              color:
+                alert.key === 'HR'
+                  ? '#4FFF96'
+                  : '#32CFFF'
+            }">
+                             <mat-checkbox class="mx-2" (change)="checkAll(alert.key, $event)"
+                                [checked]="(alert.selected.length !==0) && (alert.selected.length === alert.unAck)"
+                                [indeterminate]="(alert.selected.length !==0) && (alert.selected.length < alert.unAck)"
+                                [disabled]="!alert?.unAck">
+                                <span class="mx-2 text-uppercase">{{
+                                    alert.alert
+                                    }}</span>
+                                <span style="font-size: 12px">( {{alert.selected.length}} {{
+                                    "alert_config_module.selected" | translate}} )</span>
+                            </mat-checkbox>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="d-flex justify-content-center btn-class">
+                            <button class="text-uppercase" [disabled]="!alert?.selected?.length" mat-flat-button
+                                type="button" color="primary" (click)="acknowledgeAll(alert.key)">
+                                {{ "alert_config_module.acknowledge_all" | translate}}
+                            </button>
+                        </td>
+                    </tr>
+                    <tr class="tbody-row-inner" *ngFor="let rowItem of alert.items;let i = index">
+                        <td class="mx-2">
+                            <mat-checkbox class="mx-4" [disabled]="(rowItem.ack === true)" [(ngModel)]="rowItem.checked"
+                                [checked]="rowItem.checked"
+                                (change)="onCheckboxChange(rowItem.alertKey, $event, rowItem)">
+                                <div class="alert-level"
+                                    *ngIf="rowItem?.setting?.length && alert.key !== 'POSTURE_ALERT'">
+                                    <span class="mx-2">{{
+                                        getAlertType(rowItem.alertKey, rowItem.alertType, rowItem.setting[1],
+                                        rowItem.setting[2])
+                                        }}</span>
+                                </div>
+                                <div *ngIf="alert.key === 'POSTURE_ALERT'" class="px-3">
+                                    {{postures[rowItem.alertVal]}}
+                                </div>
+                            </mat-checkbox>
+                        </td>
+                        <td>
+                            <span class="d-flex align-items-center justify-content-start time-interval-text">
+                                <span *ngIf="rowItem?.active === true">
+                                    <button type="button" mat-flat-button color="accent" class="text-uppercase">
+                                        {{ "alert_config_module.active" | translate}}
+                                    </button>
+                                    <span class="ms-3 time-duration">
+                                        <span>{{rowItem?.alertTimeFrom/1000000 | date: "MMM dd, yyyy " + timeFmt
+                                            :timeZone }} to</span>
+                                        <span class="fw-bold hourtxt text-uppercase">
+                                            {{ "alert_config_module.now" | translate}}
+                                        </span>
+                                    </span>
+                                </span>
+                                <span *ngIf="rowItem?.active === false">
+                                    <span class="time-duration"><span class="fw-bold hourtxt">{{
+                                            getRelativeTime(rowItem?.alertTime/1000000000) }} |
+                                        </span> {{rowItem?.alertTimeFrom/1000000| date: "MMM dd, " + timeFmt : timeZone
+                                        }} to {{rowItem?.alertTime/1000000 | date: "MMM dd, " + timeFmt : timeZone
+                                        }}</span>
+                                </span>
+                            </span>
+                        </td>
+                        <td class="priority-text">
+                            <div style="display: contents" *ngIf="rowItem?.setting?.length">
+                                <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="16" cy="16" r="8" [attr.fill]="priorityHexCode[rowItem?.setting[0]]" />
+                                    <circle *ngIf="rowItem?.setting[0].toUpperCase() !== 'LOW'" cx="16" cy="16" r="12"
+                                        [attr.stroke]="priorityHexCode[rowItem?.setting[0]]" stroke-width="2"
+                                        stroke-dasharray="4 4" />
+                                </svg>
+                            </div>
+                            <span class="mx-3 mt-1" *ngIf="rowItem?.setting?.length">{{ rowItem?.setting[0] }}</span>
+                        </td>
+                        <td class="text-start">
+                            <span class="px-2" *ngIf="rowItem?.ack && rowItem?.acknowledgedOn">
+                                {{ rowItem?.acknowledgedOn*1000 | date: "MMM dd, " + timeFmt : timeZone || "-" }}</span>
+                            <br />
+                            <span class="px-2" *ngIf="rowItem?.ack && rowItem?.acknowledgedBy">by {{
+                                rowItem.acknowledgedBy }}</span>
+                            <span *ngIf="!rowItem?.ack || !rowItem?.acknowledgedOn">
+                                -
+                            </span>
+                        </td>
+                        <td>
+                            <span class="d-flex justify-content-center btn-class">
+                                <button *ngIf="rowItem?.ack === false" mat-flat-button type="button" color="primary"
+                                    (click)="acknwoledge(rowItem)">
+                                    {{ "alert_config_module.alertfreq_acknowledge" | translate}}
+                                </button>
+                                <button *ngIf="rowItem?.ack === true" [disabled]="true" mat-flat-button type="button"
+                                    color="primary">
+                                    {{ "alert_config_module.acknowledge" | translate}}
+                                </button>
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="text-center my-3" *ngIf="totalAlerts === 0">
+                <strong>{{ "alert_config_module.messages.no_data" | translate}}</strong>
+            </div>
+        </div>
+        <button mat-flat-button type="button" color="primary" (click)="downloadLog()" class="my-2 text-uppercase">
+            <mat-icon>save_alt</mat-icon>
+            {{ "alert_config_module.download_log" | translate}}
+        </button>
+    </div>
+</div>

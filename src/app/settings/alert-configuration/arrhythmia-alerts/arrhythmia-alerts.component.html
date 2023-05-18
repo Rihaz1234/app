@@ -1,0 +1,130 @@
+<ls-table [(config)]="config" [columns]="columns" [data]="parameterAlertSettings">
+  <ng-template lsWidgetName="enabled" let-config>
+    <span class="d-flex align-items-center">
+      <mat-slide-toggle [(ngModel)]="config.Enabled" class="ms-1 me-2" (change)="toggle(config?.index)"
+        [disabled]="!isEditAccess">
+      </mat-slide-toggle>
+    </span>
+  </ng-template>
+<ng-template lsWidgetName="alerts" let-config>
+  {{ config.alert }}
+  <span class="fw-normal"
+    *ngIf="['SINUS_TACHYCARDIA','SINUS_BRADYCARDIA','PVC_RATE','PAC_RATE'].includes(config.key)">
+    ({{ config.unit }})</span>
+</ng-template>
+<ng-template lsWidgetName="threshold" let-config>
+  <span *ngIf="['SINUS_TACHYCARDIA','SINUS_BRADYCARDIA','PVC_RATE','PAC_RATE'].includes(config.key)">
+    <span *ngIf="!editThreshold[config?.index]">
+      {{ config.LowThr }}
+    </span>
+    <span *ngIf="editThreshold[config?.index]" class="d-flex align-items-center justify-content-center">
+      <input (keypress)="numericsOnly(config.key, $event)" matInput digitOnly
+        class="text-input-box py-1 me-1" (paste)="alertService.checkForSpecialCharacters($event)"
+        [(ngModel)]="config.LowThr" autocomplete="off"
+        (change)="parameterThresholdChanged(config.index,'LowThr',parameterMinMax[config.key])" type="number"
+        [min]="parameterMinMax[config.key]['MIN']['LowThr']" [max]="parameterMinMax[config.key]['MAX']['LowThr']" />
+    </span>
+  </span>
+  <span *ngIf="!['SINUS_TACHYCARDIA','SINUS_BRADYCARDIA','PVC_RATE','PAC_RATE'].includes(config.key)">-</span>
+</ng-template>
+
+<ng-template lsWidgetName="editThreshold" let-config>
+  <span *ngIf="['SINUS_TACHYCARDIA','SINUS_BRADYCARDIA','PVC_RATE','PAC_RATE'].includes(config.key)">
+    <span *ngIf="!editThreshold[config?.index]">
+      <button *ngIf="!editThreshold[config?.index] && isEditAccess" mat-mini-fab color="primary"
+        class="btn-boxed btn-no-shadow" [disabled]="!config.Enabled" (click)="showHideEdit(config?.index, 'threshold')">
+        <mat-icon>edit</mat-icon>
+      </button>
+    </span>
+    <span *ngIf="editThreshold[config?.index]">
+      <button mat-mini-fab color="primary" class="btn-boxed btn-no-shadow"
+        (click)="showHideEdit(config?.index, 'threshold')">
+        <mat-icon>done</mat-icon>
+      </button>
+    </span>
+  </span>
+</ng-template>
+
+<ng-template lsWidgetName="priority" let-config>
+  <span class="me-2">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="16" cy="16" r="8" [attr.fill]="priorityHexCode[config.Priority]" />
+      <circle *ngIf="config.Priority?.toUpperCase() !== 'LOW'" cx="16" cy="16" r="12"
+        [attr.stroke]="priorityHexCode[config.Priority]" stroke-width="2" stroke-dasharray="4 4" />
+    </svg>
+    &nbsp; <span *ngIf="!editPrior[config.index]">{{ config.Priority }}</span>
+    <span *ngIf="editPrior[config.index]">
+      <mat-select placeholder="Select" class="priority-drop-down" [(ngModel)]="config.Priority"
+        (selectionChange)="updated()">
+        <mat-option *ngFor="let priority of alertPriority" [value]="priority.value">
+          {{ priority.label }}
+        </mat-option>
+      </mat-select>
+    </span>
+  </span>
+</ng-template>
+<ng-template lsWidgetName="editPriority" let-config>
+  <ng-container>
+    <span>
+      <span *ngIf="!editPrior[config.index]">
+        <button *ngIf="isEditAccess" mat-mini-fab color="primary" class="btn-boxed btn-no-shadow"
+          (click)="showHideEdit(config.index, 'priority')" [disabled]="!config.Enabled">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </span>
+      <span *ngIf="editPrior[config.index]">
+        <button mat-mini-fab color="primary" class="btn-boxed btn-no-shadow"
+          (click)="showHideEdit(config.index, 'priority')">
+          <mat-icon>done</mat-icon>
+        </button>
+      </span>
+    </span>
+  </ng-container>
+</ng-template>
+<!--Delay time column-->
+<ng-template lsWidgetName="delayTime" let-config>
+  <div class="d-flex justify-content-around align-items-center">
+    <div class="d-flex ack-column justify-content-center align-items-center">
+      <div class="nowrap-align d-flex justify-content-center align-items-center">
+        <div *ngIf="!editDelay[config.index]" class="text-value align-items-center justify-content-end">
+          {{ config.CondDelay }} <span>{{'alert_config_module.secs' |
+            translate}}</span>
+        </div>
+        <div *ngIf="editDelay[config.index]">
+          <input (keypress)="numericsOnly(config.key, $event)"
+            (paste)="alertService.checkForSpecialCharacters($event)" matInput autocomplete="off" type="number"
+            digitOnly class="text-input-box py-1" size="4" (change)="
+          parameterThresholdChanged(
+            config.index,
+            'CondDelay',
+            parameterMinMax[config.key]
+          )" [min]="parameterMinMax[config.key]['MIN']['CondDelay']"
+            [max]="parameterMinMax[config.key]['MAX']['CondDelay']" [(ngModel)]="config.CondDelay" />
+        </div>
+        <ng-container *ngIf="isEditAccess">
+          <div class="ms-2 edit">
+            <button *ngIf="!editDelay[config.index]" mat-mini-fab color="primary" class="btn-boxed btn-no-shadow"
+              [disabled]="!config.Enabled" (click)="showHideEdit(config.index, 'delay')">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button *ngIf="editDelay[config.index]" mat-mini-fab color="primary" class="btn-boxed btn-no-shadow"
+              (click)="showHideEdit(config.index, 'delay')">
+              <mat-icon>done</mat-icon>
+            </button>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<!--Modified column-->
+<ng-template lsWidgetName="modified" let-config>
+  <span *ngIf="masterData?.modifiedDateTime">
+    {{ masterData.modifiedDateTime+ '+0000' | date: "MMM dd, yyyy " + timeFmt : timeZone }}
+  </span>
+  <br />
+  <span *ngIf="!isBlank(masterData.modifiedBy)">by {{ masterData.modifiedBy }}</span>
+</ng-template>
+  <ng-template lsWidgetName="spacer">
+  </ng-template>
+</ls-table>

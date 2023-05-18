@@ -1,0 +1,80 @@
+<ls-page-header type="manage_relays">
+    <ng-container page-actions>
+        <div class="d-flex justify-content-end me-4">
+            <div class="d-lg-flex d-md-none d-sm-none d-none button-group">
+              <button class="me-2" mat-flat-button color="primary" *ngIf="selectedTab === 'sprelay'" (click)="openQrDialog()">
+                {{ "manage_relays_module.send_otp_qr" | translate }}
+              </button>
+              <button class="me-2" mat-flat-button  color="primary" *ngIf="selectedTab === 'mprelay' && editAccessMPR" (click)="addRelay()">
+                {{"manage_relays_module.add_relay" | translate}}
+              </button>
+              <button class="delete-btn" mat-flat-button [disabled]="!relaySelected" color="primary" *ngIf="(selectedTab === 'sprelay' && editAccessSPR) || (selectedTab === 'mprelay' && editAccessMPR)" (click)="deleteRelays()">
+                {{ "manage_relays_module.delete" | translate }}
+              </button>
+            </div>
+            <div class="d-block d-lg-none my-2 ">
+              <button mat-icon-button [matMenuTriggerFor]="menu" class="border" *ngIf="selectedTab === 'sprelay' ||(selectedTab === 'mprelay' && editAccessMPR)">
+                <mat-icon class="justify-content-center">more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu" class="mobile-menu overflow-hidden d-block d-lg-none">
+                  <button mat-menu-item class="me-2" color="primary" *ngIf="selectedTab === 'sprelay'" (click)="openQrDialog()">
+                    {{ "manage_relays_module.send_otp_qr" | translate }}
+                  </button>
+                  <button class="me-2" mat-menu-item  color="primary" *ngIf="selectedTab === 'mprelay' && editAccessMPR" (click)="addRelay()">
+                    {{"manage_relays_module.add_relay" | translate}}
+                  </button>
+                  <button mat-menu-item [disabled]="!relaySelected" color="primary" *ngIf="(selectedTab === 'sprelay' && editAccessSPR) || (selectedTab === 'mprelay' && editAccessMPR)" (click)="deleteRelays()">
+                    {{ "manage_relays_module.delete" | translate }}
+                  </button>
+                </mat-menu>
+            </div>
+        </div>
+    </ng-container>
+</ls-page-header>
+<div class="sc-el-1 mt-2 px-3 custom-position-pagination">
+    <div class="row mt-3 mb-3 mx-n1 ">
+        <div class="col-sm-7 px-1">
+            <mat-form-field class="search-form-field" appearance="fill" *ngIf="selectedTab !== 'configurations'">
+                <mat-label>{{ "manage_users_module.search" | translate }} </mat-label>
+                <input matInput id="search" (keyup.enter)="search()" [(ngModel)]="searchString" autocomplete="off"/>
+                <mat-icon  class="clear-icon" *ngIf="searchString" (click)="clear()">close
+                </mat-icon>
+                <mat-icon matSuffix class="default-cursor">search</mat-icon>
+            </mat-form-field>
+        </div>
+        <div class="col-sm-5 px-1 d-flex justify-content-sm-end">
+
+        </div>
+    </div>
+    <div class="my-0 button-card-area">
+        <button mat-button [ngClass]="
+          selectedTab === 'sprelay' ? 'select-btn-active' : 'select-btn'
+        " (click)="selectTab('sprelay')">
+      {{ "manage_relays_module.single_patient_relay" | translate }}
+    </button>
+        <button mat-button [ngClass]="
+          selectedTab === 'mprelay' ? 'select-btn-active' : 'select-btn'
+        " (click)="selectTab('mprelay')">
+      {{ "manage_relays_module.multi_patient_relay" | translate }}
+    </button>
+        <button mat-button [ngClass]="
+          selectedTab === 'configurations' ? 'select-btn-active' : 'select-btn'
+        " (click)="selectTab('configurations')">
+      {{ "manage_relays_module.relay_configurations" | translate }}
+    </button>
+        <button mat-button [ngClass]="
+          selectedTab === 'careGiverApp' ? 'select-btn-active' : 'select-btn'
+        " (click)="selectTab('careGiverApp')">
+      {{ "manage_relays_module.caregiver_app" | translate }}
+    </button>
+    </div>
+    <div class="table-container table-responsive-md px-2">
+        <app-single-patient-relays *ngIf="selectedTab === 'sprelay'" (selected)="relaysSelected($event)" [searchString]="searchString" [editAccess]="editAccessSPR"></app-single-patient-relays>
+        <app-multi-patient-relays *ngIf="selectedTab === 'mprelay'" (selected)="relaysSelected($event)" [searchString]="searchString" [editAccess]="editAccessMPR"></app-multi-patient-relays>
+        <span class="py-4">
+      <app-relay-configuration *ngIf="selectedTab === 'configurations'" [editAccess]="editAccessRelayConfiguration">
+      </app-relay-configuration>
+    </span>
+        <app-care-giver-app *ngIf="selectedTab === 'careGiverApp'" [searchString]="searchString"></app-care-giver-app>
+    </div>
+</div>

@@ -1,0 +1,16 @@
+  @import "src/assets/scss/modules/variables";
+
+.error-text {
+  font-style: normal;
+  font-size: $size-12;
+}
+
+/**** button ****/
+button.fill-btn{min-width: 10rem;
+
+  @media (max-width: 499px) {
+    min-width: 7rem;
+
+  }
+
+}

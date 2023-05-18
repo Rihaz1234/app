@@ -1,0 +1,8 @@
+<div class="px-2 py-3 ">
+    <div class="table-container alert-destination-table table-responsive-sm">
+        <app-alert-destination [alertType]="'Clinical'" [alertDestinationSettings]="alertDestinationSettings.Setting" [alertDestinationSettingsCopy]="alertDestinationSettingsCopy.Setting" (updateDestination)="valueUpdated($event, 'clinical')"
+                               [userData]="alertDestinationSettings?.UserData"></app-alert-destination>
+        <app-alert-destination [alertType]="'Technical'" [alertDestinationSettings]="alertDestinationSettings.SettingTech" [alertDestinationSettingsCopy]="alertDestinationSettingsCopy.SettingTech" (updateDestination)="valueUpdated($event, 'tech')"
+                               [userData]="alertDestinationSettings?.UserData"></app-alert-destination>
+    </div>
+</div>

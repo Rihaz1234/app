@@ -1,0 +1,48 @@
+@import "src/assets/scss/modules/variables";
+@import "src/assets/scss/modules/mixins";
+
+.main-div {
+    max-height: 100%;
+}
+
+.table-header-btn {
+    width: 177px;
+}
+
+/*.scroll-assist {
+    max-height: calc(100vh - 130px);
+}*/
+
+.service-table {
+    ::ng-deep table.mat-table {
+        thead {
+            background-color: $dark-color-option  !important;
+
+            tr {
+
+                th {
+                    border-bottom: 0;
+                }
+            }
+        }
+
+        tbody {
+            tr {
+                &:first-child {
+                    td {
+                        border-top: 0 !important;
+
+                    }
+                }
+
+                td {
+                    border: none !important;
+                }
+            }
+        }
+    }
+}
+
+.cursor-pointer{
+    cursor: pointer;
+}

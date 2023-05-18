@@ -1,0 +1,81 @@
+<mat-card class="dialog-header">
+    <div class="assign-header">
+        <h1 mat-dialog-title>
+            {{'profile-module.about' | translate}}
+        </h1>
+    </div>
+    <button mat-button mat-dialog-close>
+        <mat-icon>close</mat-icon>
+    </button>
+</mat-card>
+<mat-dialog-content class="mat-dialog-popup about-group-dialog">
+    <div class="about-group-content pt-5 px-3">
+        <div class="row">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-5"><div class="brand-logo mb-5 text-center text-md-start"><img  src="assets/icons/moniter-portal.png" alt="moniter-portal" /></div></div>
+            <div class="col-sm-4"><div class="brand-logo mb-5 text-center text-md-start"><img  src="assets/icons/server-software.png" alt="software-server" /></div></div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-sm-3 pb-2">Product</div>
+            <div class="col-sm-5 pb-2">UbiqVue™ Active Monitoring Portal</div>
+            <div class="col-sm-4 pb-2">UbiqVue™ Central Server Software</div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-sm-3 pb-2">Model #</div>
+            <div class="col-sm-5 pb-2">UA 2550-C</div>
+            <div class="col-sm-4 pb-2">UA2550-S</div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-sm-3 pb-2">Version</div>
+            <div class="col-sm-5 pb-2">{{uiVersion}}</div>
+            <div class="col-sm-4 pb-2">{{ep4Version}}</div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-sm-3 pb-2">Release date</div>
+            <div class="col-sm-5 pb-2">-</div>
+            <div class="col-sm-4 pb-2">-</div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-sm-3 pb-2">Unique device identifier</div>
+            <div class="col-sm-5 pb-2 text-break">B353UA2550C1/$$7{{uiVersion}}</div>
+            <div class="col-sm-4 pb-2 text-break" *ngIf="ep4Version">B353UA2550S1/$$7{{ep4Version}}</div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-sm-3 pb-2">Medical device class</div>
+            <div class="col-sm-5 pb-2">EU MDD 93/42/EEC, Class IIb <br/> <br/> FDA Class II</div>
+            <div class="col-sm-4 pb-2">EU MDD 93/42/EEC, Class IIb <br/>  <br/>FDA Class II</div>
+        </div>
+        <div class="border-top mt-2 pt-3">
+        <div class="row">
+            <div class="col-5 col-sm-3">
+                <div class="title-head pb-2">Manufactured by</div>
+                <div class="group-blocker">
+                    <figure class="mb-2">
+                        <img  src="assets/icons/icons-group.svg" alt="icons-group" style="max-width: 42px;" />
+                    </figure>
+                </div>
+            </div>
+            <div class="col-7 col-sm-9">
+                <div class="d-flex">
+                    <div class="group-content">
+                        <p class="mb-1">
+                            LifeSignals, Inc.<br/>
+                            426 S Hillview Drive, <br />
+                            Milpitas, CA 95035, USA <br />
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-5 col-sm-3">
+                <div class="title-head pb-3">Contact</div>
+                <div class="group-blocker"><img src="assets/icons/ce-logo.png" alt="ce-logo" /></div>
+            </div>
+            <div class="col-7 col-sm-9">
+                <a href="mailto:info@lifesignals.com">info@lifesignals.com</a>, <a href="https://www.lifesignals.com">www.lifesignals.com</a>
+            </div>
+        </div>
+    </div>
+    </div>
+</mat-dialog-content>

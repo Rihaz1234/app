@@ -1,0 +1,55 @@
+@import "src/assets/scss/modules/variables";
+
+/*.msg-select {
+  width: 200px;
+  border: none !important;
+  padding: 6px;
+  text-align: left;
+  background: $white;
+  box-shadow: $box-shadow-color;
+  border-radius: $border-radius;
+}*/
+.table {
+  width: 100%;
+}
+tbody tr {
+  border-bottom: 7px solid $tab-bg-color !important;
+  border-collapse: separate !important;
+  background: $bg-dashboard-color;
+}
+td {
+  padding: 5px !important;
+}
+.disabled {
+  pointer-events: none;
+  opacity: 0.7!important;
+}
+
+.alert-dialog-content {
+  padding: 0;
+  .input-icon-field {
+    input {
+      padding-top: 0 !important; 
+    }
+    .mat-icon {
+      color: #235987;
+    }
+  }
+}
+@media only screen and (max-width: 767px) {
+  .table-responsive-sm {
+    overflow: auto;
+  }
+}
+
+.destination-table.table {
+  thead {
+    tr {
+      th {
+        border-bottom: 1px solid $opacity-bg-color;
+        padding-bottom: 0.8rem;
+        text-transform: uppercase;
+      }
+    }
+  }
+}

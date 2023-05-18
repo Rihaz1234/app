@@ -1,0 +1,149 @@
+<mat-card class="dialog-header">
+    <div class="assign-header">
+        <div class="list-item ms-0">
+            <h1 mat-dialog-title>More Info</h1>
+            <div class="patient-id"><strong>{{'patient-more-detail-c.pid'| translate}} {{data.patientId}}</strong></div>
+        </div>
+        <div class="list-item patient-group">
+            <strong>{{data.firstName}} {{data.lastName}}</strong>
+            <span class="time-group">{{data?.pGroup?.name}}{{(data?.pGroup && data?.cGroup ) ? "," :""}}
+                {{data?.cGroup?.name}}</span>
+        </div>
+    </div>
+    <button mat-button mat-dialog-close class="me-3">
+        <mat-icon>close</mat-icon>
+    </button>
+</mat-card>
+<mat-dialog-content class="mat-dialog-popup">
+    <div class="moreinfo-group-dialog">
+        <div class="row">
+            <div class="col-md-6 px-1 mb-2">
+                <div class="row align-items-center py-3 mx-0 ">
+                    <div class="col-sm-6"><strong>{{'patient-more-detail-c.full_name'| translate}}</strong></div>
+                    <div class="col-sm-6 ps-md-0 pt-2 pt-md-0"><span
+                            class="fw-normal d-flex justify-content-start justify-content-sm-end text-sm-end">
+                            {{data.firstName}} {{data.lastName}}</span></div>
+                </div>
+            </div>
+            <div class="col-md-6 px-1 mb-2">
+                <div class="row align-items-center py-3 mx-0 ">
+                    <div class="col-sm-6"><strong>{{'patient-more-detail-c.sex'| translate}}</strong></div>
+                    <div class="col-sm-6 ps-md-0 pt-2 pt-md-0">
+                        <span class="fw-normal d-flex justify-content-start justify-content-sm-end text-sm-end"
+                            *ngIf="data?.gender">
+                            {{(data.gender === 'M' || data.gender === 'MALE') ? 'Male'
+                            : (data.gender === 'F' || data.gender === 'FEMALE') ? 'Female' : 'Other' }}
+                        </span>
+                        <span class="fw-normal d-flex justify-content-start justify-content-sm-end text-sm-end"
+                            *ngIf="data?.sex">
+                            {{(data.sex === 'M' || data.sex === 'MALE') ? 'Male'
+                            : (data.sex === 'F' || data.sex === 'FEMALE') ? 'Female' : 'Other' }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 px-1 mb-2">
+                <div class="row align-items-center py-3 mx-0 ">
+                    <div class="col-sm-6"><strong>{{'patient-more-detail-c.dob'| translate}}</strong></div>
+                    <div class="col-sm-6 ps-md-0 pt-2 pt-md-0">
+                        <span class="fw-normal d-flex justify-content-start justify-content-sm-end text-sm-end text-uppercase"
+                            *ngIf="data.dob || data.age">{{ (data.dob) ? (data.dob | date : "dd/MMM/yyyy ") + " | " :
+                            "" }}
+                            <strong class="mx-1">{{(data.dob) ? data.age + " yrs" : "-" }}</strong>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 px-1 mb-2">
+                <div class="row align-items-center py-3 mx-0 ">
+                    <div class="col-sm-6"><strong>{{'patient-more-detail-c.phone_no'| translate}}</strong></div>
+                    <div class="col-sm-6 ps-md-0 pt-2 pt-md-0"><span
+                            class="fw-normal d-flex justify-content-start justify-content-sm-end text-sm-end">{{data.phoneNo
+                            || "-"}}</span></div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-6 px-1 mb-2">
+                <div class="row align-items-center py-3 mx-0 ">
+                    <div class="col-sm-6"><strong>{{'patient-more-detail-c.height'| translate}}</strong></div>
+                    <div class="col-sm-6 ps-md-0 pt-2 pt-md-0"><span
+                            class="fw-normal d-flex justify-content-start justify-content-sm-end text-sm-end">{{data?.height
+                            || '-'}}
+                            {{(data?.height !== 0)?data.heightUnit:""}}</span></div>
+                </div>
+            </div>
+            <div class="col-md-6 px-1 mb-2">
+                <div class="row align-items-center py-3 mx-0 ">
+                    <div class="col-sm-6"><strong>{{'patient-more-detail-c.weight'| translate}}</strong></div>
+                    <div class="col-sm-6 ps-md-0 pt-2 pt-md-0"><span
+                            class="fw-normal d-flex justify-content-start justify-content-sm-end text-sm-end">{{data?.weight
+                            || '-'}} {{(data?.weight !== 0 )?data.weightUnit:''}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 px-1 mb-2">
+                <div class="row align-items-center py-3 mx-0 ">
+                    <div class="col-sm-6"><strong>{{'patient-more-detail-c.admitted_on'| translate}}</strong></div>
+                    <div class="col-sm-6 ps-md-0 pt-2 pt-md-0"><span
+                            class="fw-normal d-flex justify-content-start justify-content-sm-end text-sm-end text-uppercase">{{(data.startedOn
+                            > 0) ? (data.startedOn*1000 | date : "dd/MMM/yyyy " + timeFmt : timeZone) : "-"}}</span></div>
+                </div>
+            </div>
+            <div class="col-md-6 px-1 mb-2">
+                <div class="row align-items-center py-3 mx-0 ">
+                    <div class="col-sm-6"><strong>{{'patient-more-detail-c.estimated_discharge'| translate}}</strong>
+                    </div>
+                    <div class="col-sm-6 ps-md-0 pt-2 pt-md-0">
+                        <span class="fw-normal d-flex justify-content-start justify-content-sm-end text-sm-end text-uppercase">
+                            {{data?.estimatedDischarge ? (data.estimatedDischarge | date : "dd/MMM/yyyy" : timeZone ) : "-"}}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 px-1 mb-2">
+                <div class="row align-items-center py-3 mx-0 ">
+                    <div class="col-sm-6"><strong>{{'patient-more-detail-c.physician'| translate}}</strong></div>
+                    <div class="col-sm-6 ps-md-0 pt-2 pt-md-0"><span
+                            class="fw-normal d-flex justify-content-start justify-content-sm-end text-sm-end">{{doctorName
+                            || "-"}}</span></div>
+                </div>
+            </div>
+            <div class="col-md-6 px-1 mb-2">
+                <div class="row align-items-center py-3 mx-0 ">
+                    <div class="col-sm-6"><strong>{{'patient-more-detail-c.biosensor_id'| translate}}</strong></div>
+                    <div class="col-sm-6 ps-md-0 pt-2 pt-md-0">
+                        <span class="fw-normal d-flex justify-content-start justify-content-sm-end text-sm-end">
+                            {{(data.activePatch !== "" && data.activePatch !== undefined) ? data.activePatch :
+                            data.patchId || "-"}}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="this.biosensorInfo">
+            <div class="col-md-12 px-1">
+                <div class="row align-items-center py-3 mx-0 ">
+                    <div class="col-sm-6"><strong>{{'patient-more-detail-c.biosensor_startedon'| translate}}</strong></div>
+                    <div class="col-sm-6"><span class="fw-normal d-flex justify-content-start justify-content-sm-end text-uppercase">{{(data?.activePatchStartTime*1000 | date : "dd/MMM/yyyy " + timeFmt : timeZone) || '-' }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+</mat-dialog-content>

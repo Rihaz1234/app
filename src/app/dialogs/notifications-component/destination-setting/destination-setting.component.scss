@@ -1,0 +1,15 @@
+@import "src/assets/scss/modules/variables";
+
+/*.alert-destination-table {
+    max-height: 320px;
+    overflow-y: auto;
+}*/
+
+.alert-dialog-content {
+    max-height: 100vh;
+
+}
+
+.reset_btn_bg {
+    background: $bg-reset-btn;
+  }

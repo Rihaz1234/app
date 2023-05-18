@@ -1,0 +1,141 @@
+/* new variable define */
+@import "src/assets/scss/modules/variables";
+@import "src/assets/scss/modules/_mixins";
+
+.edit-form-control {
+    width: 100%;
+    text-transform: capitalize;
+}
+h2 {
+    text-transform: capitalize!important;
+}
+
+/*** nested ***/
+/*.add-level-button {
+    position: absolute !important;
+    left: 2rem;
+    font-size: 0.8rem;
+    background-color: transparent;
+    padding: 0.2rem 0.5rem;
+    border-radius: $border-radius;
+    z-index: 9000;
+    border: 1px solid $white;
+    color: $white;
+
+    @media only screen and (max-width: 479px) {
+        left: 0px;
+        margin-left: 0 !important;
+    }
+
+    &.level1 {
+        border: 1px solid $pink-color;
+        color: $pink-color;
+    }
+
+    &.level2 {
+        border: 1px solid $green-color;
+        color: $green-color;
+    }
+
+    &.level3 {
+        border: 1px solid $blue-color;
+        color: $blue-color;
+    }
+}*/
+
+.sub-card {
+    background: transparent;
+    box-shadow: none;
+}
+
+.add-btn {
+    text-align: right;
+    margin-right: 10px;
+}
+
+.nested-group {
+    .manage-card {
+
+        h2 {
+            max-width: 326px;
+            margin-right: 0;
+
+            @media only screen and (max-width: 767px) {
+
+                max-width: 200px;
+            }
+
+            @media only screen and (max-width: 448px) {
+                max-width: 80px;
+                font-size: $base-font-size;
+                padding-right: 0;
+            }
+        }
+
+    }
+
+}
+
+
+/*** add level button case ***/
+.add-small-button {
+    font-size: 8px;
+    height: 1.25rem;
+    line-height: 1;
+    min-height: auto;
+    padding: 2px 8px;
+    border-radius: 4px;
+    position: absolute;
+    left: -5rem;
+    top: 0;
+    bottom: 0px;
+    margin: auto;
+
+
+    &.level1 {
+        border: 1px solid $default-manage-button-level-1;
+        color: $default-manage-button-level-1;
+        background: $bg-default-manage-button-level-1;
+    }
+
+    &.level2 {
+        border: 1px solid $default-manage-button-level-2;
+        color: $default-manage-button-level-2;
+        background: $bg-default-manage-button-level-2;
+    }
+
+    &.level3 {
+        border: 1px solid $default-manage-button-level-3;
+        color: $default-manage-button-level-3;
+        background: $bg-default-manage-button-level-3;
+    }
+
+    &.level4 {
+        border: 1px solid $default-manage-button-level-4;
+        color: $default-manage-button-level-4;
+        background: $bg-default-manage-button-level-4;
+    }
+
+    &.level5 {
+        border: 1px solid $default-manage-button-level-5;
+        color: $default-manage-button-level-5;
+        background: $bg-default-manage-button-level-5;
+    }
+
+    &.level6 {
+        border: 1px solid $default-manage-button-level-1;
+        color: $default-manage-button-level-1;
+        background: $bg-default-manage-button-level-1;
+    }
+
+}
+
+/*** add level button case ***/
+
+@media only screen and (max-width: 800px) {
+    .nested-group {
+        margin-left: 5rem !important;
+    }
+
+
+}

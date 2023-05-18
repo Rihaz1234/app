@@ -1,0 +1,227 @@
+@import "src/assets/scss/modules/variables";
+
+ul li {
+  list-style-type: none;
+}
+
+.flo-lef {
+  float: left;
+}
+
+/*dashboard monitor model CSS*/
+
+.battery-percent label {
+  float: right;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.25px;
+  color: $rgba-white-color;
+}
+
+.battery-percent span {
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.25px;
+  color: rgba(255, 255, 255);
+}
+
+.battery-percent {
+  position: absolute;
+  right: 10%;
+  color: red;
+}
+
+.modal-header .close {
+  margin: -1.5rem -1rem -2rem auto !important;
+}
+
+.modal-header {
+  background-color: rgba(196, 196, 196, 0.16) !important;
+  border-radius: $border-radius-divide !important;
+}
+
+.modal-content {
+  background: $bg-card-color !important;
+  border-radius: 8px !important;
+}
+
+.modal-title {
+  font-size: 18px !important;
+  line-height: 20px !important;
+  letter-spacing: 0.25px !important;
+  color: $light-blue-color !important;
+}
+
+.modal-footer {
+  background: $bg-primary-color !important;
+  border-radius: 5px !important;
+}
+
+.login_btn_EDF {
+  background: $bg-button-color;
+  box-shadow: $box-shadow-button;
+  border-radius: 4px;
+  color: $white;
+  float: right;
+  border: none;
+  padding: 8px 16px;
+}
+
+.modal_body_align li label {
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.25px;
+  color: $rgba-white-color;
+  padding-right: 15px;
+}
+
+.modal_body_align ul li {
+  padding: 0px 40px 0px 0px;
+  margin-top: 15px;
+  margin-bottom: -12px;
+}
+
+.modal-dialog {
+  max-width: 876px !important;
+  position: absolute;
+  left: 0%;
+  right: 0%;
+  top: 0%;
+  bottom: 0%;
+}
+
+.modal_body_align li span {
+  font-size: 14px;
+  line-height: 20px;
+  align-items: flex-end;
+  letter-spacing: 0.25px;
+  color: $white;
+}
+
+.modal_body_align {
+  margin-bottom: 20px;
+}
+
+.monitoring {
+  background: rgba(0, 84, 159, 0.32);
+  box-shadow: $box-shadow-card;
+  border-radius: 8px;
+  width: 80%;
+  margin: 0 auto;
+  margin-bottom: 20px;
+  color: $white;
+}
+
+.monitoring li {
+  float: left;
+  padding: 15px;
+}
+
+.measurings_large {
+  margin-top: -12px;
+}
+
+.measurings_large ul {
+  margin-right: 6%;
+}
+
+.measurings_large li label {
+  font-size: 32px;
+  color: $red-font-color;
+}
+
+.measurings_large .hrate {
+  float: left;
+}
+
+.measurings_large .hrate div {
+  font-size: 14px;
+  color: $rgba-white-color;
+}
+
+.measurings_large .rrate div {
+  font-size: 14px;
+  color: $rgba-white-color;
+}
+
+.measurings_large .lrate div {
+  font-size: 14px;
+  color: $rgba-white-color;
+}
+
+.measurings_large .lrate {
+  float: left;
+}
+
+.measurings_large .rrate {
+  float: left;
+}
+
+.measurings_large li span {
+  font-size: 10px;
+}
+
+.measurings_large img {
+  margin-top: 12px;
+  margin-right: 10px;
+  float: left;
+}
+
+.alert-settings {
+  font-size: 12px;
+  line-height: 20px;
+  letter-spacing: 0.25px;
+  color: rgba(255, 255, 255, 0.65);
+  text-shadow: $text-shadow;
+}
+
+.measurings_rate li {
+  float: left;
+  font-size: 14px;
+  text-align: right;
+  letter-spacing: 0.25px;
+  color: $rgba-white-color;
+  text-align: left;
+}
+
+.measurings_rate li {
+  text-align: left;
+}
+
+.low-rate {
+  margin-right: 40px;
+  margin-left: 5px;
+  float: left;
+}
+
+.timer {
+  float: right;
+  margin-right: -30px;
+  margin-top: -5px;
+}
+
+.modal-dialog {
+  pointer-events: auto !important;
+}
+
+/*dashboard model monitor CSS  ends*/
+@media only screen and (max-width: 600px) {
+  .login_btn_EDF {
+    float: left;
+  }
+  .low-rate {
+    float: left !important;
+    margin-right: 10px !important;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .login_btn_EDF {
+    float: left;
+  }
+
+  .low-rate {
+    float: left !important;
+    margin-right: 10px !important;
+  }
+}

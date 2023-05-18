@@ -1,0 +1,67 @@
+@import "src/assets/scss/modules/variables";
+
+/*.msg-select {
+  width: 200px;
+  border: none !important;
+  padding: 0px 6px;
+  text-align: left;
+  background: $white;
+  box-shadow: $box-shadow-color;
+  border-radius: $border-radius;
+}*/
+
+.table {
+  width: 100%;
+
+  tr {
+    td {
+      padding: 0 0.5rem;
+
+      input {
+        padding-top: 0;
+      }
+
+    }
+
+  }
+}
+
+tbody tr {
+  border-collapse: separate !important;
+  background: $bg-table-row-color;
+}
+
+.disabled {
+  pointer-events: none;
+}
+
+mat-label {
+  padding-bottom: 1rem !important;
+}
+
+@media (min-width:992px) {
+  .table-responsive-sm table tr td.pt-1 {
+    width: 60%;
+  }
+}
+
+@media (max-width: 767px) {
+
+  .table-responsive-sm {
+    overflow-x: auto;
+  }
+
+}
+
+
+.destination-table.table {
+  thead {
+    tr {
+      th {
+        border-bottom: 1px solid $opacity-bg-color;
+        padding-bottom: 0.8rem;
+        text-transform: uppercase;
+      }
+    }
+  }
+}

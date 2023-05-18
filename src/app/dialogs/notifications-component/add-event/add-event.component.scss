@@ -1,0 +1,140 @@
+@import "src/assets/scss/modules/variables";
+
+.form-row {
+  background-color: $bg-table-row-color;
+  padding: 10px;
+  margin: 0 0 0.5rem;
+  border-radius: 4px;
+}
+::ng-deep .mat-dialog-container{
+  background-color: $dark-color-option ;
+}
+.text-input {
+  width: 100%;
+}
+.matlabel {
+  font-weight: 700;
+  font-style: $size-16 !important;
+}
+.time-control {
+  position: relative;
+
+  &:after {
+    position: absolute;
+    top: 0px;
+    right: 0.5rem;
+    content: "";
+    background-image: url("../../../../assets/icons/timer-icon.svg");
+    background-repeat: no-repeat;
+    height: 1rem;
+    width: 1rem;
+    margin: auto;
+    bottom: 0;
+    background-size: 1rem;
+  }
+}
+
+
+
+.mat-dialog-popup {
+  .dialog-form {
+    .matlabel {
+      font-size: $base-font-size;
+      color: $white;
+      font-weight: $font-weight-600;
+      text-transform: capitalize;
+      opacity: 1;
+      padding-bottom: 5px;
+      padding-top: 10px;
+    }
+
+    .time-input {
+      width: 11.3rem;
+      @media (max-width: 400px) {
+        width: 10rem;
+      }
+      margin: 0px;
+      .mat-icon {
+        color:$colorgray  !important;
+      }
+     
+    }
+
+  }
+}
+
+.select-btn {
+  padding: 5px 40px;
+  background: $select-label-color;
+  border-radius: 8px;
+  margin: 7px 7px 0px 0px;
+  height: 40px;
+  font-weight: 600;
+}
+
+.select-btn-active {
+  padding: 5px 40px;
+  background: $select-label-color;
+  border-radius: 8px 8px 0px 0px;
+  margin: 0px 7px 0px 0px;
+  height: 56px;
+  font-weight: 600;
+}
+
+.button-card-area {
+  button.select-btn-active {
+    background: $select-label-color;
+  }
+}
+
+
+
+.required-text {
+  font-size: $size-12;
+}
+.scroll-assist {
+  max-height: 350px;
+  overflow-y: auto;
+}
+
+.text-area {
+height: 26rem !important;
+}
+
+.textarea-note{
+  .text-area {
+    height: 8rem !important;
+    }
+  }
+
+.dialog-header {
+  background: $bg-button-color;
+  min-height: 35px;
+
+  &.patientalert-dialog-header {
+    padding-bottom: 0 !important;
+  }
+}
+
+.form-control[readonly] {
+  background-color: $white  !important;
+  opacity: 1 !important;
+}
+
+.time-field {
+  pointer-events: none;
+}
+
+.owl-dt-container-disabled,
+.owl-dt-trigger-disabled {
+  opacity: 1 !important;
+}
+/**** button ****/
+button.fill-btn{min-width: 10rem;
+
+  @media (max-width: 499px) {
+    min-width: 7rem;
+
+  }
+
+}

@@ -1,0 +1,47 @@
+<div class="grid-fluid-container">
+    <div class="container grid-aligning-summary pt-5 pb-5 mx-auto col-md-12 col-lg-10 col-xl-8 col-xxl-7">
+        <div class="row justify-content-center align-items-center card-items">
+            <app-setting-card [loading]="loading" [view]="isSCGCPHY()" class="child col-md-4 col-sm-12"
+                [routerUrl]="'patients/admit-patients'" title="{{'home_alerts.label_admit_patients' | translate}}"
+                image="admit-patients.png" [count]="dashboardSummary.unassignedPatches"
+                subTitle="home_cards.card_sub_title_admit_patients">
+            </app-setting-card>
+            <app-setting-card [loading]="loading" [view]="isSCGCPHY()" class="child col-md-4 col-sm-12"
+                [routerUrl]="'patients/active-patients'" title="{{'home_alerts.label_active_patients' | translate}}"
+                image="current-patients.png" [count]="dashboardSummary.activePatients"
+                subTitle="home_cards.card_sub_title_patients">
+            </app-setting-card>
+            <app-setting-card [loading]="loading" [view]="isSC()" class="col-md-4 col-sm-12"
+                title="{{'home_alerts.label_discharged_patients'|translate}}" [routerUrl]="'discharge/patients'"
+                image="discharge-patients.png" [count]="dashboardSummary.dischargedPatients"
+                subTitle="home_cards.card_sub_title_patients">
+            </app-setting-card>
+        </div>
+        <div class="row d-none d-md-block">
+            <div class="col-sm-10 my-5 mx-auto">
+                <mat-divider></mat-divider>
+            </div>
+        </div>
+        <div class="row justify-content-center align-items-center card-items" *ngIf="!isSCGCPHY()">
+            <app-setting-card [view]="isCFA()" class="col-md-4 col-sm-12"></app-setting-card>
+            <app-setting-card [view]="isCFA()" class="col-md-4 col-sm-12"></app-setting-card>
+            <app-setting-card [view]="isCFA()" class="col-md-4 col-sm-12"></app-setting-card>
+        </div>
+        <div class="row justify-content-center align-items-center card-items" *ngIf="isSCGCPHY()">
+            <app-setting-card [loading]="alertLoading" class="child col-md-4 col-sm-12" [routerUrl]="'parameter-alerts'"
+                title="{{'home_alerts.label_clinical_alert'|translate}}" image="parameter-alerts.png"
+                [count]="dashboardSummary.parameterAlerts" timerIcon="true" type="parameter" (fetchSummary)="getAlertsSummary($event)"
+                subTitle="home_cards.card_sub_title_alerts"></app-setting-card>
+            <!-- <app-setting-card [loading]="alertLoading" class="child col-md-4 col-sm-12" [routerUrl]="'arrhythmia-alerts'"
+                              title="{{'home_alerts.label_arrhythmia_alerts'| translate}}" image="arrhythmia-alerts.png"
+                              [count]="dashboardSummary.arrhythmiaAlerts" type="arrhythmia" timerIcon="true" (fetchSummary)="getAlertsSummary($event)"
+                              subTitle="home_cards.card_sub_title_alerts">
+            </app-setting-card> -->
+            <app-setting-card [loading]="alertLoading" class="child col-md-4 col-sm-12" [routerUrl]="'technical-alerts'"
+                title="{{'home_alerts.label_technical_alerts'| translate}}" image="technical-alerts.png"
+                [count]="dashboardSummary.techAlerts" (fetchSummary)="getAlertsSummary($event)"
+                subTitle="home_cards.card_sub_title_alerts"></app-setting-card>
+            <app-setting-card class="col-md-4 col-sm-12"></app-setting-card>
+        </div>
+    </div>
+</div>

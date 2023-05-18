@@ -1,0 +1,109 @@
+<mat-card class="dialog-header">
+    <h1 mat-dialog-title>
+        {{ heading | translate }}
+    </h1>
+</mat-card>
+
+<mat-dialog-content class="mat-dialog-popup moreinfo-dialog">
+    <div class="dialog-form">
+        <div class="table-responsive">
+            <table mat-table class="table-format-cell mat-table" aria-label="Table">
+                <thead>
+                    <tr>
+                        <th>
+                            <img alt="bio sensor icon" class="me-2" src="assets/icons/biosensor.svg"  /> {{ "active-patients-module.form_label.biosensor_id" | translate }}
+                        </th>
+                        <th>
+                            {{ "active-patients-module.form_label.added_on" | translate }}
+                        </th>
+                        <th>
+                            {{ "active-patients-module.form_label.removed_on" | translate }}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let patch of patchIdData" [class.expired]="(patch.endTime && isFutureDate(patch.endTime))">
+                        <td class="d-flex align-items-center">
+                            <img alt="bio sensor icon" class="me-2" src="assets/icons/biosensor.svg"  />
+                            <span class="mx-1">{{patch.deviceId}}</span>
+                            <button mat-icon-button (click)="openDeleteConfirmationModal(patch)" *ngIf="displayDeleteIcon(patch) && !readOnly" class="rounded delete-btn ms-2">
+                                <mat-icon class="justify-content-center">delete_outline</mat-icon>
+                              </button>
+                        </td>
+                        <td>
+                            <ng-container *ngIf="!readOnly; else diff_pattern_for_startTime">
+                                {{ patch.startTime ? ( patch.startTime*1000 | date:'MMM d, y / ' : timeZone ) : '-'}}
+                                <strong>{{ patch.startTime ? ( patch.startTime*1000 | date:timeFmt : timeZone ) : ''}}</strong>
+                            </ng-container>
+                            <ng-template #diff_pattern_for_startTime>
+                                {{ patch.startTime ? ( patch.startTime*1000 | date:'d MMM y / ' : timeZone ) : '-'}}
+                                <strong>{{ patch.startTime ? ( patch.startTime*1000 | date:timeFmt : timeZone ) : ''}}</strong>
+                            </ng-template>
+                        </td>
+                        <td>
+                            <ng-container *ngIf="!readOnly; else diff_pattern_for_endTime">
+                                {{ (patch.endTime && isFutureDate(patch.endTime)) ? ( patch.endTime*1000 | date:'MMM d, y / ' : timeZone ) : '-' }}
+                                <strong>{{ (patch.endTime && isFutureDate(patch.endTime)) ? ( patch.endTime*1000 | date:timeFmt : timeZone ) : ''}}</strong>
+                            </ng-container>
+                            <ng-template #diff_pattern_for_endTime>
+                                {{ (patch.endTime && isFutureDate(patch.endTime)) ? ( patch.endTime*1000 | date:'MMM d, y / ' : timeZone ) : '-' }}
+                                <strong>{{ (patch.endTime && isFutureDate(patch.endTime)) ? ( patch.endTime*1000 | date:timeFmt : timeZone ) : ''}}</strong>
+                            </ng-template>
+                        </td>
+                    </tr>
+                    <tr *ngIf="isShow">
+                        <td class="d-flex align-items-center">
+                            <div class="add-Biosensor-Id">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <mat-form-field appearance="fill" floatLabel="never" class="input-control">
+                                            <input matInput [(ngModel)]="newBiosensorId" maxlength="5" minlength="5" type="text" autocomplete="off" (keypress)="alphaNumericsOnly($event)" pattern="^[a-zA-Z]{1}[a-zA-Z0-9]{4}$" #biosensorIdCtrl="ngModel">
+                                            <mat-error *ngIf="!biosensorIdCtrl.hasError('minlength') && biosensorIdCtrl.hasError('pattern')">{{"active-patients-module.errors.biosensorPatternValid" | translate}}</mat-error>
+                                            <mat-error *ngIf="(biosensorIdCtrl.hasError('maxlength') || biosensorIdCtrl.hasError('minlength'))">
+                                                {{"active-patients-module.errors.biosensorLength" | translate}}
+                                            </mat-error>
+                                            <button mat-icon-button color="warn" *ngIf="newBiosensorId?.length" matSuffix class="btn-boxed btn-no-shadow" (click)="clear()">
+                      <mat-icon>close</mat-icon>
+                    </button>
+                                            <button mat-mini-fab color="primary" matSuffix *ngIf="!checkIfExisting() && (newBiosensorId?.length === 5) && !biosensorIdCtrl.hasError('pattern')" class="btn-boxed tick-checked" (click)="addBiosensorId()">
+                      <mat-icon>check</mat-icon>
+                    </button>
+                                        </mat-form-field>
+                                        <div class="error-message" *ngIf="checkIfExisting()">{{"active-patients-module.errors.biosensor_id_repeated" | translate}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="add-items mt-2" *ngIf="!readOnly">
+            <button mat-flat-button mat-dialog-add color="primary" (click)="addNew()">
+        <!--<mat-icon >add</mat-icon>{{"active-patients-module.button.add_new" | translate}}-->
+        <!--<mat-icon *ngIf="!isShow">add</mat-icon>
+          <mat-icon *ngIf="isShow">close</mat-icon>-->
+        {{ isShow ? ("active-patients-module.button.cancel" | translate) : ("active-patients-module.button.add_new" | translate) }}
+      </button>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions class="me-4">
+    <ng-container *ngIf="!readOnly; else okButton">
+        <button mat-flat-button mat-dialog-close color="warn" class="fill-btn">
+      {{ "active-patients-module.button.cancel" | translate }}
+    </button>
+        <button mat-flat-button color="primary" (click)="onClickSave()" class="fill-btn"
+                [disabled]="!validateBiosensor() || !patchesUpdated" [class.disabled]="!validateBiosensor() || !patchesUpdated">
+      {{ "active-patients-module.button.save" | translate }}
+    </button>
+    </ng-container>
+    <ng-template #okButton>
+        <button mat-flat-button mat-dialog-close color="primary" class="fill-btn">
+      {{ "active-patients-module.button.ok" | translate }}
+    </button>
+    </ng-template>
+
+</mat-dialog-actions>

@@ -1,0 +1,124 @@
+<ls-page-header type="alert_configuration">
+</ls-page-header>
+<div class="container-fluid">
+  <div class="justify-content-between align-items-center my-2 mt-3">
+    <div class="mx-md-2 mb-3 d-md-flex align-items-center">
+      <span class="pe-3 head-setting" *ngIf="(!isBlank(alertSettings?.FacilityName) || !isCfa)">
+        {{ "alert_config_module.alert_configuration" | translate }} :
+      </span>
+      <span class="head-setting-right" *ngIf="
+        checkRole(
+          accessRoles.ALERT_CONFIGURATIONS.ALERT_NOTIFICATIONS.PAGE_VIEW,
+          roles
+        )
+      ">
+        {{ alertSettings?.FacilityName }}
+      </span>
+      <span class="selectfilter-dropdown justify-content-md-start justify-content-between d-flex" *ngIf="groupsView">
+        <!-- <mat-form-field appearance="fill" class="whiteselect drop-down-selectfilter selectfilter">
+          <mat-select placeholder="Clinical Condition" class="drop-down"
+            (selectionChange)="getGroupAlertSettings()" [(ngModel)]="clinicalFacilityGroupId">
+            <mat-option *ngFor="let group of clinicalFacilityGroups" [value]="group.groupId">
+              {{ group.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field> -->
+        <app-nested-dropdown class="nested-selectfilter bg-selectfilter me-2 me-md-0  mx-md-2" [selectedValue]="locationGroupId" key="groupId" displayKey="name"
+                                     [label]="'alert_config_module.location' | translate" (selected)="onLocationSelected($event, 'LOCATION')"
+                                     [options]="locationGroups" [noSelection]="true">
+        </app-nested-dropdown>
+        <app-nested-dropdown class="nested-selectfilter bg-selectfilter mx-md-2" [selectedValue]="clinicalGroupId" key="groupId" displayKey="name"
+                             [label]="'alert_config_module.medical_condition' | translate" (selected)="onLocationSelected($event, 'CLINICAL')"
+                             [options]="clinicalGroups" [noSelection]="true">
+        </app-nested-dropdown>
+      </span>
+    </div>
+    <div class="my-0 button-card-area alert-configuration-button ">
+      <button mat-button [ngClass]="
+        selectedTab === 'parameter' ? 'select-btn-active' : 'alert_btn'
+      " (click)="selectTab('parameter')">
+        {{ "alert_config_module.parameter_alert" | translate }}
+      </button>
+      <!-- <button mat-button (click)="selectTab('arrhythmia')"
+        [ngClass]="selectedTab === 'arrhythmia' ? 'select-btn-active' : 'alert_btn'">
+        {{ "alert_config_module.arrhythmia_alert" | translate }}
+      </button> -->
+      <button mat-button [ngClass]="
+        selectedTab === 'technical' ? 'select-btn-active' : 'alert_btn'
+      " (click)="selectTab('technical')">
+        {{ "alert_config_module.technical_alert" | translate }}
+      </button>
+
+      <button mat-button [ngClass]="selectedTab === 'priority' ? 'select-btn-active' : 'alert_btn'"
+        (click)="selectTab('priority')">
+        {{ "alert_config_module.priority_alert" | translate }}
+      </button>
+      <button mat-button [ngClass]="
+        selectedTab === 'destination' ? 'select-btn-active' : 'alert_btn'
+      " (click)="selectTab('destination')">
+        <span>{{ "alert_config_module.alert_destinations" | translate }}</span>
+      </button>
+
+      <button *ngIf="
+        checkRole(
+          accessRoles.ALERT_CONFIGURATIONS.ALERT_NOTIFICATIONS.PAGE_VIEW,
+          roles
+        )
+      " class="btn4" mat-button [ngClass]="selectedTab === 'message' ? 'select-btn-active' : 'alert_btn'"
+        (click)="selectTab('message')">
+        <span>{{ "alert_config_module.alert_notifications" | translate }}</span>
+      </button>
+    </div>
+    <div class="loading-indicator" *ngIf="loader">
+      <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+    </div>
+    <div class="table-container  bg-thead-color with-tab-table-low table-responsive-md px-2 comman-table-users head-border" *ngIf="!loader">
+      <div *ngIf="locationGroups?.length || clinicalGroups?.length || this.isCfa">
+        <ng-template [ngIf]="selectedTab === 'parameter'">
+          <app-parameter-alerts (reloadData)="getSettings()"></app-parameter-alerts>
+        </ng-template>
+
+        <ng-template [ngIf]="selectedTab === 'technical'">
+          <app-technical-alerts (reloadData)="getSettings()"></app-technical-alerts>
+        </ng-template>
+
+        <ng-template [ngIf]="selectedTab === 'arrhythmia'">
+          <app-arrhythmia-alerts (reloadData)="getSettings()"></app-arrhythmia-alerts>
+        </ng-template>
+
+        <ng-template [ngIf]="selectedTab === 'priority'">
+          <app-priority (reloadData)="getSettings()"></app-priority>
+        </ng-template>
+
+        <ng-template [ngIf]="selectedTab === 'message'">
+          <app-alert-messages (reloadData)="getSettings()"></app-alert-messages>
+        </ng-template>
+
+        <ng-template [ngIf]="selectedTab === 'destination'">
+          <app-destination-settings (reloadData)="getSettings()"></app-destination-settings>
+        </ng-template>
+      </div>
+      <div class="text-center my-4 py-4" *ngIf="clinicalGroups?.length === 0 && locationGroups?.length === 0 && !isCfa">
+        {{"alert_config_module.messages.no_groups" | translate}}
+      </div>
+    </div>
+    <div class="row py-2 px-2" *ngIf="!loader && (clinicalGroups?.length || locationGroups?.length || this.isCfa)">
+      <div class="col-md-6 my-1">
+        <button mat-flat-button color="primary" class="reset_btn_bg" (click)="openDialog()" *ngIf="isShowResetButton">
+          <mat-icon>refresh</mat-icon>
+          <span class="ps-2">{{ "alert_config_module.reset_to_default" | translate }}</span>
+        </button>
+      </div>
+      <div class="col-md-6 text-center text-md-end my-1">
+        <ng-template [ngIf]="showActionButtons">
+          <button mat-flat-button color="warn" class="fill-btn" (click)="handleAlertSettingsEditCancel()">
+            <span>{{ "alert_config_module.cancel" | translate }}</span>
+          </button>
+          <button mat-flat-button color="primary" class="fill-btn" (click)="handleAlertSettingsSave()">
+            <span>{{ "alert_config_module.save" | translate }}</span>
+          </button>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>

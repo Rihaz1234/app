@@ -1,0 +1,31 @@
+<div class="grid-fluid-container">
+    <div class="container grid-aligning-summary pt-5 pb-5 mx-auto col-md-12 col-lg-10 col-xl-8 col-xxl-7">
+        <div class="row justify-content-center align-items-center card-items">
+            <app-setting-card [view]="manageUsers" [showCount]="manageUsers"
+                title="{{'home_alerts.label_manage_users'|translate}}" subTitle="home_cards.card_sub_title_users"
+                image="manageuser.png" [count]="settingsSummary?.users" routerUrl="/settings/manage-users"
+                class="col-md-4 col-sm-12">
+            </app-setting-card>
+            <app-setting-card title="{{'home_alerts.label_manage_groups'|translate}}" image="managegroup.png"
+                [routerUrl]="'manage-group'" class="col-md-4 col-sm-12">
+            </app-setting-card>
+            <app-setting-card [view]="relayViewAccess()" class="col-md-4 col-sm-12"
+                title="{{'home_alerts.label_manage_relays'|translate}}" image="managerelay.png"
+                routerUrl="/settings/manage-relays"></app-setting-card>
+        </div>
+        <div class="row d-none d-md-block">
+            <div [ngClass]="manageUsers ? 'col-sm-10 my-5 mx-auto' : 'col-sm-8 my-5 mx-auto'">
+                <mat-divider></mat-divider>
+            </div>
+        </div>
+
+        <div class="row justify-content-center align-items-center card-items">
+            <app-setting-card title="{{'home_alerts.label_alert_configuration'|translate}}" image="notif-icon.png"
+                routerUrl="/settings/alert-configurations" class="col-md-4 col-sm-12"></app-setting-card>
+            <app-setting-card title="{{'home_alerts.label_miscellaneous'|translate}}" image="miscelaneous.png"
+                routerUrl="/settings/additional-devices" class="col-md-4 col-sm-12"></app-setting-card>
+            <app-setting-card class="col-md-4 col-sm-12"></app-setting-card>
+        </div>
+
+    </div>
+</div>

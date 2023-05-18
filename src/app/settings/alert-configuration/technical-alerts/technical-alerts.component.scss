@@ -1,0 +1,33 @@
+@import "src/assets/scss/modules/variables";
+
+.text-input-box {
+  border-radius: 0.25rem;
+  border-color: $white;
+  width: 55px;
+  text-align: center;
+  background-color: $white;
+}
+
+.mat-input-element {
+  color: $select-label-color;
+}
+
+.text-value {
+  width: 4.5rem;
+  margin: auto;
+  text-align: center;
+}
+
+/*::ng-deep {
+  .scroll-assist {
+    max-height: calc(100vh - 300px) !important;
+  }
+}*/
+
+.ack-column{margin: auto; justify-content: center;}
+
+table.mat-table {
+  border-spacing: 0 !important;
+}
+.ack-column{font-weight: normal;}
+

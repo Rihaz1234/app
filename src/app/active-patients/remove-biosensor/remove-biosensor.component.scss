@@ -1,0 +1,18 @@
+/* new variable define */
+@import "src/assets/scss/modules/variables";
+
+/** modal popup */
+.mat-dialog-popup {
+  &.remove-dialog {
+    .dialog-form {
+      p {
+        margin: 1rem 0;
+        padding: 0rem;
+        display: block;
+        text-align: left;
+        color: $base-font-color;
+        font-size: 1rem;
+      }
+    }
+  }
+}

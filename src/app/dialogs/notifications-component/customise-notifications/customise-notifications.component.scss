@@ -1,0 +1,171 @@
+@import "src/assets/scss/modules/variables";
+
+.inside-div {
+  margin-top: 10px;
+  background: rgba(4, 60, 109, 0.4);
+  border-radius: $border-radius-divide;
+  //height: 420px;
+}
+
+.settings-for-floor {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  /* identical to box height, or 143% */
+
+  letter-spacing: 0.25px;
+
+  color: $white;
+
+  opacity: 0.8;
+}
+
+.btn-alert {
+  background: $rgb-transparent-bg;
+  border: 2px solid $bg-button-color;
+  box-sizing: border-box;
+  box-shadow: $box-shadow-button;
+  border-radius: 25px;
+  width: 150px !important;
+  height: 35px;
+}
+
+table {
+  width: 100%;
+  overflow: auto;
+}
+
+.table-header {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  /* identical to box height, or 100% */
+  //align-items: center;
+  //text-align: center;
+
+  color: $white;
+}
+
+.hr-line {
+  width: 328%;
+  margin-left: 25px;
+  background: $rgb-color-code;
+}
+
+.hr-below-text {
+  font-style: italic;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 16px;
+  /* identical to box height, or 114% */
+
+  display: flex;
+  align-items: center;
+  margin-left: 25px;
+  color: $white;
+}
+
+.tbody-row-inner {
+  border-collapse: collapse;
+  border-top: 5px solid rgb(5 51 90 / 40%);
+  height: 50px;
+  background: $bg-primary-color;
+}
+
+// Slider CSS
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 20px;
+  padding-left: 25px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: $bg-primary-color;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: -3px;
+  bottom: 1px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: $light-blue-bg;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px $light-blue-bg;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+// Slider CSS end
+.table-row-alert-text {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 16px;
+  /* identical to box height, or 100% */
+  letter-spacing: 0.05em;
+  padding-left: 25px;
+
+  color: $white;
+}
+
+.row-text-small {
+  font-style: normal;
+  font-weight: normal;
+  line-height: 16px;
+  /* identical to box height, or 114% */
+
+  align-items: center;
+  letter-spacing: 0.05em;
+
+  color: $white;
+}
+
+.priority-text {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 16px;
+  /* identical to box height, or 114% */
+  letter-spacing: 0.05em;
+
+  color: $white;
+}

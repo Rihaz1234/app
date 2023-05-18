@@ -1,0 +1,57 @@
+@use "sass:math";
+@import "src/assets/scss/modules/variables";
+@import "src/assets/scss/modules/mixins";
+
+.sort-icons {
+    position: absolute;
+    margin-left: 10px;
+}
+
+.storage-type {
+    font-size: 0.8rem;
+    line-height: 1rem;
+    text-align: center;
+    letter-spacing: 0.05em;
+    color: $white;
+    background: $background-white-rgb-color;
+    border-radius: math.div($border-radius, 2);
+    flex-direction: row;
+    @include displayflex();
+    width: 70px;
+    height: 24px;
+}
+
+/*::ng-deep .scroll-assist {
+    max-height: calc(100vh - 90px) !important;
+}*/
+
+
+
+.clinical-table {
+    ::ng-deep table.mat-table {
+        thead {
+            background-color: $dark-color-option  !important;
+
+            tr {
+                th {
+                    border-bottom: 0;
+                }
+            }
+        }
+
+        tbody {
+            tr {
+                &:first-child {
+                    td {
+                        border-top: 0 !important;
+
+                    }
+                }
+
+                td {
+                    border: none !important;
+                }
+            }
+        }
+    }
+}

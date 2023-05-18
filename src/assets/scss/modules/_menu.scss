@@ -1,0 +1,77 @@
+@import "variables";
+
+.setting-card-menu {
+  background-color: $primary-color;
+
+  .mat-menu-content:not(:empty) {
+    padding: 0;
+  }
+
+  &.profile-card-menu {
+    button {
+      &.mat-menu-item {
+        text-align: left;
+        border-bottom: 0.2px solid rgba(255, 255, 255, 0.25);
+        text-transform: capitalize;
+
+        .mat-icon {
+          margin-right: 0.5rem;
+        }
+
+        &:last-child {
+          border-bottom: 0;
+        }
+
+        &:hover {
+          background-color: transparent;
+        }
+      }
+    }
+  }
+
+  button {
+    &.mat-menu-item {
+      font-size: 0.8rem;
+      padding: 0.2rem 0.5rem;
+      height: 2rem;
+      line-height: 1rem;
+
+      a {
+        color: $white;
+        text-decoration: none;
+        &:hover {
+          color: $white !important;
+        }
+      }
+
+    }
+  }
+}
+
+.mat-menu-panel {
+  background-color: $white-text;
+  min-height: 2rem !important;
+
+  .mat-menu-item {
+    color: $primary-color;
+    box-shadow: $none !important;
+  }
+}
+
+.mat-menu-submenu-icon {
+  fill: $primary-color !important;
+}
+
+.alert-configuration-menu {
+  background-color: $select-label-color;
+
+  .mat-menu-item {
+    color: $white;
+
+    .mat-icon {
+      color: $white ;
+    }
+
+  }
+
+}

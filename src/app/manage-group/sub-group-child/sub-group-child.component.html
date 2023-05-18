@@ -1,0 +1,67 @@
+<!-- <div *ngIf="level === 1">{{getSubPGroups(pGroupItem?.groupId) | json}}</div> -->
+<mat-card class="d-flex align-items-center flex-column p-0 w-100 sub-card"
+    *ngFor="let subItem of getSubPGroups(pGroupItem?.groupId); let i = index;">
+    <ng-container *ngIf="!subItem?.deleted">
+        <div class="d-flex w-100 align-items-center">
+
+            <div [class]="'level' + level"
+                [style]="'margin-left: ' + level*7 + 'rem; width: calc(100% - ' + level*7 + 'rem);'"
+                class="w-100 nested-group d-flex align-items-center  position-relative">
+                <button mat-stroked-button [class]="'level' + level" class="mx-2 add-small-button"
+                    *ngIf="isCreationAllowed && i === 0 && subItem?.groupId"
+                    (click)="toggleAddPgroup(pGroupItem?.groupId)">Add
+                    Level</button>
+
+                <div class="p-2 m-0 my-1 w-100 manage-card input-group">
+                    <span class="delete-icon" (click)="cancelAdd(subItem)"
+                        *ngIf="isCreationAllowed && !subItem?.groupId">
+                        <mat-icon>close</mat-icon>
+                    </span>
+                    <span class="delete-icon" (click)="confirmDelete(subItem)"
+                        *ngIf="isCreationAllowed && subItem?.groupId && !subItem?.hasChildren">
+                        <mat-icon>delete_outline</mat-icon>
+                    </span>
+                    <button mat-mini-fab style="position: absolute; right: 1rem" class="btn-sml-boxed" color="primary"
+                        (click)="toggleAddPgroup(subItem?.groupId)"
+                        *ngIf="isCreationAllowed && subItem?.groupId && (!subItem?.hasChildren || !getSubPGroups(subItem?.groupId)?.length) && level<6">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                    <h2 style="white-space: nowrap" *ngIf="!subItem?.isShow">
+                        {{ subItem?.name }} {{subItem?.deleted}}
+                    </h2>
+                    <div class="ms-3 d-flex justify-content-start align-items-center input-group">
+                        <input *ngIf="subItem?.isShow" type="text" class="px-2 form-control edit-form-control  me-2"
+                            [(ngModel)]="subItem.name" [maxLength]="32" placeholder="Group Name" required="true"
+                            (keypress)="alphaNumericsOnly($event)" (paste)="alphaNumericsOnPaste($event)"
+                            autocomplete="off" />
+                        <span class="edit-icon" *ngIf="isCreationAllowed && !subItem?.isShow"
+                            (click)="editSubGroup(subItem, pGroupItem?.groupId)">
+                            <mat-icon>edit</mat-icon>
+                        </span>
+                        <button mat-mini-fab color="primary" class="mx-2 btn-sml-boxed btn-no-shadow primary-button"
+                            (click)="cancelEdit(subItem)" *ngIf="subItem?.groupId && subItem?.isShow">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                        <button mat-mini-fab color="primary" class="mx-2 btn-sml-boxed btn-no-shadow primary-button"
+                            (click)="saveSubPGroup(subItem, pGroupItem?.groupId)"
+                            *ngIf="subItem?.name?.trim().length && subItem?.tempName !== subItem?.name && subItem?.isShow && validateName(subItem?.name?.toUpperCase())">
+                            <mat-icon>check</mat-icon>
+                        </button>
+                    </div>
+                    <!--<div class="w-100"></div>-->
+                    <button mat-mini-fab class="btn-sml-boxed expand-boxed-btn" color="primary"
+                        *ngIf="subItem?.hasChildren && getSubPGroups(subItem?.groupId)?.length"
+                        (click)="!subItem.expanded ? keepOpen = subItem.groupId : keepOpen = null; subItem.expanded = !subItem.expanded;">
+                        <mat-icon *ngIf="!subItem.expanded">expand_more</mat-icon>
+                        <mat-icon *ngIf="subItem.expanded">expand_less</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex w-100 align-items-center" *ngIf="!!subItem?.expanded">
+            <app-sub-group-child (updateGroups)="updateGroups" class="w-100" [pGroups]="pGroups"
+                [isCreationAllowed]="isCreationAllowed" [level]="level+1" [pGroupItem]="subItem"
+                (getGroups)="getGroups"></app-sub-group-child>
+        </div>
+    </ng-container>
+</mat-card>

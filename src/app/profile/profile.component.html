@@ -1,0 +1,161 @@
+<app-header></app-header>
+<ls-page-header type="profile"></ls-page-header>
+<div class="loading-indicator" *ngIf="loader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>
+<div *ngIf="!loader">
+    <div class="container-fluid">
+        <div class="sub-title fw-bold mb-2 pt-4">
+            {{ "shared.user_details" | translate }}
+        </div>
+        <div class="profile-card">
+            <div class="row mx-n2">
+                <div class="col-md-6 px-2 mb-3">
+                    <div class="row align-items-center py-3 px-2 mx-2 ">
+                        <div class="col-sm-6">
+                            <label> {{ "shared.username" | translate }}</label>
+                        </div>
+                        <div class="col-sm-6">
+                            <span class="fw-normal d-flex justify-content-start justify-content-sm-end">{{ user.firstName }}
+                                {{ user.lastName }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 px-2 mb-3">
+                    <div class="row align-items-center py-3 px-2 mx-2 ">
+                        <div class="col-sm-6">
+                            <label> {{ "shared.user_id" | translate }}</label>
+                        </div>
+                        <div class="col-sm-6">
+                            <span class="fw-normal d-flex justify-content-start justify-content-sm-end">{{ user.id }}</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row mx-n2">
+                <div class="col-md-6 px-2 mb-3">
+                    <div class="row align-items-center py-3 px-2 mx-2 ">
+                        <div class="col-sm-6">
+                            <label> {{ "shared.phone_no" | translate }}</label>
+                        </div>
+                        <div class="col-sm-6">
+                            <span class="fw-normal d-flex justify-content-start justify-content-sm-end">{{ user.phoneNo || '-' }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 px-2 mb-3">
+                    <div class="row align-items-center py-1 px-2 mx-2 ">
+                        <div class="col-4">
+                            <label> {{ "shared.password" | translate }}</label>
+                        </div>
+                        <div class="col-8">
+                            <div class="d-flex justify-content-end"> <button mat-button class="btn reset-btn" (click)="confirmResetPassword()">
+                  <mat-icon class="fw-normal"> refresh </mat-icon>
+                  <span class="mx-1">{{ "shared.reset_password" | translate }}</span>
+                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row mx-n2">
+                <div class="col-md-6 px-2 mb-3">
+                    <div class="row align-items-center py-3 px-2 mx-2 ">
+                        <div class="col-sm-6">
+                            <label> {{ "shared.email" | translate }}</label>
+                        </div>
+                        <div class="col-sm-6">
+                            <span class="fw-normal d-flex justify-content-start justify-content-sm-end">{{ user.email || '-' }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 px-2 mb-3">
+                    <div class="row align-items-center py-3 px-2 mx-2 ">
+                        <div class="col-sm-3">
+                            <label> {{ "shared.roles" | translate }}</label>
+                        </div>
+                        <div class="col-sm-9 roles">
+                            <span *ngFor="let role of user.roles">
+                                {{ 'profile-module.roles.' + role | translate }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+            <div *ngIf="showPreference">
+                <div class="sub-title mb-2 px-3 pt-4">
+                    {{ "shared.preferences" | translate }}
+                </div>
+
+                <div class="row mx-n2">
+                    <div class="col-md-6 px-2 mb-3">
+                        <div class="row align-items-center py-1 mx-2 ">
+                            <div class="col-4">
+                                <label>{{ "shared.units" | translate }}</label>
+                            </div>
+                            <div class="col-8">
+                                <div class="d-flex justify-content-end">
+                                    <mat-select placeholder="Select" appearance="fill" class="mat-sel whiteselect selectfilter" [(ngModel)]="user.units" (ngModelChange)="updated()">
+                                        <mat-option *ngFor="let unit of units" [value]="unit.value">
+                                            {{ unit.name }}
+                                        </mat-option>
+                                    </mat-select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 px-2 mb-3">
+                        <div class="row align-items-center py-1 mx-2 ">
+                            <div class="col-5">
+                                <label> {{ "shared.time_zone" | translate }}</label>
+                            </div>
+                            <div class="col-7">
+                                <div class="d-flex justify-content-end">
+                                    <app-matselect-withsearch class="mat-sel" [key]="'name'" [value]="'name'" [selected]="user.timezone"
+                                        (valueUpdated)="selectZone($event)" [items]="timeZones"></app-matselect-withsearch>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="row bottom-tab mt-4">
+            <!-- <div class="col-sm-12 my-4 d-flex" *ngIf="version">
+                <div class="mr-2">{{ "shared.version" | translate }}:&nbsp;</div>
+                <div>{{version}}</div>
+            </div> -->
+            <div class="col-sm-6">
+                <!--        <button mat-flat-button color="warn" (click)="logout()">-->
+                <!--          <span>{{ "shared.logout" | translate }}</span>-->
+                <!--        </button>-->
+            </div>
+            <div class="col-sm-12 text-end">
+                <span *ngIf="valuesUpdated">
+          <button mat-flat-button color="warn" class="fill-btn" (click)="cancel()">
+            {{ "shared.cancel" | translate }}
+          </button>
+          <button mat-flat-button color="primary" class="fill-btn" (click)="save()">
+            {{ "shared.save" | translate }}
+          </button>
+        </span>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,82 @@
+<mat-toolbar class="mat-navbar navbar position-sticky top-0 ">
+    <div class="logoBar">
+        <a><img [src]="logo" alt="logo" class="logo-default" /></a>
+    </div>
+    <div class="select-tabs mx-auto d-none d-lg-block">
+        <app-navigation></app-navigation>
+    </div>
+    <div class="user-info">
+        <div class="user">
+            {{ user }}
+        </div>
+        <div class="role" *ngIf="userRoles.SA || userRoles.SPA || userRoles.SPAC">
+            {{ ('profile-module.roles.' + ((userRoles.SPA || userRoles.SPAC) ? 'SPA' : 'SA')) | translate }}
+        </div>
+    </div>
+    <div class="d-flex align-items-center align-items-lg-center d-lg-block">
+        <div class="profileBar" [matMenuTriggerFor]="belowMenu"
+            [ngClass]="(userRoles.SA || userRoles.SPA || userRoles.SPAC)?'profile-role':''">
+            <div class="user-icon">
+                <div>
+                    <mat-icon>person</mat-icon>
+                </div>
+            </div>
+
+            <div class="userinfo-area" *ngIf="userRoles.GC">
+                <div class="user-information gc-icon" [matTooltip]="'profile-module.roles.GC' | translate"
+                    matTooltipClass="whitebackground" matTooltipPosition="before">
+                    <mat-icon>add</mat-icon>
+                </div>
+            </div>
+            <div class="userinfo-area" *ngIf="userRoles.SC">
+                <div class="user-information" [matTooltip]="'profile-module.roles.SC' | translate"
+                    matTooltipClass="whitebackground" matTooltipPosition="before">
+                    S<sub>+</sub></div>
+            </div>
+            <div class="userinfo-area" *ngIf="userRoles.PHY">
+                <div class="user-information" [matTooltip]="'profile-module.roles.PHY' | translate"
+                    matTooltipClass="whitebackground" matTooltipPosition="below">
+                    <img alt="bio sensor icon" src="assets/icons/stethoscope.svg" />
+                </div>
+            </div>
+            <div class="userinfo-area" *ngIf="userRoles.CFA || userRoles.CFAC">
+                <div class="user-information" [matTooltip]="'profile-module.roles.CFA' | translate"
+                    matTooltipClass="whitebackground" matTooltipPosition="below">
+                    <mat-icon>settings</mat-icon>
+                </div>
+            </div>
+
+
+        </div>
+        <mat-menu #belowMenu="matMenu" yPosition="below" xPosition="before" class="setting-card-menu profile-card-menu">
+            <button mat-menu-item (click)="navigateUrl('/profile')">
+                <mat-icon>perm_identity</mat-icon> {{'profile-module.my_profile' | translate}}
+            </button>
+            <!-- <button mat-menu-item (click)="openHospialModel()" *ngIf="user_role !== 'SPA' && user_role !== 'SA'">
+                            <mat-icon><img class="align-top"  src="assets/icons/hospital-icon.svg" alt="hospital-icon" /></mat-icon> {{'profile-module.clinical_facility' | translate}}
+                        </button> -->
+            <button mat-menu-item (click)="openAboutModel()">
+                <mat-icon>error_outline</mat-icon> {{'profile-module.about' | translate}}
+            </button>
+            <button mat-menu-item>
+                <a href="https://lifesignals.zendesk.com/hc/en-us" target="_blank"
+                    class="d-block"><mat-icon>help_outline</mat-icon>
+                    {{'profile-module.help' | translate}}</a>
+            </button>
+            <button mat-menu-item (click)="logout()">
+                <mat-icon>power_settings_new</mat-icon> {{'profile-module.logout' | translate}}
+            </button>
+        </mat-menu>
+        <div class="ms-2 d-block d-lg-none">
+            <button mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon class="justify-content-center">menu</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu" class="mobile-menu d-block d-lg-none">
+                <div class="select-tabs">
+                    <app-navigation></app-navigation>
+                </div>
+            </mat-menu>
+        </div>
+    </div>
+
+</mat-toolbar>

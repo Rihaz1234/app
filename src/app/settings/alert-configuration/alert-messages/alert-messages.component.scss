@@ -1,0 +1,14 @@
+@import "src/assets/scss/modules/variables";
+table {
+  width: 100%;
+}
+.alert_msg {
+  background-color: $tab-bg-color;
+}
+
+.alert_msg .matlabel {
+  font-weight: $font-weight-700;
+  font-size: $base-font-size;
+  color: $label-color;
+  display: block;
+}

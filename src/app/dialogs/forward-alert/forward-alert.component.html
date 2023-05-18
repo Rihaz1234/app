@@ -1,0 +1,65 @@
+<mat-card class="dialog-header">
+    <h1 mat-dialog-title>
+        {{ "shared.dialog.page-heading" | translate }}
+    </h1>
+</mat-card>
+<mat-dialog-content class="mat-dialog-popup Forwardalert-popup">
+    <form class="dialog-form" [formGroup]="forwardAlertForm">
+        <div class="row">
+            <div class="col-sm-12">
+                <mat-label class="matlabel">
+                    {{ "shared.dialog.select-role" | translate }}
+                </mat-label>
+                <mat-form-field appearance="fill" class="formfield-control">
+                  <mat-label>Please select role</mat-label>
+                    <mat-select formControlName="role" (selectionChange)="fetchUsers($event)">
+                      <mat-option *ngFor="let role of roles" [value]="role.value"> {{role.name}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="forwardAlertForm.get('role').hasError('required') && submitted">
+                        {{"active-patients-module.errors.required" | translate}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <mat-label class="matlabel">
+                    {{ "shared.dialog.select-user" | translate }}
+                </mat-label>
+                <mat-form-field appearance="fill" class="formfield-control">
+                  <mat-label>Please select User</mat-label>
+                    <mat-select formControlName="user" [disabled]="!forwardAlertForm?.value?.role" (selectionChange)="userChange()">
+                        <mat-option *ngFor="let user of usersList" [value]="user"> {{user.displayName}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="forwardAlertForm.get('user').hasError('required') && submitted">
+                        {{"active-patients-module.errors.required" | translate}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="alert-type-list">
+                    <h4 class="matlabel">{{ "shared.dialog.select-alert-type" | translate }}</h4>
+                    <div class="alertlist">
+                        <div class="alertcheckbox" *ngFor="let type of alertType">
+                            <mat-checkbox [disabled]="type?.validation && !forwardAlertForm.value?.user?.[type?.validation]" (change)="onTypeChange($event)" [value]="type.value">{{ type.name | translate }}</mat-checkbox>
+                        </div>
+                    </div>
+                    <mat-error *ngIf="forwardAlertForm.get('type').hasError('required') && submitted">
+                        {{"active-patients-module.errors.required" | translate}}
+                    </mat-error>
+                </div>
+            </div>
+        </div>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions class="mx-4">
+    <button
+        mat-flat-button
+        mat-dialog-close
+        class="fill-btn"
+        color="warn"
+    > {{ "shared.dialog.Cancel" | translate }}</button>
+    <button mat-flat-button class="fill-btn" (click)="onSubmit()" color="primary">{{ "shared.dialog.Send" | translate }}</button>
+</mat-dialog-actions>

@@ -1,0 +1,173 @@
+<mat-card class="dialog-header">
+    <h1 mat-dialog-title *ngIf="serviceProviderData === undefined; else edit">
+        {{ 'super_admin.add_service_provider.label_add_sp' | translate }}
+    </h1>
+    <ng-template #edit>
+        <h1 mat-dialog-title>
+            {{ 'super_admin.add_service_provider.label_edit_sp' | translate }}
+        </h1>
+    </ng-template>
+</mat-card>
+
+<mat-dialog-content class="mat-dialog-popup">
+    <form [formGroup]="addServiceProviderForm" class="dialog-form" autocomplete="off" id="addServiceProviderForm">
+        <div *ngIf="serviceProviderData !== undefined">
+            <mat-label for="sp-company-name" class="matlabel" [class.disabled]="serviceProviderData">{{
+                'shared_label.label_id' | translate }}
+            </mat-label>
+            <mat-form-field appearance="fill" class="formfield-control" [class.disabled]="serviceProviderData">
+                <input matInput formControlName="user_id" [readonly]="serviceProviderData" />
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-label for="sp-company-name" class="matlabel" [class.disabled]="serviceProviderData">{{
+                'shared_label.label_company_name' | translate }}
+                <span class="required-star" *ngIf="serviceProviderData === undefined">* </span>
+                <!--<span class="required-star cannotEdit" *ngIf="serviceProviderData === undefined">{{ 'shared_label.label_company_name_change' | translate }}</span>
+                <span class="required-star cannotEdit" *ngIf="serviceProviderData">{{ 'shared_label.label_cannot_edit' | translate }}</span>-->
+            </mat-label>
+            <mat-form-field appearance="fill" class="formfield-control" [class.disabled]="serviceProviderData"
+                [ngClass]="addServiceProviderForm.get('companyName').hasError('pattern') && addServiceProviderForm.get('companyName').touched ? 'error-msg': ''">
+                <input matInput autocomplete="off" formControlName="companyName" [readonly]="serviceProviderData"
+                    maxlength="128" />
+                <mat-error *ngIf="hasError('companyName', 'required') && submitted">{{
+                    'error_message.err_company_name_required' | translate }}
+                </mat-error>
+                <mat-error *ngIf="hasError('companyName','pattern')">{{ 'error_message.err_company_name_pattern' |
+                    translate }}
+                </mat-error>
+                <mat-error
+                    *ngIf="(hasError('companyName','minlength') || hasError('companyName','maxlength')) && !hasError('companyName','pattern')">
+                    {{ 'error_message.err_company_name_range' | translate }}
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="mb-1">
+            <mat-label for="sp-address-line-1" class="matlabel">{{ 'shared_label.label_address' | translate }}
+            </mat-label>
+            <mat-form-field appearance="fill" class="formfield-control"
+                [ngClass]="addServiceProviderForm.get('addressLine1').hasError('pattern') && addServiceProviderForm.get('addressLine1').touched ? 'error-msg': ''">
+                <input matInput autocomplete="off" placeholder="{{ 'shared_label.label_line_1' | translate }}"
+                    formControlName="addressLine1" maxlength="128" />
+                <mat-error *ngIf="hasError('addressLine1','pattern')">
+                    {{'error_message.err_valid_address'|translate}}
+                </mat-error>
+                <mat-error
+                *ngIf="(hasError('addressLine1','minlength') || hasError('addressLine1','maxlength')) && !hasError('addressLine1','pattern')">
+                    {{'error_message.err_address_range' | translate}}
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="formfield-control"
+                [ngClass]="addServiceProviderForm.get('addressLine2').hasError('pattern') && addServiceProviderForm.get('addressLine2').touched ? 'error-msg': ''">
+                <input matInput autocomplete="off" placeholder="{{ 'shared_label.label_line_2' | translate }}"
+                    formControlName="addressLine2" maxlength="128" />
+                <mat-error *ngIf="hasError('addressLine2','pattern')">
+                    {{'error_message.err_valid_address'|translate}}
+                </mat-error>
+                <mat-error
+                    *ngIf="(hasError('addressLine2','minlength') || hasError('addressLine2','maxlength')) && !hasError('addressLine2','pattern')">
+                    {{'error_message.err_address_range' | translate}}
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <fieldset class="scheduler-border">
+            <legend class="scheduler-border">
+                <div>
+                    <mat-icon class="me-2 material-icons-outlined">account_circle</mat-icon>
+                    <label class="facility-details-label">{{
+                        'shared_label.label_contact_details' | translate
+                        }}</label>
+                </div>
+            </legend>
+            <div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <mat-label for="sp-contact-person-fname" class="matlabel">{{ 'shared_label.label_first_name' |
+                            translate }}
+                            <span class="required-star">*</span>
+                        </mat-label>
+                        <mat-form-field appearance="fill" class="formfield-control"
+                            [ngClass]="addServiceProviderForm.get('firstName').hasError('pattern') && addServiceProviderForm.get('firstName').touched ? 'error-msg': ''">
+                            <input matInput autocomplete="off" formControlName="firstName"
+                                (keypress)="charsOnly('firstName', $event)" />
+                            <mat-error *ngIf="hasError('firstName', 'required') && submitted">{{
+                                'error_message.err_first_name_required' | translate }}
+                            </mat-error>
+                            <mat-error *ngIf="hasError('firstName','pattern')">
+                                {{'error_message.err_first_name_char_only' | translate}}</mat-error>
+                            <mat-error *ngIf="hasError('firstName','maxlength') && !hasError('firstName','pattern')">
+                                {{'error_message.err_first_name_range' | translate}}</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-label for="sp-contact-person-lname" class="matlabel">{{ 'shared_label.label_last_name' |
+                            translate }}
+                            <span class="required-star">*</span>
+                        </mat-label>
+                        <mat-form-field appearance="fill" class="formfield-control"
+                            [ngClass]="addServiceProviderForm.get('firstName').hasError('pattern') && addServiceProviderForm.get('firstName').touched ? 'error-msg': ''">
+                            <input matInput autocomplete="off" formControlName="lastName"
+                                (keypress)="charsOnly('lastName', $event)" />
+                            <mat-error *ngIf="hasError('lastName', 'required') && submitted">{{
+                                'error_message.err_last_name_required' | translate }}
+                            </mat-error>
+                            <mat-error *ngIf="hasError('lastName','pattern')">{{'error_message.err_last_name_char_only'
+                                | translate}}</mat-error>
+                            <mat-error *ngIf="hasError('lastName','maxlength') && !hasError('lastName','pattern')">
+                                {{'error_message.err_last_name_range' | translate}}</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <mat-label for="sp-contact-email" class="matlabel">{{ 'shared_label.label_email' |
+                            translate }}
+                            <!--<<span class="required-star">**</span>-->
+                        </mat-label>
+                        <mat-form-field appearance="fill" class="formfield-control">
+                            <input matInput autocomplete="off" formControlName="email" [maxLength]="320" />
+                            <mat-error *ngIf="hasError('email','email')" >{{'error_message.err_invalid_email'|translate}}</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-label for="sp-contact-person-phone" class="matlabel">{{ 'shared_label.label_phone_no' |
+                            translate }}
+                            <!--<span class="required-star">**</span>-->
+                        </mat-label>
+                        <app-tel-input formControlName="phoneNo"></app-tel-input>
+                        <mat-error class="mt-2" *ngIf="hasError('phoneNo', 'phoneNumberInvalid')">
+                            {{"errors.err_invalid_phone_no" | translate}}
+                        </mat-error>
+                    </div>
+
+                </div>
+                <!--                <mat-error *ngIf="submitted && !addServiceProviderForm.getRawValue()?.email && !addServiceProviderForm.getRawValue()?.phoneNo">-->
+                <!--                    {{ "manage_users_module.edituser.message1" | translate }}-->
+                <!--                </mat-error>-->
+            </div>
+
+            <!--<div class="email-phone-info-text">
+                **{{ 'error_message.err_email_phone_mandatory' | translate }}
+            </div>-->
+        </fieldset>
+        <div class="required-text">
+            <span>* {{ 'error_message.err_mandatory' | translate }}</span>
+        </div>
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button color="warn" mat-flat-button type="button" class="fill-btn" (click)="onClose()">
+        {{ 'buttons.btn_cancel' | translate }}
+    </button>
+    <button type="button" mat-flat-button color="primary" class="fill-btn" (click)="saveServiceProvider()"
+        *ngIf="serviceProviderData">
+        {{ 'buttons.btn_save' | translate }}
+    </button>
+    <button type="button" color="primary" mat-flat-button class="fill-btn" (click)="saveServiceProvider()"
+        *ngIf="serviceProviderData === undefined">
+        {{ 'buttons.btn_add' | translate }}
+    </button>
+</mat-dialog-actions>

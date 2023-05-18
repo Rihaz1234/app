@@ -1,0 +1,43 @@
+<div class="loading-indicator" *ngIf="loader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>
+
+<div *ngIf="!loader" class="scrolltab-height bg-thead-color comman-table-users head-border">
+    <ls-table [config]="config" [columns]="columns" (page)="onPage($event)" (sortChange)="onSortChange($event)" [data]="relayList$ | async" (selected)="relaysSelected($event)" [isSelected]="isSelected" [Id]="'relayId'">
+
+
+        <ng-template lsWidgetName="relayId" let-data>
+            <div class="py-2">{{ data?.relayId }}</div>
+        </ng-template>
+        <ng-template lsWidgetName="firstName" let-data>
+            {{data.firstName || "-"}}
+        </ng-template>
+        <ng-template lsWidgetName="email" let-data>
+            <div class="pe-3">
+                <small class="pt-1">{{ data?.email }}</small><br>
+                <small class="pt-1">{{ data?.phoneNo }}</small>
+            </div>
+        </ng-template>
+        <ng-template lsWidgetName="biosensorIDHeading">
+            <img alt="bio sensor icon" src="assets/icons/biosensor.svg" /> {{'manage_relays_module.biosensorID' | translate}}
+        </ng-template>
+        <ng-template lsWidgetName="biosensorID" let-row>
+            <div class="d-flex justify-content-center align-items-center">
+                <img class="patch-icon" src="assets/icons/biosensor.svg" />
+                <div class="biosensor-id">
+                    {{ row.biosensorID || "-" }}
+                </div>
+            </div>
+        </ng-template>
+        <ng-template lsWidgetName="createdDateTime" let-row>
+            {{ row?.createdDateTime | date: "MMM d, yyyy" : timeZone }} /
+            <span class="bold-text">{{ row?.createdDateTime+ '+0000' | date: timeFmt : timeZone }}</span>
+        </ng-template>
+        <ng-template lsWidgetName="lastActive" let-row>
+            <span *ngIf="row?.lastActive">{{ row?.lastActive | date: "MMM d, yyyy" : timeZone }} /
+            <span class="bold-text">{{ row?.lastActive | date: timeFmt : timeZone }}</span>
+            </span>
+            <span *ngIf="!row?.lastActive"> - </span>
+        </ng-template>
+    </ls-table>
+</div>

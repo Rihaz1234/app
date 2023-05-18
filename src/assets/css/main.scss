@@ -1,0 +1,282 @@
+.logo_align {
+  margin-bottom: 55px;
+}
+
+.card {
+  border: 1px solid #28a745;
+}
+
+.card-login {
+  margin-top: 80px;
+  padding: 18px;
+  max-width: 30rem;
+}
+
+.card-header {
+  color: $white;
+  /*background: #ff0000;*/
+
+  font-size: 20px;
+  font-weight: 600 !important;
+  margin-top: 10px;
+  border-bottom: 0;
+}
+
+.input-group-prepend span {
+  width: 50px;
+  background-color: #ff0000;
+  color: $white;
+  border: 0 !important;
+}
+
+input:focus {
+  outline: 0 !important;
+  box-shadow: 0 0 0 0 !important;
+}
+
+.login_btn {
+  background-color: rgb(196, 196, 196, 0.16);
+
+  border-radius: 0.25rem;
+  border: none;
+  color: rgba(255, 255, 255, 0.85);
+  padding: 5px 75px 5px 75px;
+  margin-top: 55px;
+}
+
+.login_btn label {
+  font-size: 18px;
+}
+
+.login_btn:hover {
+  background-color: #033562;
+  box-shadow: $box-shadow-button;
+  border-radius: 0.25rem;
+
+  color: rgba(255, 255, 255, 0.85);
+  border: none;
+  padding: 5px 75px 5px 75px;
+  margin-top: 55px;
+}
+
+.form-control {
+  background-color: rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0px 2px 4px rgba(255, 255, 255, 0.25);
+  border-radius: 0.25rem;
+  width: 75% !important;
+  height: 32px;
+  margin-left: 13%;
+  border: none;
+}
+
+input::placeholder {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 20px;
+  /* identical to box height, or 125% */
+
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.25px;
+
+  color: rgba(255, 255, 255, 0.65) !important;
+}
+
+/*--dashboard css */
+.navbar {
+  width: 100%;
+  background: $bg-button-color;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.12);
+}
+
+.nav-item {
+  clear: both;
+  float: right !important;
+}
+
+ul li {
+  list-style-type: none;
+}
+
+.readings {
+  background-color: $bg-card-color;
+  width: 253px;
+  height: 145px;
+  margin-top: 20px;
+  color: $white;
+  border-radius: 8px;
+}
+
+.read-heading {
+  width: 253px;
+  height: 50px;
+  background-color: $bg-button-color;
+  color: $white;
+  padding: 5px;
+  border-radius: 8px;
+}
+
+.read-heading li {
+  font-size: 12px;
+  line-height: 20px;
+  /* or 167% */
+
+  display: flex;
+  align-items: flex-end;
+  letter-spacing: 0.25px;
+  text-decoration: none;
+  color: $white;
+}
+
+.patch-id {
+  clear: both;
+}
+
+.read-heading span {
+  font-size: 12px;
+  line-height: 20px;
+  /* or 167% */
+
+  display: flex;
+  align-items: flex-end;
+  letter-spacing: 0.25px;
+
+  color: $white;
+}
+
+.flo-lef {
+  float: left;
+}
+
+.pat-name {
+  padding-left: 10px;
+}
+
+.close-icon {
+  float: right;
+  padding-top: 5px;
+}
+
+.measurings li label {
+  font-size: 12px;
+  line-height: 20px;
+  /* or 167% */
+
+  display: flex;
+  align-items: flex-end;
+  letter-spacing: 0.25px;
+
+  color: $white;
+}
+
+.measurings li {
+  float: left;
+  list-style-type: none;
+  padding-top: 10px;
+}
+
+.measurings span {
+  font-size: 8px;
+  padding-left: 3px;
+}
+
+.measurings img {
+  padding-bottom: 8px;
+}
+
+.add_pat label {
+  font-size: 16px;
+  line-height: 20px;
+  /* identical to box height, or 125% */
+
+  display: flex;
+  align-items: flex-end;
+  letter-spacing: 0.25px;
+
+  color: $white;
+}
+
+.measurings label {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 28px;
+  line-height: 20px;
+  /* identical to box height, or 71% */
+
+  display: flex;
+  align-items: flex-end;
+  letter-spacing: 0.25px;
+}
+
+hr {
+  width: 1px;
+  height: 10px;
+}
+
+.dateandtime {
+  font-weight: normal;
+  font-size: 8px;
+  line-height: 20px;
+  /* identical to box height, or 250% */
+
+  display: flex;
+  align-items: flex-end;
+  letter-spacing: 0.25px;
+
+  color: $time-color;
+}
+
+.add {
+  padding-top: 20%;
+}
+
+/*--dashboard css end*/
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/*--dashboard css end*/
+
+/*-respomsive*/
+
+@media only screen and (max-width: 768px) {
+  .card-login img {
+    width: 250px;
+  }
+
+  input::placeholder {
+    font-size: 12px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .card-login img {
+    width: 200px;
+  }
+
+  input::placeholder {
+    font-size: 12px;
+  }
+}
+
+/*-respomsive*/
+
+@media only screen and (width: 240px) {
+  input::placeholder {
+    font-size: 8px;
+  }
+
+  .login_btn {
+    border: none;
+
+    padding: 5px 35px 0px 35px;
+  }
+}

@@ -1,0 +1,104 @@
+<div id="sendOtp">
+<mat-card class="dialog-header">
+  <h1 mat-dialog-title>
+    {{ "manage_relays_module.send_otp_qr" | translate }}
+  </h1>
+  <!--<button mat-icon-button mat-dialog-close>
+    <mat-icon>close</mat-icon>
+  </button>-->
+</mat-card>
+<mat-dialog-content class="mat-dialog-popup">
+  <form [formGroup]="sendOtpForm" class="dialog-form">
+    <div class="row">
+      <div class="col-sm-12">
+        <mat-label for="email" class="matlabel">{{ "manage_users_module.adduser.emailid" | translate }}
+        </mat-label>
+        <mat-form-field appearance="fill" class="formfield-control">
+          <input
+          autocomplete="off"
+            matInput
+            type="email"
+            formControlName="email"
+            [maxlength]="320"
+            id="email"
+            placeholder="Email"
+          />
+          <mat-error  *ngIf=" f.email.errors && f.email.touched">
+            {{ 'error_message.err_invalid_email' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <!--    </div>-->
+    <!--    <div class="form-group mt-1">-->
+    <div class="row mt-1">
+      <div class="col-sm-12">
+        <mat-label class="matlabel">{{
+          "manage_relays_module.phone_number" | translate
+        }}</mat-label>
+        <ngx-intl-tel-input
+          matInput
+          formControlName="phoneNumber"
+          disabled
+          class="iti-phone2 form-control py-1"
+          [ngClass]="{ 'is-invalid': submitted && f.phoneNumber.errors }"
+          [selectedCountryISO]="CountryISO.India"
+          [phoneValidation]="true"
+          [enablePlaceholder]="false"
+        ></ngx-intl-tel-input>
+        <div *ngIf="submitted && f.phoneNumber.errors" class="invalid-feedback">
+          <mat-error  *ngIf="f.phoneNumber.errors.required">
+            {{ "manage_relays_module.phone_number_required" | translate }}
+          </mat-error>
+          <mat-error  *ngIf="!f.phoneNumber.valid">
+            {{ "manage_relays_module.phone_number_invalid" | translate }}
+          </mat-error>
+        </div>
+      </div>
+    </div>
+    <mat-error class="mt-1" *ngIf="submitted && noSelection">
+      {{ "manage_relays_module.email/phone_number_required_msg" | translate }}
+    </mat-error>
+    <!--    </div>-->
+    <div class="form-group select-form-group my-2 ">
+      <mat-label class="matlabel fw-bold text-uppercase">{{
+        "manage_relays_module.select" | translate
+      }}</mat-label>
+        <div>
+          <mat-checkbox class="mt-2" value="otp"
+                        (change)="onCheckboxChange($event)"
+            ><span style="margin: 10px">{{
+              "manage_relays_module.otp" | translate
+            }}</span></mat-checkbox
+          >
+        </div>
+        <div>
+          <mat-checkbox class="mt-2" value="qr" [disabled]="!sendOtpForm?.value?.email"
+                        (change)="onCheckboxChange($event)"
+            ><span style="margin: 10px">{{
+              "manage_relays_module.qr_code" | translate
+            }}</span></mat-checkbox
+          >
+        </div>
+      <div *ngIf="submitted && f.type.errors" class="invalid-feedback">
+        <mat-error class="mt-2" *ngIf="f.type.errors.required">
+          {{ "manage_relays_module.select_option" | translate }}
+        </mat-error>
+      </div>
+    </div>
+  </form>
+</mat-dialog-content>
+<div matDialogActions class="mx-4">
+  <button mat-flat-button mat-dialog-close class="fill-btn" color="warn">
+    {{ "manage_relays_module.cancel" | translate }}
+  </button>
+  <button
+    mat-flat-button
+    class="fill-btn"
+    (click)="onSubmit()"
+    color="primary"
+  >
+    {{ "manage_relays_module.send" | translate }}
+  </button>
+</div>
+</div>

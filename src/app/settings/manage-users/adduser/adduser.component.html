@@ -1,0 +1,186 @@
+<div id="addUser">
+    <mat-card class="dialog-header">
+        <h1 mat-dialog-title>
+            {{ "manage_users_module.adduser.add_user" | translate }}
+        </h1>
+        <!--<button mat-icon-button mat-dialog-close>
+      <mat-icon>close</mat-icon>
+    </button>-->
+    </mat-card>
+    <mat-dialog-content class="mat-dialog-popup">
+        <div class="loading-indicator" *ngIf="loader">
+            <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+        </div>
+        <form [formGroup]="addUserForm" class="dialog-form" autocomplete="off">
+            <!--            <div class="row">-->
+            <!--                <div class="col-md-6">-->
+            <!--                    <mat-label class="matlabel">{{ "manage_users_module.adduser.user_Id" | translate }}-->
+            <!--                    </mat-label>-->
+            <!--                    <mat-form-field class="formfield-control" appearance="fill">-->
+            <!--                        <input matInput type="text" formControlName="user_Id" class="form-control" id="firstname" autocomplete="off" />-->
+            <!--                    </mat-form-field>-->
+            <!--                </div>-->
+            <!--            </div>-->
+
+            <div class="row">
+                <div class="col-md-6">
+                    <mat-label class="matlabel">{{ "manage_users_module.adduser.firstname" | translate }}
+                        <span class="required-star">* </span>
+                    </mat-label>
+                    <mat-form-field class="formfield-control" appearance="fill" [ngClass]="addUserForm.get('firstName').hasError('pattern') && addUserForm.get('firstName').touched ? 'error-msg': ''">
+                        <input matInput type="text" formControlName="firstName" class="form-control firstName" id="firstname" autocomplete="off" placeholder="First Name" [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" (keypress)="charsOnly('firstName', $event)"
+                        maxlength="25"/>
+                        <mat-error *ngIf="f.firstName?.errors?.required && submitted">
+                            {{ "manage_users_module.adduser.firstname_required" | translate }}
+                        </mat-error>
+                        <mat-error *ngIf="!f.firstName?.errors?.required && f.firstName?.errors?.pattern">
+                            {{ "manage_users_module.adduser.firstname_invalid" | translate }}
+                        </mat-error>
+                        <mat-error *ngIf="f.firstName?.errors?.maxlength && !f.firstName?.errors?.required && !f.firstName?.errors?.pattern">
+                            {{'error_message.err_first_name_range' | translate}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-label for="lastname" class="matlabel">{{ "manage_users_module.adduser.lastname" | translate }}
+                        <span class="required-star">* </span>
+                    </mat-label>
+                    <mat-form-field class="formfield-control" appearance="fill" [ngClass]="addUserForm.get('lastName').hasError('pattern') && addUserForm.get('lastName').touched ? 'error-msg': ''">
+                        <input matInput formControlName="lastName" type="text" class="form-control firstName" id="lastname" autocomplete="off" placeholder="Last Name" [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }"
+                               (keypress)="charsOnly('lastName', $event)" maxlength="25"/>
+                        <mat-error *ngIf="f.lastName?.errors?.required && submitted">
+                            {{ "manage_users_module.adduser.lastname_required" | translate }}
+                        </mat-error>
+                        <mat-error *ngIf="!f.lastName?.errors?.required && f.lastName?.errors?.pattern">
+                            {{ "manage_users_module.adduser.lastname_invalid" | translate }}
+                        </mat-error>
+                        <mat-error *ngIf="f.lastName?.errors?.maxlength && !f.lastName?.errors?.required && !f.lastName?.errors?.pattern">
+                            {{'error_message.err_last_name_range' | translate}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <mat-label for="email" class="matlabel">{{ "manage_users_module.adduser.emailid" | translate }}
+                        <label class="required"> **</label>
+                    </mat-label>
+                    <mat-form-field appearance="fill" class="formfield-control">
+                        <input matInput type="email" formControlName="email" [maxlength]="320" id="email" autocomplete="off" placeholder="Email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+                        <mat-error *ngIf="f.email?.errors?.required">
+                            {{ "manage_users_module.adduser.email_required" | translate }}
+                        </mat-error>
+                        <mat-error *ngIf="f.email?.invalid" >
+                            {{ "manage_users_module.adduser.invalid_email" | translate }}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="form-group col-md-6">
+                    <mat-label for="phonenumber" class="matlabel">{{ "manage_users_module.adduser.phoneno" | translate }}
+                        <label class="required"> **</label>
+                    </mat-label>
+                    <!--        <ngx-intl-tel-input-->
+                    <!--          formControlName="phoneNo"-->
+                    <!--          class="iti-phone2 form-control"-->
+                    <!--          id="phonenumber"-->
+                    <!--          placeholder="Phone number"-->
+                    <!--          [ngClass]="{ 'is-invalid': submitted && f.phoneNo.errors }"-->
+                    <!--          [selectedCountryISO]="CountryISO.India"-->
+                    <!--        ></ngx-intl-tel-input>-->
+                    <app-tel-input [formControl]="addUserForm?.controls?.phoneNo" [ngClass]="{ 'is-invalid': submitted && f.phoneNo.errors }"></app-tel-input>
+                    <mat-error *ngIf="f.phoneNo?.errors?.required" class="mt-2 required">
+                        {{ "manage_users_module.adduser.phoneno_required" | translate }}
+                    </mat-error>
+                    <mat-error *ngIf="!f.phoneNo?.errors?.required && !f.phoneNo?.valid" class="mt-2 required">
+                        {{ "manage_users_module.adduser.invalid_phoneno" | translate }}
+                    </mat-error>
+                </div>
+            </div>
+            <mat-error *ngIf="!isBlank(error)" class="required">
+                {{ "manage_users_module.adduser." + error | translate }}
+            </mat-error>
+            <mat-error *ngIf="
+        submitted &&
+        isBlank(addUserForm.getRawValue().email) &&
+        isBlank(addUserForm.getRawValue().phoneNo)
+      " class="required">
+                {{ "manage_users_module.edituser.message1" | translate }}
+            </mat-error>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group my-3">
+                        <mat-label class="matlabel">{{ "manage_users_module.adduser.select_role" | translate }}
+                            <label class="required"> *</label>
+                        </mat-label>
+                        <div *ngFor="let role of roles" class="d-flex flex-column mt-1">
+                            <mat-checkbox class="my-1" [value]="role.value" (change)="onRoleChange($event)">
+                                <span> {{ role.name }}</span>
+                            </mat-checkbox>
+                        </div>
+                        <ng-container *ngIf="submitted && f.roles.errors">
+                            <mat-error *ngIf="f.roles.errors.required" class="my-1">
+                                {{ "manage_users_module.adduser.role_required" | translate }}
+                            </mat-error>
+                        </ng-container>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="my-3" *ngIf="showAssignGroup()">
+                        <label class="matlabel">{{ "manage_users_module.adduser.groups" | translate }} </label
+          >
+          <div
+                  *ngFor="let group of userGroups; let i = index"
+                  class="d-flex align-items-center my-2"
+          >
+            <span class="text-truncate lh-base">{{ i + 1 }}. {{ group.name }} </span>
+            <mat-icon
+                    fontSet="material-icons-outlined"
+                    class="ms-2 cursor-pointer"
+                    (click)="saveChanges(group.groupId)"
+            >
+              delete</mat-icon
+            >
+          </div>
+          <!--      <div *ngIf="submitted && isBlank(groups)">-->
+          <!--        <mat-error class="required-text my-1">-->
+          <!--          {{ "manage_users_module.adduser.group_required" | translate }}-->
+          <!--        </mat-error>-->
+          <!--      </div>-->
+        </div>
+        <button mat-flat-button (click)="addGroup()" color="primary" *ngIf="showAssignGroup()">
+          {{ "manage_users_module.adduser.groupbutton" | translate }}
+        </button>
+      </div>
+
+    </div>
+    <div class="mt-4">
+      <label class="required">
+        {{ "manage_users_module.adduser.required" | translate }}</label
+      ><br />
+      <label class="required">
+        {{ "manage_users_module.adduser.message" | translate }}</label
+      >
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions *ngIf="!loader" class="mx-4">
+  <button
+    mat-flat-button
+    (click)="close()"
+    class="fill-btn"
+    color="warn"
+  >
+    {{ "manage_users_module.adduser.cancelbutton" | translate }}
+  </button>
+  <button
+    mat-flat-button
+    type="submit"
+    class="fill-btn"
+    (click)="onSubmit()"
+    color="primary"
+  >
+    {{ "manage_users_module.adduser.savebutton" | translate }}
+  </button>
+</mat-dialog-actions>
+</div>

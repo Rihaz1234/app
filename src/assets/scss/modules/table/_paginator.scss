@@ -1,0 +1,16 @@
+@import "src/assets/scss/modules/variables";
+
+/* pagination */
+
+.mat-paginator, .ls-paginator {
+  background-color: transparent;
+  .mat-paginator-icon {
+    fill: $white;
+  }
+
+  button {
+    box-shadow: none !important;
+  }
+}
+
+/* pagination */

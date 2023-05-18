@@ -1,0 +1,132 @@
+@import "src/assets/scss/modules/variables";
+
+/*::ng-deep {
+    .scroll-assist {
+        max-height: calc(100vh - 300px) !important;
+    }
+}*/
+
+.head-setting {
+    font-weight: $font-weight-700;
+    font-size: 1rem;
+    white-space: nowrap;
+}
+
+.head-setting-right {
+    font-weight: 400;
+    opacity: 0.8;
+    font-size: 1rem;
+    font-style: italic;
+}
+
+/*.drop-down {
+    width: 130px;
+    border: none !important;
+    padding: 2px;
+    text-align: left;
+    background: $white;
+    box-shadow: $box-shadow-color;
+    border-radius: $border-radius;
+}
+
+.select-btn:focus {
+    background: $tab-bg-color !important;
+    outline: none;
+    box-shadow: none;
+}*/
+
+.reset_btn_bg {
+    background: $bg-reset-btn;
+}
+
+.table-container {
+    background: $tab-bg-color !important;
+    /*max-height: calc(100vh - 430px) !important;
+    min-height: 45vh;
+    overflow: auto;*/
+}
+
+/*.selectfilter-dropdown {
+    width: 100%;
+}*/
+.nested-selectfilter {
+    width: 14rem;
+
+    @media only screen and (max-width: 767px) {
+        width: 50%;
+
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1099px) {
+    .alert-configuration-button {
+        &.button-card-area {
+            button {
+                margin-right: 0.5rem;
+                padding: 0 0.9rem;
+                min-width: auto;
+                font-size: $size-12;
+            }
+        }
+    }
+
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .alert-configuration-button {
+        &.button-card-area {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 0 -0.2rem;
+            height: auto;
+
+            button {
+                width: calc(33.33% - 0.5rem);
+                margin: 0 0.2rem 0.4rem;
+                display: flex;
+                height: 2.5rem;
+                border-radius: 4px;
+            }
+        }
+    }
+}
+
+
+
+@media only screen and (max-width: 767px) {
+    .select-btn-active {
+        border-radius: 8px 8px 8px 8px;
+        margin: 7px 7px 10px 10px;
+    }
+
+    .btn4 {
+        outline: none;
+        box-shadow: none;
+        border: none !important;
+    }
+
+    .msgbtn {
+        right: -476px;
+        top: -34px;
+        position: relative;
+    }
+
+    .button-card-area {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        margin: 0 -0.2rem;
+
+        button {
+            width: calc(50% - 0.5rem);
+            margin: 0 0.2rem 0.4rem;
+            display: flex;
+            height: 2.5rem;
+            border-radius: 4px;
+        }
+    }
+
+
+
+}

@@ -1,0 +1,15 @@
+<button [disabled]="disabled" *ngIf="!service?.getChildren(option[key], options).length" mat-menu-item class="nested-menu-item"
+    (click)="onClickChild(option)" (mouseenter)="mouseMove(undefined, option, 'ENTER', false)" (mouseleave)="mouseMove(undefined, option, 'LEAVE', false)">
+    {{ option[displayKey] }}
+</button>
+<button [disabled]="disabled" *ngIf="service?.getChildren(option[key], options).length" mat-menu-item class="nested-menu-item"
+    [matMenuTriggerFor]="subchildren" #subTrigger="matMenuTrigger" (mouseenter)="mouseMove(subTrigger, option, 'ENTER', true)" (mouseleave)="mouseMove(subTrigger, option, 'LEAVE', true)"
+    (click)="onClickChild(option)">
+    {{ option[displayKey] }}
+</button>
+<mat-menu #subchildren="matMenu">
+    <ng-container *ngFor="let child of service?.getChildren(option[key], options)">
+        <app-menu (sequence)="onSequence($event)" [displayKey]="displayKey" [options]="options" [option]="child" [key]="key" [parent]="option[key]"
+            (clickChild)="onClickChild($event)"></app-menu>
+    </ng-container>
+</mat-menu>

@@ -1,0 +1,148 @@
+<ls-page-header type="discharge_patients">
+    <ng-container page-actions>
+        <div class="d-flex justify-content-end me-4">
+            <div class="d-lg-flex d-md-none d-sm-none d-none button-group my-2">
+            </div>
+            <div class="d-block d-lg-none my-2 ">
+            </div>
+        </div>
+    </ng-container>
+
+</ls-page-header>
+<!-- discharge patient topheader after-->
+
+<!--<div class="row align-items-center">
+        <div class="col-10 col-sm-10 col-md-10 col-lg-8 col-xl-8 col-xxl-7">
+            
+        </div>
+        <div class="col-2 col-sm-2 col-md-2 col-lg-4 col-lg-4 col-xxl-5">
+
+        </div>
+    </div>-->
+<div class="px-3">
+    <div class="table-scroll">
+
+        <div class="mat-discharge-table without-tab-table comman-table-users head-border">
+            <ls-table [data]="dischargePatients" (sortChange)="onSortChange($event)" [columns]="columns"
+                [config]="config" (page)="onPageChange($event)" [Id]="'patientId'" [isSelected]="isSelected"
+                (selected)="onPatientsSelected($event)">
+                <ng-container table-header>
+                    <div class="my-3 row align-items-end position-relative ps-0 ps-lg-5">
+                        <label class="mat-label filter-label d-lg-flex d-none  align-items-center">{{ "active-patients-module.filter" | translate }}</label>
+                        <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8 col-xxl-7 select-col discharge-select-dropdown">
+                            <div class="row">
+                                <div class="col-12 col-sm-6">
+                                    <!--                                    <mat-form-field class="selectfilter whiteselect me-2" appearance="fill" floatLabel="never">-->
+                                    <!--                                        <mat-label>{{ "discharge-patients-module.location" | translate }}-->
+                                    <!--                                        </mat-label>-->
+                                    <!--                                        <mat-select class="search-filter-select" #locationMatSelect (selectionChange)="searchByGroup('LOCATION', locationGroup, $event)" [(ngModel)]="locationGroup">-->
+                                    <!--                                            <mat-option [value]="null">-->
+                                    <!--                                                Select-->
+                                    <!--                                            </mat-option>-->
+                                    <!--                                            <mat-option [value]="group" *ngFor="let group of locationGroups$ | async">-->
+                                    <!--                                                {{group?.name}}-->
+                                    <!--                                            </mat-option>-->
+                                    <!--                                        </mat-select>-->
+                                    <!--                                    </mat-form-field>-->
+                                    <app-nested-dropdown class="nested-selectfilter bg-selectfilter" [selectedValue]="filterObject.pGroupId" key="groupId" displayKey="name" [label]="'discharge-patients-module.location' | translate" (selected)="searchByGroup('LOCATION', $event)" [options]="locationGroups$ | async"
+                                    [showSelect]="true">
+                                    </app-nested-dropdown>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <!--                                    <mat-form-field class="selectfilter whiteselect me-2" appearance="fill" floatLabel="never">-->
+                                    <!--                                        <mat-label>{{ "discharge-patients-module.clinical_conditions" | translate }}-->
+                                    <!--                                        </mat-label>-->
+                                    <!--                                        <mat-select class="search-filter-select" #clinicalMatSelect (selectionChange)="searchByGroup('CLINICAL', clinicalGroup, $event)" [(ngModel)]="clinicalGroup">-->
+                                    <!--                                            <mat-option [value]="null">-->
+                                    <!--                                                Select-->
+                                    <!--                                            </mat-option>-->
+                                    <!--                                            <mat-option *ngFor="let cgroup of clinicalGroups$ | async" [value]="cgroup">-->
+                                    <!--                                                {{cgroup?.name}}-->
+                                    <!--                                            </mat-option>-->
+                                    <!--                                        </mat-select>-->
+                                    <!--                                    </mat-form-field>-->
+                                    <app-nested-dropdown class="nested-selectfilter bg-selectfilter" [selectedValue]="filterObject.cGroupId" key="groupId" displayKey="name" [label]="'discharge-patients-module.clinical_conditions' | translate" (selected)="searchByGroup('CLINICAL', $event)" [options]="clinicalGroups$ | async"
+                                    [showSelect]="true">
+                                    </app-nested-dropdown>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 col-xxl-4 mt-2 mt-lg-0">
+                            <mat-form-field class="search-form-field" appearance="fill" floatLabel="never">
+                                <mat-label>{{ "discharge-patients-module.search" | translate }}
+                                </mat-label>
+                                <input [(ngModel)]="searchObjString" matInput type="search" (keyup)="search()"
+                                    id="searchString" autocomplete="off" />
+                                <mat-icon class="clear-icon" *ngIf="searchObjString" (click)="clear()">close
+                                </mat-icon>
+                                <mat-icon matSuffix class="default-cursor">search</mat-icon>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </ng-container>
+
+                <ng-template lsWidgetName="firstName" let-row>{{row?.firstName}} {{row?.lastName}}
+                </ng-template>
+                   <ng-template lsWidgetName="admissionId" let-row>
+                    <div  [class.card-space]="row?.admissions.length > 1"> 
+                       <div *ngFor="let admission of row?.admissions">
+                        {{admission.admissionId}}</div>
+                    </div> 
+                   </ng-template> 
+                <ng-template lsWidgetName="patchesHeading">
+                    <img alt="bio sensor icon" src="assets/icons/biosensor.svg" />
+                     {{'discharge-patients-module.table.patches' | translate}} 
+                </ng-template>
+                <ng-template lsWidgetName="patches" let-row>
+                    <div  [class.card-space]="row?.admissions.length > 1">
+                        <div *ngFor="let admission of row?.admissions">
+                            <button mat-flat-button color="primary" class="btn-boxed px-2 btn-no-shadow me-2" (click)="openBiosensorModal(admission)"><img alt="bio sensor icon" src="assets/icons/biosensor.svg"/></button>
+                           <span class="patch-input">{{admission.patchIds[0]?.deviceId}}</span>
+                        </div>
+                    </div>
+                    <!-- <div class="d-flex justify-content-center align-items-center">
+                        <button mat-mini-fab color="primary" (click)="openBiosensorModal(row)"
+                            class="btn-boxed btn-no-shadow me-2" [disabled]="!row.patchIds?.length"
+                            [class.disabled]="!row.patchIds?.length">
+                            <img alt="bio sensor icon" src="assets/icons/biosensor.svg" />
+                        </button>
+                        <div class="biosensor-id mx-1" *ngIf="row.patchIds?.length">
+                            {{ row.patchIds[0]?.deviceId || "-" }}
+                        </div>
+                        <div class="biosensor-id mx-1" *ngIf="!row.patchIds?.length"> 
+                        </div>
+                    </div> -->
+                </ng-template>
+                <ng-template lsWidgetName="startedOn" let-row> 
+                    <div  [class.card-space]="row?.admissions.length > 1">
+                     <div *ngFor="let admission of row?.admissions">
+                      {{ (admission.startedOn > 0) ? (admission.startedOn*1000 | date: "MMM d, y / ": timeZone) : ""}}
+                        <strong>{{(admission.startedOn > 0) ? (admission.startedOn*1000 | date: timeFmt: timeZone) : "-"}}</strong>
+                     </div></div>
+                 </ng-template>
+                                
+                <ng-template lsWidgetName="completedOn" let-row>
+                    <div  [class.card-space]="row?.admissions.length > 1">
+                    <div *ngFor="let admission of row?.admissions">
+                        {{ (admission.completedOn > 0) ? (admission.completedOn*1000 | date: "MMM d, y / ": timeZone) : ""}}
+                        <strong>{{(admission.completedOn > 0) ? (admission.completedOn*1000 | date: timeFmt: timeZone) : "-"}}</strong>
+                    </div></div>
+                </ng-template>
+                <ng-template lsWidgetName="statusHeading" class="pe-2">
+                    {{'discharge-patients-module.table.status' | translate}}
+                    <mat-icon>filter_list</mat-icon>
+                </ng-template>
+                <ng-template lsWidgetName="status" let-row>
+                    <!-- <mat-list class="taglist small-tags pt-0">
+                            <mat-list-item class="mx-1 small-tag sepsis-tag">{{ "discharge-patients-module.table.status.archived" | translate }}
+                            </mat-list-item>
+                            <mat-list-item class="mx-1 small-tag sepsis-tag">{{ "discharge-patients-module.table.status.immediate_access" | translate }}
+                            </mat-list-item>
+                        </mat-list>-->
+                        <div  [class.card-space]="row?.admissions.length > 1"><div><span class="taglist small-tags pt-0 justify-content-start">-</span></div></div>
+                </ng-template>
+            </ls-table>
+        </div>
+    </div>
+</div>

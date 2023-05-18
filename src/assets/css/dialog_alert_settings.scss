@@ -1,0 +1,192 @@
+@import "src/assets/scss/modules/variables";
+
+/*Modal two css (this css is addition with modal css)*/
+ul li {
+  list-style-type: none;
+}
+/*dashboard monitor model CSS*/
+
+.modal-header .close {
+  margin: -1.5rem -1rem -2rem auto !important;
+}
+
+.modal-header {
+  background-color: rgba(196, 196, 196, 0.16) !important;
+  border-radius: $border-radius-divide !important;
+}
+
+.modal-content {
+  background: $bg-card-color !important;
+  border-radius: 8px !important;
+}
+
+.modal-title {
+  font-size: 18px !important;
+  line-height: 20px !important;
+  letter-spacing: 0.25px !important;
+  color: $light-blue-color !important;
+}
+
+.modal-dialog {
+  max-width: 876px !important;
+  // position: absolute;
+  left: 0%;
+  right: 0%;
+  top: 0%;
+  bottom: 0%;
+}
+
+.modal_body_align li span {
+  font-size: 14px;
+  line-height: 20px;
+  align-items: flex-end;
+  letter-spacing: 0.25px;
+  color: $white;
+}
+
+.modal_body_align {
+  margin-bottom: 20px;
+}
+
+.alert-settings {
+  font-size: 12px;
+  line-height: 20px;
+  letter-spacing: 0.25px;
+  color: rgba(255, 255, 255, 0.65);
+  text-shadow: $text-shadow;
+  margin-top: -12%;
+}
+
+.measurings_rate li {
+  float: left;
+  font-size: 14px;
+  text-align: right;
+  letter-spacing: 0.25px;
+  color: $rgba-white-color;
+  text-align: left;
+}
+
+/*dashboard model monitor CSS  ends*/
+
+.alert-set {
+  font-size: 20px !important;
+  color: $white !important;
+  opacity: 0.65 !important;
+}
+
+.drop-button {
+  background: $bg-disable-color;
+  box-shadow: $box-shadow-color;
+  border-radius: 4px;
+  border: none;
+  font-size: 16px;
+  color: $white;
+  opacity: 0.85;
+}
+
+.drop-button .interval {
+  padding: 5px 46px 0px 10px;
+}
+
+.drop-button .address {
+  padding: 5px 38px 0px 10px;
+}
+
+.dropdown-toggle {
+  padding-right: 15px !important;
+}
+
+.dropdown-menu {
+  min-width: 12.3rem;
+}
+
+.monitoring-alert {
+  background: rgba(0, 84, 159, 0.32);
+  box-shadow: $box-shadow-card;
+  border-radius: 8px;
+  width: 90%;
+  margin: 0 auto;
+  margin-bottom: 20px;
+  color: $white;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.monitoring-alert ul li {
+  float: left;
+  margin-bottom: 20px;
+}
+
+.alert-text {
+  font-size: 16px;
+  line-height: 24px;
+  margin-left: -10px;
+  margin-top: 20px;
+  letter-spacing: 0.15px;
+  color: $white-text;
+  mix-blend-mode: normal;
+}
+
+.alert-text-rate {
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.15px;
+  color: $white-text;
+  mix-blend-mode: normal;
+}
+
+.low-high-bg input {
+  background: #28527a;
+  border: 1px solid #05315e;
+  box-shadow: inset 0px 2px 4px rgba(255, 255, 255, 0.25);
+  border-radius: 4px;
+  font-size: 14px;
+  line-height: 20px;
+  padding: 6px 0px 3px 10px;
+  margin-right: 0px;
+  color: $white;
+}
+
+.low-high-bg input::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  font-size: 14px;
+  line-height: 20px;
+  /* or 143% */
+  display: flex;
+  align-items: flex-end;
+  letter-spacing: 0.25px;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.save_btn {
+  background: $bg-button-color;
+  box-shadow: $box-shadow-button;
+  border-radius: 4px;
+  font-size: 14px;
+  padding: 1% 10% 0% 10%;
+  border: none;
+  color: $white;
+  margin-bottom: 10px;
+}
+
+.dropdown-item {
+  color: $white !important;
+}
+
+.dropdown-menu {
+  background: $bg-disable-color;
+  box-shadow: $box-shadow-color;
+  border-radius: 4px;
+  border: none;
+  font-size: 16px;
+  color: $white;
+}
+
+.dropdown-menu a:hover {
+  background: $bg-button-color;
+  box-shadow: $box-shadow-color;
+  border-radius: 4px;
+  border: none;
+  font-size: 16px;
+  color: $white;
+}

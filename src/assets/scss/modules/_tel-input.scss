@@ -1,0 +1,56 @@
+/* new variable define */
+@import "src/assets/scss/modules/variables";
+@import "src/assets/scss/modules/mixins";
+
+.tel-input.mat-form-field {
+  display: block;
+  background-color: $bg-input-color;
+  border-radius: 0.25rem 0.25rem 0 0;
+  height: 52px;
+  margin-top: 4px;
+
+  .mat-form-field-infix {
+    width: 100%;
+    border: $none;
+  }
+  .mat-form-field-flex {
+    align-items: center;
+    background-color: $white;
+    border-radius: 4px 4px 0 0;
+    padding: 9px 0px 4px 0px;
+  }
+  input {
+    color: $black-color;
+    letter-spacing: 0.15px;
+    font-size: 16px;
+    padding: 0px 0px 0px 10px;
+    &::placeholder {
+      color: rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  .mat-form-field-underline {
+    bottom: 0px;
+
+    &:before {
+      background-color: $label-color;
+      height: 2px;
+      bottom: 0px;
+    }
+    .mat-form-field-ripple {
+      background-color: $bg-table-row-active-color;
+      bottom: 0px;
+      @include transition(all 0.8s ease 0s);
+    }
+  }
+  .country-selector {
+    color: $black;
+  }
+}
+.iti-phone-2 input[type="tel"] {
+  border-radius: $border-radius $border-radius 0 0;
+}
+
+/*.mat-divider {
+  border-top-color: rgba(0, 0, 0, 0.5) !important;
+}*/

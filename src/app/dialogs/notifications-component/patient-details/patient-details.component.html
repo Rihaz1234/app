@@ -1,0 +1,52 @@
+<div class="container-fluid py-3 pb-1">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="row">
+        <div class="d-flex flex-wrap align-items-center patient-details">
+          <div class="patient-id px-2">
+            <strong> <img src="assets/icons/biosensor.svg" alt="biosensor" class="header-tab-icon me-2" width="28" height="31" /> {{patientData?.patchId}}</strong>
+            <span class="d-block pid">{{ "dashboard-module.pid" | translate }} {{ patientData?.patientId }}</span>
+          </div>
+          <div class="px-2 me-auto w-max-20">
+            <strong  class="d-block pb-2 text-truncate">
+              <span class="patient-name" *ngIf="patientData?.firstName"> {{ patientData?.firstName + " "}}</span>
+              <span class="patient-name" *ngIf="patientData?.lastName">{{ patientData?.lastName }}</span>
+            </strong>
+            <!--<span class="time-group" *ngIf="patientData?.admitted">
+              {{ patientData?.admitted | date: 'MMM dd, yyyy' }}
+            </span>-->
+            <span *ngIf="patientData?.pGroup" class="small-tag remote-tag">
+              {{patientData.pGroup?.name}}<span *ngIf="patientData?.pGroup && patientData?.cGroup">,</span>
+          </span>
+          <span *ngIf="patientData?.cGroup" class="small-tag sepsis-tag">
+              {{patientData.cGroup?.name}}
+          </span>
+        </div>
+          <div class="justify-content-end py-1" *ngIf="tab === 'alerts'">
+            <span class="mx-2">Current</span>
+            <span class="alert-count"><strong>{{count.current}}</strong></span>
+            <span class="mx-2 ms-3">Unacknowledged</span>
+            <span class="alert-count"><strong>{{count.unAcknowledged}}</strong></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-center  text-md-end col-md-6 patient-right-detail">
+      <label *ngIf="updated?.toString()" class="mx-1 time-stamp fw-normal  py-1">Last updated
+        {{ updated+ '+0000' | date: "MMM dd, yyyy / " + timeFmt : timeZone }}
+      </label>
+      <button *ngIf="tab === 'alerts'" (click)="acknowledgeAll()" [disabled]="!activeAlert"
+              mat-flat-button type="button" color="primary" class="mx-1 py-1 text-uppercase">
+        {{ "alert_config_module.acknowledge_all" | translate}}
+      </button>
+      <button *ngIf="(tab === 'eventList') && eventEditAccess && patientData?.addEvent" mat-flat-button type="button" color="accent" class="mx-2 my-1 text-uppercase"
+      (click)="addNewEvent()">
+        {{ "alert_config_module.add_event.new_event" | translate}}
+      </button>
+      <button *ngIf="tab === 'eventList'" (click)="acknowledgeAllEvent()" [disabled]="!activeEvents"
+              mat-flat-button type="button" color="primary" class="me-1 my-1 text-uppercase">
+        {{ "alert_config_module.alertfreq_acknowledge" | translate}}
+      </button>
+    </div>
+  </div>
+</div>

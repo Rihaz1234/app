@@ -1,0 +1,116 @@
+@import "src/assets/scss/modules/variables";
+
+.patient-id {
+  border-right: 1px solid $white;
+}
+
+.patient-details {
+  line-height: $size-18;
+}
+
+.time-group {
+  font-size: $size-10;
+}
+
+.alert-count {
+  font-size: $size-18;
+}
+
+/*** alert Modal Dialog *****/
+.pid {
+  font-size: $size-10;
+}
+
+.patient-name {
+  font-size: 1rem;
+  font-weight: $font-weight-700;
+}
+
+.small-tag {
+  font-size: $base-font-size;
+  color: $blue-color-group;
+
+  @media only screen and (max-width: 992px) {
+    display: block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+
+  }
+
+}
+
+/*** alert Modal Dialog *****/
+
+/*** alert modal *****/
+.patient-details {
+  .patient-id strong {
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+  }
+}
+
+.time-stamp {
+  font-weight: 400;
+  opacity: 0.8;
+
+}
+
+.patient-right-detail {
+
+  button {
+    min-width: 10rem;
+
+    @media (min-width: 768px) and (max-width: 992px) {
+      min-width: auto;
+      width: 8.75rem;
+      font-size: $size-12;
+    }
+
+    @media only screen and (max-width: 767px) {
+      width: 7.8rem;
+      font-size: $size-12;
+      min-width: auto;
+      margin: 0px !important;
+      margin-right: 5px !important;
+
+      &:last-child{margin-right: 0;}
+
+    }
+  }
+
+  .time-stamp {
+    @media only screen and (max-width: 1300px) {
+      display: block;
+    }
+
+  }
+
+}
+
+.w-max-20 {
+  max-width: 20rem;
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    max-width: 14rem;
+  }
+
+}
+
+@media only screen and (max-width: 767px) {
+  .patient-details {
+    justify-content: center;
+    padding: 0;
+
+    .me-auto {
+      margin: 0 !important;
+    }
+
+    .w-max-20 {
+      max-width: 60%;
+
+
+    }
+  }
+}

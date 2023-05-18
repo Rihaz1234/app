@@ -1,0 +1,41 @@
+@import "src/assets/scss/modules/variables";
+/*::ng-deep {
+  .scroll-assist {
+    max-height: calc(100vh - 300px) !important;
+  }
+}*/
+/*.inside-div {
+  height: 300px;
+}*/
+.mat-sel {
+  width: 130px;
+}
+.text-input-box {
+  width: 50px !important;
+  height: 26px !important;
+  background: white;
+  box-sizing: border-box;
+  color: black;
+  border-radius: 4px;
+  font-size: 14px;
+  border: 1px solid rgba(123, 193, 255, 0.64);
+  text-align: center;
+}
+.priority-drop-down {
+  width: 90px;
+  border: none !important;
+  padding: 2px;
+  text-align: left;
+  background: $white;
+  box-shadow: $box-shadow-color;
+  border-radius: $border-radius;
+}
+.reset_btn_bg {
+  background: $bg-reset-btn;
+}
+.text-value{
+  width: 60px;
+  text-align: right;
+}
+.alert-dialog-content{padding: 0;}
+

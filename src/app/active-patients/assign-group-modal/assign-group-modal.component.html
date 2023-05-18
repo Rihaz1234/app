@@ -1,0 +1,109 @@
+<mat-card class="dialog-header">
+    <div class="assign-header">
+        <div class="list-item ms-0">
+            <h1 mat-dialog-title>
+                {{ "active-patients-module.table.assign_group_title" | translate }}
+            </h1>
+            <span class="pid d-block">{{'dashboard-module.pid'|translate}}. {{ data.patientId }}</span>
+        </div>
+        <!--<div class="list-item">
+      <span>{{data?.activePatch || '-'}}</span>
+    </div>-->
+        <div class="list-item patient-group">
+            <strong>{{ data.firstName }} {{ data.lastName }}</strong>
+            <span class="time-group">{{data?.pGroup?.name}}{{(data?.pGroup && data?.cGroup ) ? "," :""}}
+        {{data?.cGroup?.name}}</span>
+            <!--<span class="time-group">{{ data.createdDateTime }}</span>-->
+        </div>
+    </div>
+    <!--<button mat-button mat-dialog-close>
+    <mat-icon>close</mat-icon>
+  </button>-->
+</mat-card>
+
+<mat-dialog-content class="mat-dialog-popup assign-group-dialog">
+  <div class="assign-group-content">
+    <form [formGroup]="assignGroupForm">
+      <div class="row align-items-center">
+        <div class="col-sm-6">
+          <h2>
+            {{ "active-patients-module.form_label.location_group" | translate }}
+          </h2>
+        </div>
+        <div class="col-sm-6">
+          <app-nested-dropdown class="nested-selectfilter selectnested toplabel-no" [label]="'active-patients-module.form_label.location' | translate"
+            [options]="locationGroups$ | async" key="groupId" displayKey="name" [showSelect]="true"
+            [selectedValue]="assignGroupForm?.controls?.pGroup?.value" (selected)="onLocationSelected($event)"
+            [assignGroup]="true">
+          </app-nested-dropdown>
+          <!-- <mat-form-field appearance="fill" class="whiteselect selectfilter">
+              <mat-label>{{ "active-patients-module.form_label.location" | translate }}
+              </mat-label>
+              <mat-select formControlName="pGroup" appearance="fill" class="search-filter-select">
+                <mat-option [value]="''">{{'active-patients-module.form_label.select'|translate}}</mat-option>
+                <mat-option [value]="lgroup.id" *ngFor="let lgroup of locationGroups$ | async">{{ lgroup?.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field> -->
+        </div>
+      </div>
+  
+      <!--<div class="row align-items-center">
+          <div class="col-sm-6">
+            <h2>{{ "active-patients-module.form_label.subgroup" | translate }}</h2>
+          </div>
+          <div class="col-sm-6">
+            <mat-form-field appearance="fill" class="disabled-field whiteselect selectfilter">
+              <mat-label>{{ "active-patients-module.form_label.subgroup" | translate }}
+              </mat-label>
+              <mat-select appearance="fill" class="search-filter-select">
+                <mat-optgroup *ngFor="let group of subgroup">
+                  <button mat-button (click)="select.open()">
+                    {{ group.groupName }}
+                  </button>
+                  <mat-select #select appearance="fill">
+                    <mat-optgroup *ngFor="let ward of group.wards">
+                      <button mat-button (click)="p_select.open()" class="s_btn">
+                        {{ ward.wardName }}
+                      </button>
+                      <mat-select #p_select appearance="fill">
+                        <mat-option *ngFor="let room of ward.rooms" [value]="room.roomName">
+                          {{ room.roomName }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-optgroup>
+                  </mat-select>
+                </mat-optgroup>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>-->
+      <div class="row align-items-center">
+        <div class="col-sm-6">
+          <h2>
+            {{ "active-patients-module.form_label.clinical_group" | translate }}
+          </h2>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field appearance="fill" class="selectfilter whiteselect">
+            <mat-label>{{ "active-patients-module.form_label.clinical_condition" | translate }}
+            </mat-label>
+            <mat-select formControlName="clinicalGroup" appearance="fill" class="search-filter-select">
+              <mat-option [value]="null">{{'active-patients-module.form_label.none'|translate}}</mat-option>
+              <mat-option [value]="cgroup.groupId" *ngFor="let cgroup of clinicalGroups$  | async">{{ cgroup?.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </form>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions class="me-4">
+  <button mat-flat-button mat-dialog-close color="warn" class="fill-btn">
+    {{ "active-patients-module.button.cancel" | translate }}
+  </button>
+  <button mat-flat-button color="primary" [disabled]="!assignGroupForm.valid" (click)="save(assignGroupForm)" class="fill-btn">
+    {{ "active-patients-module.button.Assign_button" | translate }}
+  </button>
+</mat-dialog-actions>

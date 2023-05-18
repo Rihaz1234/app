@@ -1,0 +1,25 @@
+@import "src/assets/scss/modules/variables";
+.manage-admin-table {
+    .mat-error {
+        white-space: normal !important;
+    }
+    ::ng-deep table.mat-table {
+        thead {
+            background-color: transparent !important;
+        }
+
+        tbody {
+            tr {
+                &:first-child {
+                    td {
+                        border-top: 0px !important;
+                    }
+                }
+                td {
+                    border: none !important;
+                }
+            }
+        }
+
+    }
+}

@@ -1,0 +1,44 @@
+<mat-card class="dialog-header">
+  <h1 mat-dialog-title>
+    {{ "shared.dialog.forward_note.title" | translate }}
+  </h1>
+</mat-card>
+<div mat-dialog-content class="px-3 px-sm-4">
+  <form [formGroup]="forwardNoteForm" class="dialog-form mandatoryNote-Form">
+    <div class="py-3">
+      <mat-label class="matlabel pb-2 d-block">
+        {{ "shared.dialog.forward_note.priority" | translate }}
+        <span class="required-field">*</span>
+      </mat-label>
+      <mat-radio-group formControlName="priority">
+        <mat-radio-button *ngFor="let priority of ['EMERGENCY', 'URGENT', 'NORMAL']" class="pe-3" [value]="priority">
+          {{ "shared.dialog.forward_note." + priority | translate}}
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+    <div class="py-2">
+      <mat-label class="matlabel pb-2 d-block">
+        {{ "shared.dialog.forward_note.note" | translate }}
+        <span class="required-field">*</span>
+      </mat-label>
+      <mat-form-field class="notification-textarea textarea-note ">
+        <textarea matInput class="p-2" required minlength="2" formControlName="note" maxlength="300">
+        </textarea>
+        <mat-error *ngIf="noteForm.note?.errors?.pattern" class="text-wrap">
+          {{ "shared.dialog.forward_note.note_pattern" | translate }}
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </form>
+  <div class="required-all">
+    {{ "active-patients-module.form_label.mandatory" | translate }}
+  </div>
+  <div mat-dialog-actions class="me-0">
+    <button mat-flat-button mat-dialog-close class="fill-btn" color="warn">
+      {{ "shared.dialog.Cancel" | translate }}
+    </button>
+    <button mat-flat-button class="fill-btn" color="primary" (click)="submit()" [disabled]="forwardNoteForm?.invalid">
+      {{ "shared.dialog.Send" | translate }}
+    </button>
+  </div>
+</div>

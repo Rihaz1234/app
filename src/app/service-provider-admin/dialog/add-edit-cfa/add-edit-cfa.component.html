@@ -1,0 +1,153 @@
+<mat-card class="dialog-header">
+  <h1 mat-dialog-title *ngIf="cfAdminData === undefined; else edit">
+    {{ 'clinical_facility.add_cfa.label_add_admin_cfa' | translate }}
+  </h1>
+  <ng-template #edit>
+    <h1 mat-dialog-title>
+      {{ 'clinical_facility.add_cfa.label_edit_admin_cfa' | translate }}
+    </h1>
+  </ng-template>
+</mat-card>
+
+<mat-dialog-content class="mat-dialog-popup px-3">
+  <form [formGroup]="addAddEditForm" class="dialog-form" autocomplete="off">
+    <div>
+      <div class="row">
+        <div class="col-md-6">
+          <mat-label
+                  for="first-name"
+                  class="matlabel"
+                  [class.disabled]="cfAdminData"
+          >
+            {{ 'shared_label.label_first_name' | translate }}
+            <span class="required-star" *ngIf="cfAdminData === undefined">* </span>
+            <span class="required-star cannotEdit" *ngIf="cfAdminData === undefined">{{ 'shared_label.label_name_cannot_change' | translate }}</span>
+            <span class="required-star cannotEdit" *ngIf="cfAdminData">{{ 'shared_label.label_cannot_edit' | translate }}</span>
+          </mat-label>
+          <mat-form-field
+                  appearance="fill"
+                  class="formfield-control"
+                  [class.disabled]="cfAdminData"
+          >
+            <input
+                    matInput
+                    formControlName="firstName"
+                    [readonly]="cfAdminData"
+                    (keypress)="charsOnly('firstName', $event)"
+                    autocomplete="off"
+            />
+            <mat-error *ngIf="hasError('firstName', 'required') && submitted" >
+              {{
+              'error_message.err_first_name_required'
+                      | translate
+              }}
+            </mat-error>
+            <mat-error *ngIf="hasError('firstName', 'pattern')" >
+							{{'error_message.err_first_name_char_only' |translate}}
+						</mat-error>
+						<mat-error *ngIf="hasError('firstName','maxlength') && !hasError('firstName', 'pattern')" >
+							{{'error_message.err_first_name_range' | translate}}
+						</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-md-6">
+          <mat-label
+                  for="last-name"
+                  class="matlabel"
+                  [class.disabled]="cfAdminData"
+          >
+            {{ 'shared_label.label_last_name' | translate }}
+            <span class="required-star" *ngIf="cfAdminData === undefined">* </span>
+            <span class="required-star cannotEdit" *ngIf="cfAdminData === undefined">{{ 'shared_label.label_name_cannot_change' | translate }}</span>
+            <span class="required-star cannotEdit" *ngIf="cfAdminData">{{ 'shared_label.label_cannot_edit' | translate }}</span>
+          </mat-label>
+          <mat-form-field
+                  appearance="fill"
+                  class="formfield-control"
+                  [class.disabled]="cfAdminData"
+          >
+            <input
+                    matInput
+                    formControlName="lastName"
+                    [readonly]="cfAdminData"
+                    (keypress)="charsOnly('lastName', $event)"
+                    autocomplete="off"
+            />
+            <mat-error *ngIf="hasError('lastName', 'required') && submitted" >
+              {{
+              'error_message.err_last_name_required'
+                      | translate
+              }}
+            </mat-error>
+            <mat-error *ngIf="hasError('lastName', 'pattern')" >
+							{{'error_message.err_last_name_char_only' |translate}}
+						</mat-error>
+						<mat-error *ngIf="hasError('lastName','maxlength') && !hasError('lastName', 'pattern')" >
+							{{'error_message.err_last_name_range' | translate}}
+						</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="row">
+        <div class="col-md-6">
+          <mat-label for="spa-email" class="matlabel">
+            {{ 'shared_label.label_email_id' | translate }}
+            <span class="required-star">**</span>
+          </mat-label>
+          <mat-form-field appearance="fill" class="formfield-control">
+            <input matInput formControlName="email" autocomplete="off" [maxlength]="320"/>
+            <mat-error *ngIf="hasError('email','email')" >
+              {{'error_message.err_invalid_email'|translate}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-md-6">
+          <mat-label for="sp-contact-person-phone" class="matlabel">
+            {{ 'shared_label.label_phone_no' | translate }}
+            <span class="required-star">**</span>
+          </mat-label>
+          <app-tel-input formControlName="phoneNo"></app-tel-input>
+          <mat-error class = "mt-2" *ngIf="hasError('phoneNo', 'phoneNumberInvalid')" >
+            {{"errors.err_invalid_phone_no" | translate}}
+          </mat-error>
+        </div>
+      </div>
+      <mat-error class="email-error" *ngIf="submitted && !addAddEditForm.getRawValue()?.email && !addAddEditForm.getRawValue()?.phoneNo">
+        {{ "manage_users_module.edituser.message1" | translate }}
+      </mat-error>
+    </div>
+    <div class="my-2">
+      <div class="required-text mt-3">
+        <span>* {{ 'error_message.err_mandatory' | translate }}</span>
+      </div>
+      <div
+              style="margin-top: 10px !important"
+              class="email-phone-info-text"
+      >
+        **{{ 'error_message.err_email_phone_mandatory' | translate }}
+      </div>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<div mat-dialog-actions align="end">
+  <button
+          type="button"
+          mat-flat-button color="warn"
+          class="fill-btn"
+          (click)="onClose()"
+  >
+    {{ 'buttons.btn_cancel' | translate }}
+  </button>
+  <button
+  type="button"
+  mat-flat-button color="primary"
+  class="fill-btn"
+  (click)="saveServiceProviderAdmin()"
+>
+{{ 'buttons.btn_save' | translate }}
+</button>
+</div>

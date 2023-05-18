@@ -1,0 +1,91 @@
+<div id="patientAlertSettings">
+  <div class="dialog-header patientalert-dialog-header">
+    <div class="mx-3 d-lg-flex d-md-flex d-sm-none d-none flex-wrap btn-group-area">
+      <button mat-button [ngClass]="selectedTab === 'notificationsList'? 'select-btn-active select-btn-active-notif': 'select-btn select-btn-notif'" (click)="selectTab('notificationsList')">
+        <img src="assets/icons/notification-icon-red.svg" alt="notification-icon-red" class="header-tab-icon" width="24" height="24" />
+        Alerts
+      </button>
+      <button mat-button [ngClass]="selectedTab === 'eventList' ? 'select-btn-active' : 'select-btn'" (click)="selectTab('eventList')">
+        <mat-icon class="header-tab-icon">person</mat-icon>
+        <img src="assets/icons/biosensor.svg" alt="biosensor" class="header-tab-icon" width="18" height="16" />
+        Event List
+      </button>
+      <button mat-button [ngClass]="selectedTab === 'parameterAlerts' ? 'select-btn-active' : 'select-btn'" (click)="selectTab('parameterAlerts')">
+        <mat-icon>settings</mat-icon> {{ "alert_config_module.configure_parameter" | translate }}
+      </button>
+      <!-- <button mat-button [ngClass]="selectedTab === 'arrhythmiaAlerts' ? 'select-btn-active' : 'select-btn'" (click)="selectTab('arrhythmiaAlerts')">
+        <mat-icon>settings</mat-icon> {{ "alert_config_module.configure_arrhythmia" | translate }}
+      </button> -->
+      <button mat-button [ngClass]="selectedTab === 'technicalAlerts' ? 'select-btn-active' : 'select-btn'" (click)="selectTab('technicalAlerts')">
+        <mat-icon>settings</mat-icon> {{ "alert_config_module.configure_technical" | translate }}
+      </button>
+      <button mat-button [ngClass]="selectedTab === 'alertDestination' ? 'select-btn-active' : 'select-btn'" (click)="selectTab('alertDestination')">
+        <mat-icon>settings</mat-icon> {{ "alert_config_module.configure_destination" | translate }}
+      </button>
+      <!--<button mat-button class="btn" [ngClass]="
+        selectedTab === 'others' ? 'select-btn-active' : 'select-btn'
+      " (click)="selectTab('others')">
+      {{ "alert_config_module.configure_others" | translate }}
+    </button>-->
+    </div>
+    <div class="d-block d-lg-none d-md-none ">
+      <button mat-icon-button [matMenuTriggerFor]="menu" class="border mb-2">
+        <mat-icon class="justify-content-center">more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu" class="mobile-menu alert-configuration-menu overflow-hidden d-block d-lg-none">
+        <button mat-menu-item (click)="selectTab('notificationsList')">
+          <img src="assets/icons/notification-icon-red.svg" alt="notification-icon-red" class="header-tab-icon"
+            width="24" height="24" />
+          Alerts
+        </button>
+        <button mat-menu-item (click)="selectTab('eventList')">
+          <mat-icon class="menu-tab-icon">person</mat-icon>
+          <img src="assets/icons/biosensor.svg" alt="biosensor" class="header-tab-icon" width="18" height="16" />
+          Event List
+        </button>
+        <button mat-menu-item (click)="selectTab('parameterAlerts')">
+          <mat-icon>settings</mat-icon> {{ "alert_config_module.configure_parameter" | translate }}
+        </button>
+        <!-- <button mat-menu-item (click)="selectTab('arrhythmiaAlerts')">
+          <mat-icon>settings</mat-icon> {{ "alert_config_module.configure_arrhythmia" | translate }}
+        </button> -->
+        <button mat-menu-item (click)="selectTab('technicalAlerts')">
+          <mat-icon>settings</mat-icon> {{ "alert_config_module.configure_technical" | translate }}
+        </button>
+        <button mat-menu-item (click)="selectTab('alertDestination')">
+          <mat-icon>settings</mat-icon> {{ "alert_config_module.configure_destination" | translate }}
+        </button>
+        <!--<button mat-menu-item (click)="selectTab('others')">
+          {{ "alert_config_module.configure_others" | translate }}
+        </button>-->
+      </mat-menu>
+    </div>
+    <span class="close-icon mt-2 mt-md-0 me-2 me-md-0">
+      <mat-icon aria-hidden="false" aria-label="close icon" class="cursor-pointer" (click)="closeDialog()">close
+      </mat-icon>
+    </span>
+  </div>
+  <div>
+    <div *ngIf="selectedTab === 'notificationsList'">
+      <app-notification-list [patientData]="patientData"></app-notification-list>
+    </div>
+    <div *ngIf="selectedTab === 'eventList'">
+      <app-event-list [patientData]="patientData"></app-event-list>
+    </div>
+    <div *ngIf="selectedTab === 'parameterAlerts'">
+      <app-parameter-alerts [patientData]="patientData"></app-parameter-alerts>
+    </div>
+    <div *ngIf="selectedTab === 'arrhythmiaAlerts'">
+      <app-arrhythmia-alerts [patientData]="patientData"></app-arrhythmia-alerts>
+    </div>
+    <div *ngIf="selectedTab === 'technicalAlerts'">
+      <app-technical-alerts [patientData]="patientData"></app-technical-alerts>
+    </div>
+    <div *ngIf="selectedTab === 'alertDestination'">
+      <app-destination-setting [patientData]="patientData"></app-destination-setting>
+    </div>
+    <!--<div *ngIf="selectedTab === 'others'">
+    <app-others [patientData]="patientData"></app-others>
+  </div>-->
+  </div>
+</div>

@@ -1,0 +1,47 @@
+/* new variable define */
+@import "src/assets/scss/modules/variables";
+@import "src/assets/scss/modules/_mixins.scss";
+
+/** modal popup */
+.dialog-header {
+  .assign-header {
+    h1 {
+      line-height: 1.5rem;
+    }
+
+    .patient-id {
+      font-size: 10px;
+    }
+
+    .patient-group {
+      strong {
+        font-size: 1rem;
+        padding-bottom: 4px;
+      }
+    }
+
+    .time-group {
+      font-size: $base-font-size;
+      color:$blue-color-group;
+    }
+
+  }
+}
+
+.mat-dialog-popup {
+  .moreinfo-group-dialog {
+    padding: 1rem 0;
+
+    .align-items-center {
+      background-color: $bg-table-row-color;
+      border-radius: 4px;
+      height: 100%;
+
+      label {
+        @media only screen and (max-width: 767px) {
+          padding-bottom: 0.5rem;
+        }
+      }
+    }
+  }
+}

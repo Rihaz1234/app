@@ -1,0 +1,106 @@
+@import "src/assets/scss/modules/variables";
+
+.grid-bg {
+  background: $bg-grid-color;
+  box-shadow: $box-shadow-area;
+  border-radius: 8px;
+  height: 240px;
+  margin: 0.5rem;
+  position: relative;
+}
+
+.card-disabled {
+  opacity: $opacity-disabled  !important;
+}
+
+.sixh {
+  font-size: 12px;
+  line-height: 20px;
+  padding: 15px 15px 0px 0px;
+  letter-spacing: 0.25px;
+  color: #f24b4b;
+}
+
+
+.view-insight a {
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: 0.25px;
+  text-transform: capitalize;
+  text-decoration: none;
+  color: $alert-tech  !important;
+  padding: 10px 10px 0px 10px;
+}
+
+.captioning {
+  font-size: 1.1rem;
+  line-height: 1.2rem;
+  letter-spacing: 0.25px;
+  text-transform: capitalize;
+  color: $white;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  font-weight: $font-weight-700;
+  max-width: 15rem;
+  margin: 0 auto;
+}
+
+.timer-icon {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+#parameter_alert {
+  ::ng-deep .mat-select-arrow {
+    border-left: 20px solid transparent !important;
+    border-right: none !important;
+    border-top: 20px solid transparent !important;
+    border-image-source: url("../../../assets/icons/timer-icon.png") !important;
+    border-image-repeat: stretch !important;
+  }
+}
+
+#technical_alert {
+  ::ng-deep .mat-select-arrow {
+    border-left: 20px solid transparent !important;
+    border-right: none !important;
+    border-top: 20px solid transparent !important;
+    border-image-source: url("../../../assets/icons/timer-icon1.png") !important;
+    border-image-repeat: stretch !important;
+  }
+}
+
+.caption-two {
+  font-size: 0.9rem;
+  line-height: 1.2rem;
+  letter-spacing: 0.25px;
+  text-transform: capitalize;
+  color: $white;
+  font-weight: 600;
+}
+
+.selected-timer {
+  font-size: 11px;
+  color: $red-font-color;
+}
+
+.selected-timer1 {
+  font-size: 11px;
+  color: #ffa06a;
+}
+
+.view-btn {
+  position: absolute;
+  bottom: 20px;
+  right: 10px;
+}
+
+.bg-primary {
+  background-color: $bg-dashboard-color;
+}
+
+.app-card {
+  height: 100%;
+}
+

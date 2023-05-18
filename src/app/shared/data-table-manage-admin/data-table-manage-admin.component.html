@@ -1,0 +1,38 @@
+<div class="table-responsive text-nowrap head-border" style="margin-bottom: 20px">
+    <ls-table (sortChange)="onSortChange($event)" [config]="config" [data]="adminUserData" [columns]="columns" [tableSort]="true">
+        <ng-template lsWidgetName="actionsHeading" let-row>
+            <button mat-flat-button type="button" color="accent" (click)="openAddAdminDialog()">
+            <mat-icon>add</mat-icon>
+            {{ ("buttons.btn_add_admin"  | translate )+ ((role === "SA")?" (DEFAULT) ":"")}}
+          </button>
+        </ng-template>
+        <ng-template *ngIf="role === 'SA'" lsWidgetName="adminNameHeading" let-row>
+            Administrator
+        </ng-template>
+        <ng-template lsWidgetName="active" let-row>
+            <mat-slide-toggle [checked]="row?.isActive" (change)="toggleSwitch(row, $event)"></mat-slide-toggle>
+        </ng-template>
+        <ng-template lsWidgetName="email" let-row>
+            {{row?.email || "-"}}
+        </ng-template>
+        <ng-template lsWidgetName="adminName" let-row>
+            <span [matTooltip]="row.adminName" matTooltipPosition="below" class="text-truncate d-block" [matTooltipDisabled]="row.adminName.length < 40">
+            {{row.adminName}}
+          </span>
+        </ng-template>
+        <ng-template lsWidgetName="phoneNo" let-row>
+            {{row?.phoneNo || "-"}}
+        </ng-template>
+        <ng-template lsWidgetName="actions" let-row>
+            <button mat-mini-fab color="primary" (click)="openEditAdminDialog(row)" class="btn-boxed btn-no-shadow me-4 edit-btn"
+                    [disabled]="!row['isActive'] && source === 'SPA'">
+        <mat-icon class="edit-icon-size">edit</mat-icon>
+      </button>
+
+            <button type="button" [disabled]="!row['isActive']" color="primary" mat-flat-button class="me-3" [ngClass]="(!row['isActive'])?'':'cursor-pointer'" (click)="confirmResetPassword(row)">
+        <mat-icon>refresh</mat-icon
+        >{{ "buttons.btn_reset_password" | translate }}
+      </button>
+        </ng-template>
+    </ls-table>
+</div>

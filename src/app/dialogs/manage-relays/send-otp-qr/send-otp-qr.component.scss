@@ -1,0 +1,39 @@
+@import "src/assets/scss/modules/variables";
+.mat-label {
+  width: 100%;
+}
+.label {
+  font-size: $size-12;
+  letter-spacing: 0.05em;
+  color: $label-color;
+  margin-top: $size-20;
+}
+.error-text {
+  font-style: normal;
+  font-size: $size-12;
+}
+.error-text1 {
+  font-style: normal;
+  font-size: 0.875em;
+  color: $red-font-color;
+}
+.form-control {
+  width: 100%;
+}
+
+.select-form-group .matlabel {
+  font-weight: $font-weight-700;
+  font-size: $base-font-size;
+  color: $label-color;
+  margin-bottom: 0;
+}
+
+/**** button ****/
+button.fill-btn{min-width: 10rem;
+
+  @media (max-width: 499px) {
+    min-width: 7rem;
+
+  }
+
+}

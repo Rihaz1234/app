@@ -1,0 +1,43 @@
+@import "variables";
+
+.mat-slide-toggle {
+  .mat-slide-toggle-bar {
+    background-color: $toggle-button-bg-off;
+  }
+  .mat-slide-toggle-thumb {
+    background-color: $toggle-button-round-off;
+  }
+}
+.mat-slide-toggle.mat-checked {
+  .mat-slide-toggle-bar {
+    background-color: $toggle-button-bg-on;
+  }
+  .mat-slide-toggle-thumb {
+    background-color: $white;
+  }
+  .mat-slide-toggle-thumb-container {
+    right: 20px;
+  }
+}
+.mat-slide-toggle .mat-slide-toggle-thumb-container {
+  top: 4px;
+  left: initial;
+}
+.mat-slide-toggle-input {
+  display: none;
+}
+.mat-slide-toggle .mat-slide-toggle-bar {
+  height: 28px;
+  border-radius: 14px;
+  width: 52px;
+  box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.25);
+}
+.mat-slide-toggle .mat-slide-toggle-thumb {
+  margin-left: 2px;
+  margin-right: 2px;
+}
+// .mat-slide-toggle-content{
+//     position: absolute;
+//     left: 15px;
+//     top: -2px;
+// }

@@ -1,0 +1,131 @@
+<div class="row align-items-center m-0">
+  <div class="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-6 px-2">
+    <ng-content select="[table-header]"></ng-content>
+  </div>
+  <div class="col-12 col-sm-12 col-md-5 col-lg-5 col-xl-6 px-2">
+    <ls-paginator *ngIf="config?.paginator?.hide === false" (page)="onPage($event)" class="sticky-paginator"
+      [length]="config?.page?.length" [pageSize]="config?.page?.pageSize" [pageLength]="dataSource?.data?.length" [pageIndex]="config?.page?.pageIndex"
+      showFirstLastButtons [tableState] = config?.tableState >
+    </ls-paginator>
+  </div>
+</div>
+<div style="height: 4px;">
+  <mat-progress-bar mode="indeterminate" style="width: 100%; height: 4px;" *ngIf="config?.tableState === 'LOADING'">
+  </mat-progress-bar>
+</div>
+<div class="table-responsive scroll-assist">
+  <table [id]="config?.id" mat-table class="table-format-cell" matSort [dataSource]="dataSource" aria-label="Table"
+  [matSortDisabled]="!dataSource?.data?.length">
+    <!-- Checkbox Column -->
+    <ng-container matColumnDef="selectExtraHeader">
+      <th mat-header-cell *matHeaderCellDef></th>
+    </ng-container>
+    <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef>
+         <mat-checkbox *ngIf="dataSource?.data?.length !== 0 && config?.rowSelectEnabled"
+          (change)="$event ? masterToggle() : null" [checked]="selection?.hasValue() && this.allSelected"
+          [disabled]="disableMasterSelect" [indeterminate]="selection?.hasValue() && !this.allSelected">
+        </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let row" [ngClass]="((row?.admissions != undefined) && (row?.admissions).length > 1) ? 'manage-data-row' : ''">
+         <mat-checkbox (click)="$event.stopPropagation()" *ngIf="config?.rowSelectEnabled"
+          (change)="checkboxChange($event, row)"
+          [checked]="isSelected ? isSelected(row, selection) : selection?.isSelected(row)"
+          [disabled]="selectOnlyActive && row.activePatch === ''"
+          [aria-label]="checkboxLabel(row)">
+        </mat-checkbox>
+      </td>
+    </ng-container>
+
+    <ng-container [matColumnDef]="column?.id" *ngFor="let column of columns">
+      <ng-container *ngIf="!column?.sortable && widgetTemplates[column?.id + 'Heading']">
+        <th mat-header-cell *matHeaderCellDef [class]="column?.headerClass" [style]="column?.style">
+          <ls-widget *ngIf="widgetTemplates[column?.id + 'Heading']"
+            [lsTemplate]="widgetTemplates[column?.id + 'Heading']">
+          </ls-widget>
+        </th>
+      </ng-container>
+      <ng-container *ngIf="column?.sortable && widgetTemplates[column?.id + 'Heading']">
+        <th mat-header-cell *matHeaderCellDef [mat-sort-header]="column.id" [class]="column?.headerClass"
+          [style]="column?.style">
+          <ls-widget *ngIf="widgetTemplates[column?.id + 'Heading']"
+            [lsTemplate]="widgetTemplates[column?.id + 'Heading']">
+          </ls-widget>
+        </th>
+      </ng-container>
+      <ng-container *ngIf="!column?.sortable && !widgetTemplates[column?.id + 'Heading']">
+        <th mat-header-cell *matHeaderCellDef [class]="column?.headerClass" [style]="column?.style">
+          {{ config?.translate
+          ? (getHeaderTranslation(column) | translate)
+          : getHeaderTranslation(column) }}
+        </th>
+      </ng-container>
+      <ng-container *ngIf="column?.sortable && !widgetTemplates[column?.id + 'Heading']">
+        <th mat-header-cell *matHeaderCellDef [mat-sort-header]="column.id" [class]="column?.headerClass"
+          [style]="column?.style">
+          {{ config?.translate
+          ? (getHeaderTranslation(column) | translate)
+          : getHeaderTranslation(column) }}
+        </th>
+      </ng-container>
+      <td mat-cell *matCellDef="let row" [ngClass]="((row?.admissions != undefined) && (row?.admissions).length > 1) ? 'manage-data-row px-2' : 'px-2'">
+        <div [class]="column?.cellClass" [style]="column?.style">
+          <span *ngIf="!widgetTemplates[column?.id]" [class]="column?.labelClass">{{ row[column?.id] }}</span>
+          <ls-widget *ngIf="widgetTemplates[column?.id]" [lsTemplate]="widgetTemplates[column?.id]" [value]="row">
+          </ls-widget>
+        </div>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions" *ngIf="config?.actions?.show">
+      <th mat-header-cell *matHeaderCellDef [style]="config?.actions?.header?.style"
+        [class]="config?.actions?.header?.class">
+        <ng-container *ngIf="!widgetTemplates['actionsHeading']">{{
+          config?.actions?.headerLabel
+          }}</ng-container>
+        <ls-widget *ngIf="widgetTemplates['actionsHeading']" [lsTemplate]="widgetTemplates['actionsHeading']">
+        </ls-widget>
+      </th>
+      <td mat-cell *matCellDef="let row" class="px-2">
+        <ls-widget [lsTemplate]="widgetTemplates?.actions" [value]="row" [class]="config?.actions?.class"
+          [style]="config?.actions?.style"></ls-widget>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actionsExtraHeader">
+      <th mat-header-cell *matHeaderCellDef class="px-2"></th>
+    </ng-container>
+
+    <ng-container [matColumnDef]="column.id + 'ExtraHeader'" *ngFor="let column of columns">
+      <th mat-header-cell *matHeaderCellDef>
+        <ls-widget [lsTemplate]="widgetTemplates[column.id + 'ExtraHeader']" [class]="config?.extraHeader?.class"
+          [style]="config?.extraHeader?.style"></ls-widget>
+      </th>
+    </ng-container>
+
+    <ng-container *ngIf="config?.footer">
+      <ng-container matColumnDef="footer">
+        <td mat-footer-cell *matFooterCellDef [attr.colspan]="config?.footer?.colspan" [class]="config?.footer?.class">
+          <ls-widget [lsTemplate]="widgetTemplates?.footer" [style]="config?.footer?.style"></ls-widget>
+        </td>
+      </ng-container>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="getDisplayedColumns()"></tr>
+    <ng-container *ngIf="config?.showExtraHeader">
+      <tr mat-header-row *matHeaderRowDef="getExtraHeaderDisplayedColumns()" class="extra-header"></tr>
+    </ng-container>
+    <tr mat-row *matRowDef="let row; columns: getDisplayedColumns()"
+      [class.active]="isSelected ? isSelected(row, selection) : selection?.isSelected(row)"></tr>
+    <ng-container *ngIf="config?.footer">
+      <tr mat-footer-row *matFooterRowDef="['footer']"></tr>
+    </ng-container>
+  </table>
+  <div class="text-center my-4 mx-2"
+    *ngIf="config?.tableState !== 'LOADING' && config?.tableState !== 'FAILURE' && dataSource.data?.length === 0">
+    No data found
+  </div>
+  <div class="mat-error text-center my-4 mx-2" *ngIf="config?.tableState === 'FAILURE' && dataSource.data?.length === 0">
+    Something went wrong. Please try again.
+  </div>
+</div>

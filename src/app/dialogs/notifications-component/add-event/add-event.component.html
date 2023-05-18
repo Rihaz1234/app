@@ -1,0 +1,173 @@
+<div class="dialog-header patientalert-dialog-header" xmlns="http://www.w3.org/1999/html">
+    <h1 mat-dialog-title *ngIf="recordedNote || addNote" class="mx-2 pb-2">
+        {{ "alert_config_module.note" | translate }}
+    </h1>
+    <button mat-icon-button mat-dialog-close *ngIf="recordedNote">
+        <mat-icon>close</mat-icon>
+    </button>
+    <div class="btn-group-area button-card-area d-flex" *ngIf="!recordedNote && !addNote">
+        <button mat-button [ngClass]="
+        selectedTab === 'event' ? 'select-btn-active' : 'select-btn'
+      " (click)="selectTab('event')">
+            {{ "alert_config_module.add_event.event" | translate }}
+        </button>
+        <button mat-button [ngClass]="
+        selectedTab === 'note' ? 'select-btn-active' : 'select-btn'
+      " (click)="selectTab('note')">
+            {{ "alert_config_module.note" | translate }}
+        </button>
+    </div>
+</div>
+
+<mat-dialog-content class="py-2 mat-dialog-popup">
+    <div class="scroll-assist">
+        <div *ngIf="selectedTab === 'event' || selectedTab === 'note'">
+            <form [formGroup]="addEventForm" class="dialog-form">
+                <div *ngIf="selectedTab === 'event'" class="row form-row">
+                    <div class="px-3">
+                        <mat-label class="matlabel fw-bold my-2">{{ "alert_config_module.add_event.record_symptoms" |
+                            translate }}
+                        </mat-label>
+                        <div class="row">
+                            <div class="col-md-6 my-1" *ngFor="let symptom of symptoms">
+                                <mat-checkbox [value]="symptom" (change)="onSymptomChange($event)"
+                                    [checked]="addEventForm?.value?.symptoms?.indexOf(symptom) !== -1">{{symptom}}
+                                </mat-checkbox>
+                            </div>
+                        </div>
+                        <mat-error *ngIf="!f.symptoms?.errors?.required && !f.symptoms?.valid">
+                            {{ "alert_config_module.add_event.symptoms_invalid" | translate }}
+                        </mat-error>
+                    </div>
+                    <div class="px-3" *ngIf="addEventForm?.value?.symptoms?.indexOf('Other') !== -1">
+                        <div class="row">
+                            <div class="col-md-12 my-1">
+                                <input class="py-1 text-input" type="text" formControlName="manualSymptom"
+                                    placeholder="Enter Symptom" maxlength="128">
+                            </div>
+                        </div>
+                        <mat-error *ngIf="!f.manualSymptom?.errors?.required && !f.manualSymptom?.valid">
+                            {{ "alert_config_module.add_event.symptoms_invalid" | translate }}
+                        </mat-error>
+                        <mat-error *ngIf="submitted && f.manualSymptom?.errors?.required">
+                            {{ "alert_config_module.add_event.symptoms_required" | translate }}
+                        </mat-error>
+                    </div>
+                </div>
+                <div *ngIf="selectedTab === 'event'" class="row form-row">
+                    <div class="px-3">
+                        <mat-label class="matlabel fw-bold my-2">{{ "alert_config_module.add_event.select_activity" |
+                            translate }}
+                        </mat-label>
+                        <div class="row">
+                            <div class="col-md-6 my-1" *ngFor="let act of activity">
+                                <mat-checkbox [value]="act" (change)="onActivityChange($event)"
+                                    [checked]="addEventForm?.value?.activity?.indexOf(act) !== -1">{{act}}
+                                </mat-checkbox>
+                            </div>
+                        </div>
+                        <mat-error class="my-1"
+                            *ngIf="submitted && !addEventForm?.get('activity')?.value?.length && addEventForm?.get('symptoms')?.value?.length">
+                            {{ "alert_config_module.add_event.activity_required" | translate }}
+                        </mat-error>
+                    </div>
+                    <div class="px-3" *ngIf="addEventForm?.value?.activity?.indexOf('Other') !== -1">
+                        <div class="row">
+                            <div class="col-md-12 my-1">
+                                <input class="py-1 text-input" type="text" formControlName="manualActivity"
+                                    placeholder="Enter Activity" maxlength="128">
+                            </div>
+                        </div>
+                        <mat-error *ngIf="!f.manualActivity?.errors?.required && !f.manualActivity?.valid">
+                            {{ "alert_config_module.add_event.activity_invalid" | translate }}
+                        </mat-error>
+                        <mat-error *ngIf="submitted && f.manualActivity?.errors?.required">
+                            {{ "alert_config_module.add_event.enter_activity" | translate }}
+                        </mat-error>
+                    </div>
+                </div>
+                <div *ngIf="selectedTab === 'note'" class="row form-row">
+                    <div class="px-3 pb-2">
+                        <mat-label class="matlabel">{{ "alert_config_module.add_event.record_note" | translate }}
+                        </mat-label>
+                        <mat-form-field class="notification-textarea">
+                            <textarea matInput cdkTextareaAutosize class="p-2 text-area" formControlName="note"
+                                maxlength="300" [(ngModel)]="note">
+                            </textarea>
+                        </mat-form-field>
+                        <mat-error *ngIf="submitted && f.note?.errors?.required" class="required-text py-1">
+                            {{ "alert_config_module.add_event.note_required" | translate }}
+                        </mat-error>
+                        <mat-error *ngIf="!f.note?.errors?.required && f.note?.errors?.pattern" class="text-wrap">
+                            {{ "alert_config_module.add_event.note_pattern" | translate }}
+                        </mat-error>
+                    </div>
+                </div>
+                <div class="row form-row">
+                    <div class="col-3 align-items-center">
+                        <mat-label class="matlabel pt-2">{{ "alert_config_module.add_event.time" | translate }}
+                        </mat-label>
+                    </div>
+                    <div class="col-9 text-end">
+                        <mat-form-field appearance="fill" class="time-input formfield-control">
+                            <input matInput type="text" formControlName="time" autocomplete="off" class="form-control"
+                                [min]="patchStartedTime()" [max]="getCurrentDate()" [owlDateTime]="dt"
+                                [owlDateTimeTrigger]="dt" readonly [(ngModel)]="currentTime" [disabled]="editEvent" />
+                            <mat-icon matSuffix [owlDateTimeTrigger]="dt"
+                                class="cursor-pointer material-icons-outlined">access_time_filled</mat-icon>
+                            <owl-date-time #dt [hour12Timer]="false" [pickerType]="'timer'"
+                                [disabled]="editEvent || addNote"></owl-date-time>
+                            <mat-error *ngIf="f.time?.errors?.required">
+                                {{ "alert_config_module.add_event.time_required" | translate }}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div *ngIf="selectedTab === 'recordedNote'">
+            <form class="dialog-form">
+                <div class="row form-row">
+                    <div class="px-3 pb-2">
+                        <mat-label class="matlabel">{{ "alert_config_module.recorded_note" | translate }}
+                        </mat-label>
+                        <mat-form-field class="notification-textarea textarea-note ">
+                            <textarea matInput cdkTextareaAutosize class="p-2 text-area" [readonly]="true"
+                                [value]="notes">
+                            </textarea>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row form-row">
+                    <div class="col-md-3 align-items-center">
+                        <mat-label class="matlabel pt-3">{{ "alert_config_module.add_event.time" | translate }}
+                        </mat-label>
+                    </div>
+                    <div class="col-md-9 text-end">
+                        <mat-form-field appearance="fill" class="time-input formfield-control">
+                            <input matInput type="text" autocomplete="off" class="form-control" [max]="getCurrentDate()"
+                                [owlDateTime]="dt" [owlDateTimeTrigger]="dt" readonly [(ngModel)]="recordedTime" />
+                            <mat-icon matSuffix [owlDateTimeTrigger]="dt">schedule</mat-icon>
+                            <owl-date-time #dt [hour12Timer]="false" [disabled]="true"></owl-date-time>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="error-message">
+        <mat-error class="mt-2"
+            *ngIf="submitted && !addEventForm?.get('symptoms')?.value?.length && !addEventForm?.get('note')?.value">
+            <span *ngIf="!addNote">{{ "alert_config_module.add_event.event_note_required" | translate }}</span>
+            <span *ngIf="addNote">{{ "alert_config_module.add_event.note_required" | translate }}</span>
+        </mat-error>
+    </div>
+</mat-dialog-content>
+<div matDialogActions align="right" class="me-4 pe-2">
+    <button mat-flat-button mat-dialog-close class="fill-btn" color="warn" *ngIf="!recordedNote">
+        {{ "manage_users_module.adduser.cancelbutton" | translate }}
+    </button>
+    <button mat-flat-button class="fill-btn" color="primary" (click)="onSubmit()" *ngIf="!recordedNote">
+        {{ "manage_users_module.adduser.savebutton" | translate }}
+    </button>
+</div>

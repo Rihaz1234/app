@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="31.50449"
+   height="28"
+   viewBox="0 0 31.504489 28"
+   version="1.1"
+   id="svg5"
+   sodipodi:docname="pr.svg"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)">
+  <metadata
+     id="metadata11">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs9" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="775"
+     inkscape:window-height="480"
+     id="namedview7"
+     showgrid="false"
+     inkscape:zoom="7.7593916"
+     inkscape:cx="15.760001"
+     inkscape:cy="13.7"
+     inkscape:window-x="2546"
+     inkscape:window-y="403"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg5"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
+  <path
+     style="fill:#00f0ff"
+     inkscape:connector-curvature="0"
+     d="m 31.502245,8.888 a 8.693,8.693 0 0 0 -8.48,-8.888 8.4,8.4 0 0 0 -7.27,4.309 A 8.4,8.4 0 0 0 8.4822451,0 8.693,8.693 0 0 0 0.00224509,8.888 9.053,9.053 0 0 0 2.6822451,15.365 h -0.01 L 14.822245,27.541 a 1.174,1.174 0 0 0 0.93,0.459 1.19,1.19 0 0 0 0.88,-0.4 l 12.2,-12.235 h -0.01 a 9.051,9.051 0 0 0 2.68,-6.477 z"
+     data-name="Path 1526"
+     id="Path_1526" />
+</svg>

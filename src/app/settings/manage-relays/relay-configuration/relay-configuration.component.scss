@@ -1,0 +1,39 @@
+@import "src/assets/scss/modules/variables";
+
+body {
+  background-color: $dark-color-option !important;
+}
+.table {
+  width: 100%;
+}
+
+td {
+  text-align: center;
+  background: $bg-table-row;
+  align-items: center;
+  letter-spacing: 0.05em;
+  border: none;
+  padding: 7px 10px;
+  vertical-align: middle;
+}
+tr {
+  border: none;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+tbody tr {
+  border-bottom: 7px solid $tab-bg-color !important;
+  //border-top: 7px solid $tab-bg-color!important;
+  border-collapse: separate !important;
+}
+.mat-sel {
+  width: 180px;
+  border: none !important;
+  background: $light-blue-bg;
+  box-shadow: $box-shadow-color;
+  border-radius: $border-radius;
+  @media (max-width: 767px) {
+    width: 100%;
+  }
+}

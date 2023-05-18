@@ -1,0 +1,10 @@
+@import "src/assets/scss/modules/variables";
+fieldset.scheduler-border {
+    @media (max-width: 420px) {
+        padding: 0 0.5rem 0.5rem !important;
+      }
+      color: $label-color;
+    }
+
+    .facility-details-label{text-transform: uppercase; font-size:$size-12; font-weight: 600;}
+    .material-icons-outlined{font-size: 1.75rem;}

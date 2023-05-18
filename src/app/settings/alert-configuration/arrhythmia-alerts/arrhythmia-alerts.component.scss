@@ -1,0 +1,36 @@
+@import "src/assets/scss/modules/variables";
+
+.text-input-box {
+  border-radius: 0.25rem;
+  border-color: $white;
+  width: 55px;
+  text-align: center;
+  background-color: $white;
+}
+.mat-sel {
+  width: 130px;
+}
+.priority-drop-down {
+  width: 90px;
+  border: none !important;
+  padding: 2px;
+  text-align: left;
+  background: $white;
+  box-shadow: $box-shadow-color;
+  border-radius: $border-radius;
+}
+.mat-input-element {
+  color: $select-label-color;
+}
+.text-value{
+  width: 4.5rem;
+  margin: auto;
+  text-align: center;
+}
+.ack-column{margin: auto; justify-content: center;}
+
+/*::ng-deep {
+  .scroll-assist {
+    max-height: calc(100vh - 300px) !important;
+  }
+}*/

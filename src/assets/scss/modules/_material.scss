@@ -1,0 +1,106 @@
+@use "sass:map";
+@use "~@angular/material" as mat;
+@import "./variables";
+$life-signals-palette: (
+  50: darken($primary-color, 50%),
+  100: darken($primary-color, 40%),
+  200: darken($primary-color, 30%),
+  300: darken($primary-color, 20%),
+  400: darken($primary-color, 10%),
+  500: $primary-color,
+  600: lighten($primary-color, 10%),
+  700: lighten($primary-color, 20%),
+  800: lighten($primary-color, 30%),
+  900: lighten($primary-color, 40%),
+  contrast: (
+    50: white,
+    100: white,
+    200: white,
+    300: white,
+    400: white,
+    500: white,
+    600: black,
+    700: black,
+    800: black,
+    900: black,
+  ),
+);
+
+$dark-primary-text: rgba(black, 0.87);
+$dark-secondary-text: rgba(black, 0.54);
+$dark-disabled-text: rgba(black, 0.38);
+$dark-dividers: rgba(black, 0.12);
+$dark-focused: rgba(black, 0.12);
+$light-primary-text: white;
+$light-secondary-text: rgba(white, 0.7);
+$light-disabled-text: rgba(white, 0.5);
+$light-dividers: rgba($primary-color, 0.12);
+$light-focused: rgba($primary-color, 0.12);
+// $my-primary: mat.define-palette($life-signals-palette, 500);
+$my-accent: mat.define-palette(mat.$amber-palette, A200, A100, A400);
+$my-warn: mat.define-palette(mat.$red-palette);
+$my-foreground: mat.define-palette(mat.$grey-palette);
+$my-background: mat.define-palette(mat.$grey-palette);
+
+$muli-typography: mat.define-typography-config(
+  $font-family: $base-font-family,
+);
+
+// Define a dark theme
+$dark-primary: mat.define-palette($life-signals-palette);
+$dark-accent: mat.define-palette($my-accent);
+$dark-theme-foreground-palette: (
+  base: white,
+  divider: $light-dividers,
+  dividers: $light-dividers,
+  disabled: $light-disabled-text,
+  disabled-button: rgba(white, 0.3),
+  disabled-text: $light-disabled-text,
+  elevation: black,
+  hint-text: $light-disabled-text,
+  secondary-text: $light-secondary-text,
+  icon: white,
+  icons: white,
+  text: white,
+  slider-min: white,
+  slider-off: rgba(white, 0.3),
+  slider-off-active: rgba(white, 0.3),
+);
+$dark-theme-background-palette: (
+  status-bar: black,
+  app-bar: map.get(mat.$grey-palette, 900),
+  background: $primary-color,
+  hover: rgba($primary-color, 0.04),
+  // TODO(kara): check style with Material Design UX
+  card: map.get(mat.$grey-palette, 800),
+  dialog: map.get(mat.$grey-palette, 800),
+  disabled-button: rgba($primary-color, 0.12),
+  raised-button: map.get(mat.$grey-palette, 800),
+  focused-button: $light-focused,
+  selected-button: map.get(mat.$grey-palette, 900),
+  selected-disabled-button: map.get(mat.$grey-palette, 800),
+  disabled-button-toggle: black,
+  unselected-chip: map.get(mat.$grey-palette, 700),
+  disabled-list-option: black,
+  tooltip: map.get(mat.$grey-palette, 700),
+);
+$dark-theme: mat.define-dark-theme(
+  (
+    color: (
+      primary: $dark-primary,
+      accent: $dark-accent,
+      foreground: $dark-theme-foreground-palette,
+      background: $dark-theme-background-palette,
+    ),
+    typography: $muli-typography,
+  )
+);
+
+// Apply the dark theme by default
+@include mat.core-theme($dark-theme);
+
+@include mat.all-component-themes($dark-theme);
+
+.mat-ripple {
+  display: none;
+}

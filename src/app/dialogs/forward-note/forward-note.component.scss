@@ -1,0 +1,19 @@
+@import "src/assets/scss/modules/variables";
+
+.textarea-note {
+  textarea {
+    height: 7.5rem;
+  }
+}
+
+.required-field {
+  color: $requried-color;
+  font-weight: 400;
+}
+
+.required-all {
+  color: $cancel-color;
+  font-weight: 400;
+  font-size: 12px;
+  padding-top: 13px;
+}

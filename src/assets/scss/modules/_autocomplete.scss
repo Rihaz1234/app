@@ -1,0 +1,20 @@
+@import "variables";
+
+.mat-autocomplete-panel{
+    background-color: $select-option-bg;
+    .mat-option{
+        color: $select-option-color !important;
+        font-size: 0.9rem;
+    }
+    .mat-option.mat-selected:not(.mat-active):not(:hover) {
+        background: $select-option-selected-bg;
+    }
+    .mat-option:hover:not(.mat-option-disabled), .mat-option:focus:not(.mat-option-disabled){
+        background-color: $white;
+    }
+}
+.form-control{
+    .mat-autocomplete-pabel{
+        margin-top: 1rem;
+    }
+}

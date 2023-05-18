@@ -1,0 +1,80 @@
+@import "src/assets/scss/modules/variables";
+
+.select-btn:focus {
+    background: $tab-bg-color  !important;
+    outline: none;
+    box-shadow: none;
+}
+
+.mat-icon {
+    font-size: $base-font-size;
+}
+
+body {
+    background-color: $dark-color-option  !important;
+}
+
+.delete-btn {
+    background: $bg-disable-color;
+}
+
+.mat-input-element::placeholder {
+    color: rgba(255, 255, 255, 0.64);
+}
+
+.table-container {
+    background: #043158 !important;
+    color: white;
+    min-height: 240px;
+}
+
+.search-form-field {
+    &.mat-form-field-appearance-fill {
+        max-width: 19rem !important;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .button-group {
+        text-align: left !important;
+    }
+
+    /*.delete-btn,
+  .sent-btn {
+    margin-top: 10px;
+  }*/
+    .button-card-area {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        margin: 0 -0.2rem;
+
+        button {
+            width: calc(50% - 0.5rem);
+            margin: 0 0.2rem 0.4rem;
+            display: flex;
+            height: 2.5rem;
+            border-radius: 4px;
+        }
+    }
+}
+
+@media only screen and (max-width: 578px) {
+    .search-form-field {
+        &.mat-form-field-appearance-fill {
+            max-width: 100% !important;
+            margin-bottom: 0.5rem;
+        }
+    }
+}
+
+.sc-el-1 {
+    background-color: $dark-color-option  !important;
+}
+
+.button-group {
+    .delete-btn {
+        min-width: 8.5rem;
+        background-color: $bg-disable-color;
+    }
+}

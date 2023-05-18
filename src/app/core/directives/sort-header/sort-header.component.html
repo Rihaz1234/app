@@ -1,0 +1,24 @@
+<div class="sort-col">
+  <ng-content></ng-content>
+  <div
+    *ngIf="enableSort; else disbledSort"
+    [ngClass]="{
+      arrow: true,
+      asc: sorter?.active === ref && sorter?.direction === 'asc',
+      desc: sorter?.active === ref && sorter?.direction === 'desc'
+    }"
+  >
+    <mat-icon aria-hidden="false" aria-label="sort icon" class="cursor-pointer"
+      >arrow_upward</mat-icon
+    >
+  </div>
+
+  <ng-template #disbledSort>
+    <mat-icon
+      aria-hidden="false"
+      aria-label="sort icon"
+      class="cursor-pointer arrow-hide"
+      >arrow_upward</mat-icon
+    >
+  </ng-template>
+</div>

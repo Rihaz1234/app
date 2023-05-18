@@ -1,0 +1,234 @@
+$white: #fff !default;
+$black: #000 !default;
+
+/*font color and family */
+
+$base-font-size: 14px;
+$base-font-family: "Mulish",
+    "Muli-Regular",
+    sans-serif;
+$base-font-color: $white;
+$size-20: 20px;
+$size-12: 12px;
+$size-24: 24px;
+$size-16: 16px;
+$size-10: 10px;
+$size-5: 5px;
+$size-6: 6px;
+$size-20: 20px;
+$size-18: 18px;
+$size-15: 15px;
+$size-27: 27px;
+$confirm-dialog-width: 750px;
+$err0r_text_color: #dc3545;
+$opacity-white-color: rgba(255, 255, 255, 0.64);
+$opacity-bg-color: rgba(255, 255, 255, 0.25);
+$red-font-color: #ff4c4c;
+$medium-priority-color: #FAFF00;
+$low-priority-color: #FAFF00;
+$amber-font-color: #FFC700;
+$green-font-color: #17d468;
+$dark-color-option: #04294a;
+$table-tr-color: rgb(4, 60, 109);
+$table-spacing_color: #04294a;
+$p-color: #00427ca3;
+$row-disabled: rgb(4, 60, 109, 0.6);
+$white-text: #f2f2f2;
+$brown-color: #877d7d;
+$arrow-color: #7c8fa0;
+$label-color: #4ea2ef;
+$requried-color: #ff6565;
+$black-color: $black;
+$gray-color: #333333;
+$time-color: #67a5d2;
+$close-color: #afadad;
+$spo2-color: #00f0ff;
+$heartrate-color: #00ff6d;
+$yellow-color: #faff00;
+$light-text-color: #EBEBEB;
+$setting-color: #e1e1e1;
+$colornew-yellow: #fff618;
+$stop-button-color: #ca4242;
+$ews-color: #ff5841;
+$bp-color: #ff983a;
+$cancel-color: #ff4444;
+$history-label-color: #a7c7e4;
+$color-code-new: #c5ff20;
+$pink-color: #c6005f;
+$green-color: #3fff91;
+$blue-color: #1fc0f3;
+$colorgray: #666666;
+$red-label-color: #f44336;
+$select-label-color: #023f74;
+$select-option-color: #235987;
+$select-option-bg: #E0EAF2;
+$select-option-selected-bg: $white;
+$gray-color-time: #C4C4C4;
+$blue-color-group:#1fc0f3;
+$trend-topColor:#043B6C;
+$expired-vital: #a9a9a9;
+$inactive-color:#1862A1;
+$status-color-bg:rgba(255, 255, 255, 0.14);
+$status-color-border:rgba(255, 255, 255, 0.4);
+
+/*background color */
+
+$primary-color: #00549f;
+$bg-primary-color: $primary-color;
+$bg-white-color: $white;
+$light-blue-color: #00bbef;
+$bg-topbar-color: rgba(0, 66, 124, 0.64);
+$bg-yellow-color: #f2cd4b;
+$bg-button-color: #00549f;
+$bg-button-hover: $bg-primary-color;
+$bg-table-row-color: #043c6d;
+$bg-search-color: rgba(123, 193, 255, 0.16);
+$bg-disable-color: #224c72;
+$bg-table-row-active-color: #1b6db6;
+$modal-dailog-headstrip-color: #1c4871;
+$bg-input-color: #eeeeee;
+$bg-button-light-red-color: #cd6d6d;
+$light-blue-bg: #e0eaf2;
+$bg-slider-bar: #072540;
+$bg-info-color: #09478e;
+$bg-dashboard-color: #00427c;
+$bg-grid-color: #033562;
+$bg-card-color: #063056;
+$bg-signal-color: #062847;
+$bg-color-match: #032D52;
+$topbat-strip-color: #254868;
+$button-color-bg: #054680;
+$bg-matcard-color: #043b6d;
+$bg-bage-color: #a03434;
+$bg-manage-strip-color: #042f55;
+$tab-bg-color: #043158;
+$bg-reset-btn: #42709a;
+$tr-active-bg-color: #1b6db6;
+$border-radius: 0.25rem;
+$bg-table-row: #043c6d;
+$bg-leftpanel-card:#053561;
+$bg-cardblocker-box:#00315D;
+$border-line-color:#70F6FF;
+
+
+/* Toggle */
+
+$toggle-button-bg-on: #66a5dd;
+$toggle-button-bg-off: #1862a2;
+$toggle-button-round-off: #082d4e;
+
+/* Table */
+
+$table-thead-border-bottom: 1.5px solid rgba(255, 255, 255, 0.3);
+$bg-expanded: #00213e;
+$bg-transparent-rgba: rgba(0, 84, 159, 0.3);
+
+/* Font weight */
+
+$font-weight-600: 600;
+$font-weight-700: 700;
+$font-weight-normal: normal;
+$font-weight-400: 400;
+
+/*border-line */
+
+$border-search-color: rgba(123, 193, 255, 0.64);
+$border-search: 1px solid $border-search-color;
+$none: none;
+$border-separate-color: #c4c4c4;
+$border-color-bottom: 1.5px solid rgba(255, 255, 255, 0.3);
+
+/*letter spacing */
+
+$letter-spacing-size: 0.25px;
+
+/*box shadow */
+
+$box-shadow-button: 0px 1px 5px rgba(0, 0, 0, 0.16);
+$box-shadow-card: 0px 4px 4px rgba(0, 0, 0, 0.25);
+$box-shadow-color: 0px 1px 5px rgba(0, 0, 0, 0.15);
+$box-shadow-inset-area: 2px 1px 5px rgba(0, 0, 0, 0.25);
+$text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.05);
+$box-shadow-area: 0px 1px 15px rgba(0, 0, 0, 0.18);
+// scss-docs-start box-shadow-variables
+$box-shadow: 0 0.5rem 1rem rgba($black, 0.15) !default;
+$box-shadow-sm: 0 0.125rem 0.25rem rgba($black, 0.075) !default;
+$box-shadow-lg: 0 1rem 3rem rgba($black, 0.175) !default;
+$box-shadow-inset: inset 0 1px 2px rgba($black, 0.075) !default;
+// scss-docs-end box-shadow-variables
+
+/*line height */
+
+$base-line-height: 1rem;
+
+/* Font Style */
+
+$font-style-normal: normal;
+// border-radius-variables
+$border-radius-divide: 8px 8px 0px 0px;
+$border-right-bottom: 0 8px 8px 0;
+$border-top-left: 8px 0 0 8px;
+// border-radius-variables
+//opacity color variable
+$opacity-color-code: 0.64;
+//opacity color variable
+$rgb-color: rgba(255, 255, 255, 0.8);
+$background-white-rgb-color: rgba(255, 255, 255, 0.12);
+$rgb-color-code: rgba(255, 255, 255, 0.3);
+$rgb-transparent-bg: rgba(0, 84, 159, 0.4);
+$rgb-warn-color: rgba(255, 68, 68, 0.1);
+$rgba-white-color: rgba(255, 255, 255, 0.6);
+// rgba color variables
+//opacity color variable
+$opacity-color-code: 0.64;
+//opacity color variable
+$opacity-disabled: 0.65;
+//gradient color variable
+$background-gradient-color: linear-gradient(90deg, $bg-slider-bar 0%, rgba(7, 37, 64, 0) 58.86%);
+//gradient color variable
+
+/* filter shadow */
+
+$filter-dropshadow: drop-shadow(0px 1px 5px rgba(0, 0, 0, 0.16));
+//gradient color variable
+$background-gradient-color: linear-gradient(90deg, $bg-slider-bar 0%, rgba(7, 37, 64, 0) 58.86%);
+//gradient color variable
+$validation-error-message-color: #ffa69f;
+
+/* Alert Colors */
+
+$alert-low: #FAFF00;
+$alert-medium: #ffbf00;
+$alert-high: #FF4C4C;
+$alert-tech: #00F0FF;
+$alert-text: #FFF618;
+
+/* Alert  background Colors */
+$bg-alert-low:  rgba(250, 255, 0, 0.2);
+$bg-alert-medium:  rgba(250, 255, 0, 0.2);
+$bg-alert-high:  rgba(202, 66, 66, 0.2);
+$bg-alert-tech: rgba(0, 240, 255, 0.2);
+$active-bg: #F4F66F;
+
+
+/***** Manage Group Color *****/
+$default-manage-button:#C5FF20;
+$bg-default-manage-button: rgba(197, 255, 32, 0.08);
+
+$default-manage-button-level-1:#C6005F;
+$bg-default-manage-button-level-1: rgba(241, 51, 142, 0.08);
+
+$default-manage-button-level-2:#FFBE15;
+$bg-default-manage-button-level-2: rgba(255, 190, 21, 0.08);
+
+$default-manage-button-level-3:#26D8FF;
+$bg-default-manage-button-level-3: rgba(38, 216, 255, 0.08);
+
+$default-manage-button-level-4:#65C94C;
+$bg-default-manage-button-level-4: rgba(101, 201, 76, 0.08);
+
+$default-manage-button-level-5:#9847FF;
+$bg-default-manage-button-level-5: rgba(152, 71, 255, 0.08);
+
+
+

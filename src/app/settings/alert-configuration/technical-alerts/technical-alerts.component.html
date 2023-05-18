@@ -1,0 +1,157 @@
+<ls-table [(config)]="config" [columns]="columns" [data]="technicalAlertSettings" class="head-border fixed-header-relative">
+  <ng-template lsWidgetName="enabled" let-config>
+    <span class="d-flex align-items-center">
+    <mat-slide-toggle [(ngModel)]="config.Enabled" class="ms-1 me-2" (change)="toggle(config?.index)"
+      [disabled]="!isEditAccess">
+    </mat-slide-toggle>
+    </span>
+  </ng-template>
+  <ng-template lsWidgetName="alerts" let-config>
+    {{ config.alert }}
+  </ng-template>
+  <ng-template lsWidgetName="alert_freqExtraHeader" let-technicalAlertConfig>
+    <div class="d-flex align-items-center">
+      <div class="d-flex ack-column align-items-center text-start">
+        {{ "alert_config_module.acknowledge" | translate }}
+      </div>
+      <div class="d-flex ack-column align-items-center text-start">
+        {{ "alert_config_module.unacknowledge" | translate }}
+      </div>
+    </div>
+  </ng-template>
+  <ng-template lsWidgetName="alert_freq" let-technicalAlertConfig>
+    <div class="d-flex align-items-center">
+      <div class="d-flex ack-column text-start align-items-center">
+        <div class="d-flex align-items-center">
+          <div *ngIf="!editAlertFrequency[technicalAlertConfig?.index]" class="text-value align-items-center">
+            {{ technicalAlertConfig.Frequency_Ack }} {{ (technicalAlertConfig.units !== 'Mins') ? ('alert_config_module.mins' | translate) : technicalAlertConfig.units }}
+          </div>
+          <div *ngIf="editAlertFrequency[technicalAlertConfig?.index] && isEditAccess">
+            <input autocomplete="off"
+            (keypress)="numericsOnly(technicalAlertConfig.key, $event)"
+            (paste)="alertService.checkForSpecialCharacters($event)"
+            type="number" matInput class="text-input-box py-1" digitOnly (change)="technicalParamInputChanged(
+                  technicalAlertConfig?.index,
+                  'Frequency_Ack',
+                  technicalAlertMinMax[technicalAlertConfig.key]
+                )" [min]="technicalAlertMinMax[technicalAlertConfig.key]['MIN']['Frequency_Ack']"
+              [max]="technicalAlertMinMax[technicalAlertConfig.key]['MAX']['Frequency_Ack']"
+              [(ngModel)]="technicalAlertConfig.Frequency_Ack" />
+          </div>
+          <ng-container *ngIf="isEditAccess">
+            <div class="ms-2 edit">
+              <div *ngIf="!editAlertFrequency[technicalAlertConfig?.index]">
+                <button mat-mini-fab color="primary" class="btn-boxed btn-no-shadow"
+                  (click)="showHideEdit(technicalAlertConfig?.index, 'alertFrequencyACK')"
+                  [disabled]="!technicalAlertConfig.Enabled">
+                  <mat-icon>edit</mat-icon>
+                </button>
+              </div>
+              <div class="align-middle" *ngIf="editAlertFrequency[technicalAlertConfig?.index]">
+                <button mat-mini-fab color="primary" class="btn-boxed btn-no-shadow"
+                  (click)="showHideEdit(technicalAlertConfig?.index, 'alertFrequencyACK')">
+                  <mat-icon>done</mat-icon>
+                </button>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+      <div class="d-flex ack-column justify-content-center align-items-center">
+        <div class="d-flex justify-content-center align-items-center">
+          <div *ngIf="!editAlertFrequencyUnAck[technicalAlertConfig?.index]" class="text-value align-items-center">
+            {{ technicalAlertConfig.Frequency_UnAck }} {{ (technicalAlertConfig.units !== 'Mins') ? ('alert_config_module.mins' | translate) : technicalAlertConfig.units }}
+          </div>
+          <div *ngIf="editAlertFrequencyUnAck[technicalAlertConfig?.index]">
+            <input autocomplete="off"
+            (keypress)="numericsOnly(technicalAlertConfig.key, $event)"
+            (paste)="alertService.checkForSpecialCharacters($event)"
+            matInput class="text-input-box py-1" digitOnly type="number" (change)="
+                technicalParamInputChanged(
+                  technicalAlertConfig?.index,
+                  'Frequency_UnAck',
+                  technicalAlertMinMax[technicalAlertConfig.key]
+                )
+              " [min]="
+                technicalAlertMinMax[technicalAlertConfig.key]['MIN'][
+                  'Frequency_UnAck'
+                ]
+              " [max]="
+                technicalAlertMinMax[technicalAlertConfig.key]['MAX'][
+                  'Frequency_UnAck'
+                ]
+              " [(ngModel)]="technicalAlertConfig.Frequency_UnAck" />
+          </div>
+          <ng-container *ngIf="isEditAccess">
+            <div class="ms-2 edit">
+              <button *ngIf="!editAlertFrequencyUnAck[technicalAlertConfig?.index]" mat-mini-fab color="primary"
+                class="btn-boxed btn-no-shadow"
+                (click)="showHideEdit(technicalAlertConfig?.index, 'alertFrequencyNACK')"
+                [disabled]="!technicalAlertConfig.Enabled">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button *ngIf="editAlertFrequencyUnAck[technicalAlertConfig?.index]" mat-mini-fab color="primary"
+                class="btn-boxed btn-no-shadow"
+                (click)="showHideEdit(technicalAlertConfig?.index, 'alertFrequencyNACK')">
+                <mat-icon>done</mat-icon>
+              </button>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template lsWidgetName="delayTime" let-technicalAlertConfig>
+    <div class="d-flex justify-content-around align-items-center">
+      <div class="d-flex ack-column justify-content-center align-items-center">
+        <div class="d-flex justify-content-center align-items-center">
+          <div *ngIf="!editDelaytime[technicalAlertConfig?.index]" class="text-value align-items-center">
+            {{ technicalAlertConfig.CondDelay }} {{ (technicalAlertConfig.unit !== 'Secs') ? ('alert_config_module.secs' | translate) : technicalAlertConfig.unit }}
+          </div>
+          <div *ngIf="editDelaytime[technicalAlertConfig?.index]">
+            <input autocomplete="off"
+            (keypress)="numericsOnly(technicalAlertConfig.key, $event)"
+            (paste)="alertService.checkForSpecialCharacters($event)"
+            type="number" matInput class="text-input-box py-1" digitOnly [(ngModel)]="technicalAlertConfig.CondDelay"
+          (change)="
+                technicalParamInputChanged(
+                  technicalAlertConfig?.index,
+                  'CondDelay',
+                  technicalAlertMinMax[technicalAlertConfig.key]
+                )
+              " [min]="
+                technicalAlertMinMax[technicalAlertConfig.key]['MIN'][
+                  'CondDelay'
+                ]
+              " [max]="
+                technicalAlertMinMax[technicalAlertConfig.key]['MAX'][
+                  'CondDelay'
+                ]
+              " />
+           </div>
+          <ng-container *ngIf="isEditAccess">
+      <div class="ms-2 edit">
+      <button *ngIf="!editDelaytime[technicalAlertConfig?.index]" mat-mini-fab color="primary"
+              class="btn-boxed btn-no-shadow" (click)="showHideEdit(technicalAlertConfig?.index, 'delay')"
+              [disabled]="!technicalAlertConfig.Enabled">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button *ngIf="editDelaytime[technicalAlertConfig?.index]" mat-mini-fab color="primary"
+              class="btn-boxed btn-no-shadow" (click)="showHideEdit(technicalAlertConfig?.index, 'delay')">
+        <mat-icon>done</mat-icon>
+      </button>
+      </div>
+    </ng-container>
+        </div>
+    </div>
+    </div>
+  </ng-template>
+  <ng-template lsWidgetName="modified" let-config>
+    <span *ngIf="masterData?.modifiedDateTime">
+      {{ masterData?.modifiedDateTime+ '+0000' | date: "MMM dd, yyyy " + timeFmt  :timeZone }}
+    </span><br />
+    <span *ngIf="!isBlank(masterData.modifiedBy)">by {{ masterData.modifiedBy }}</span>
+  </ng-template>
+  <ng-template lsWidgetName="spacer">
+  </ng-template>
+</ls-table>

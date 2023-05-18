@@ -1,0 +1,1868 @@
+@import "src/assets/scss/modules/_mixins";
+
+/* new variable define */
+
+.container-fuild {
+    padding: 0px 1rem;
+    overflow-y: hidden;
+    overflow-x: auto;
+}
+
+.table-responsive {
+    overflow-y: hidden;
+    overflow-x: auto;
+}
+
+.fw-700 {
+    font-weight: 700 !important;
+}
+
+.table-scroll,
+.comman-table-users {
+    @include media-breakpoint-down(lg) {
+        .mat-paginator-range-label {
+            margin: 0 0.6rem;
+        }
+    }
+
+    @include media-breakpoint-down(md) {
+        .my-3 {
+            margin-bottom: 0 !important;
+        }
+
+        .mat-paginator-range-label {
+            margin: 0 0.6rem;
+        }
+
+        .mat-paginator-page-size {
+            margin-right: 0;
+        }
+
+        .mat-paginator-container {
+            justify-content: center;
+            margin-top: 1rem;
+            flex-direction: column;
+        }
+    }
+}
+
+.topbar-card {
+    background: $bg-topbar-color;
+    box-shadow: $box-shadow-card;
+    padding: 1rem;
+
+    .button-row button {
+        color: $light-blue-color;
+        font-size: $size-20;
+        box-shadow: $none;
+        @include displayflex();
+        margin-right: 7rem;
+
+        @include media-breakpoint-down(xl) {
+            margin-right: 5rem;
+        }
+
+        @include media-breakpoint-down(lg) {
+            margin-right: 3rem;
+        }
+
+        @include media-breakpoint-down(md) {
+            margin-right: 0;
+        }
+
+        .mat-button-wrapper {
+            justify-content: flex-start;
+        }
+
+        .mat-icon {
+            @include displayflex();
+        }
+    }
+
+    .icon-image {
+        @include displayflex();
+        justify-content: flex-end;
+    }
+}
+
+
+/* top header */
+
+
+/* right side button */
+
+.top-button-row {
+    @include displayflex();
+    justify-content: flex-end;
+}
+
+.location-editbox {
+    .mat-input-element {
+        color: $select-label-color;
+    }
+}
+
+.tooltip-bg {
+    background-color: $bg-slider-bar;
+}
+
+
+/* right side button */
+
+
+/* search mat box */
+
+.search-form-field {
+    &.mat-form-field-appearance-fill {
+        width: 100%;
+
+        .mat-form-field-flex {
+            padding: 0rem 0.5rem;
+            background: $bg-search-color;
+            border: 1px solid $border-search-color;
+            height: 2rem;
+            border-radius: 4px;
+        }
+
+        .mat-form-field-wrapper {
+            padding: 0rem;
+        }
+
+        .mat-form-field-infix {
+            padding: 0rem;
+            width: 100%;
+            border: $none;
+        }
+
+        .mat-form-field-label {
+            font-size: $base-font-size;
+            color: $base-font-color;
+            text-transform: capitalize;
+            font-weight: 400;
+            color: $opacity-white-color;
+        }
+
+        .mat-select-trigger {
+            height: auto;
+        }
+
+        .mat-select-value {
+            font-size: $base-font-size;
+            color: $base-font-color;
+            text-transform: capitalize;
+            font-weight: $font-weight-600;
+            padding-top: 8px;
+        }
+
+        .mat-form-field-label-wrapper {
+            top: 0rem;
+            padding-top: 0rem;
+        }
+
+        .mat-form-field-underline {
+            display: $none;
+        }
+
+        .mat-input-element {
+            font-size: $base-font-size;
+            color: $base-font-color;
+            font-weight: $font-weight-600;
+            height: 2rem;
+            padding-top: 6px;
+            margin: 0;
+            box-sizing: border-box;
+            padding-right: 2rem;
+
+            &:focus {
+                caret-color: $white;
+            }
+        }
+
+        .mat-icon {
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+    }
+}
+
+.notification-textarea {
+    width: 100%;
+    height: auto;
+
+    &.mat-form-field-appearance-fill {
+        .mat-form-field-flex {
+            background: $white;
+            border: none;
+            border-radius: 4px;
+            padding: 0.5rem;
+        }
+
+        .mat-form-field-wrapper {
+            padding: 0rem;
+        }
+
+        .mat-form-field-infix {
+            padding: 0rem;
+            width: 100%;
+            border: $none;
+        }
+
+        .mat-form-field-label {
+            font-size: $base-font-size;
+            color: $base-font-color;
+            text-transform: capitalize;
+            font-weight: 400;
+        }
+
+        .mat-form-field-label-wrapper {
+            top: 0rem;
+            padding-top: 0rem;
+        }
+
+        .mat-form-field-underline {
+            display: $none;
+        }
+
+        .mat-input-element {
+            font-size: $base-font-size;
+            color: #000;
+            margin: 0;
+            box-sizing: border-box;
+            resize: none;
+        }
+
+        textarea {
+            resize: none;
+            overflow: hidden;
+        }
+
+        .mat-input-element:disabled {
+            opacity: 0.8;
+        }
+
+        .msgbtn {
+            margin-left: 1rem;
+        }
+
+        .mat-icon {
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+    }
+}
+
+.input-icon-field {
+    vertical-align: middle;
+
+    &.mat-form-field-appearance-fill {
+        .mat-form-field-flex {
+            padding: 0rem 1rem;
+            background: $white !important;
+            border: none;
+            width: 12rem;
+            height: 2rem;
+            border-radius: 4px;
+        }
+
+        .mat-form-field-wrapper {
+            padding: 0rem;
+        }
+
+        .mat-form-field-infix {
+            padding: 0rem;
+            width: 100%;
+            border: $none;
+        }
+
+        .mat-form-field-label {
+            font-size: $base-font-size;
+            color: $select-label-color;
+            text-transform: capitalize;
+            font-weight: 400;
+        }
+
+        .mat-select-trigger {
+            height: auto;
+        }
+
+        .mat-select-value {
+            font-size: $base-font-size;
+            color: $base-font-color;
+            text-transform: capitalize;
+            font-weight: $font-weight-600;
+            padding-top: 8px;
+        }
+
+        .mat-form-field-label-wrapper {
+            top: 0rem;
+            padding-top: 0.5rem;
+        }
+
+        .mat-form-field-underline {
+            display: $none;
+        }
+
+        .mat-input-element {
+            font-size: $base-font-size;
+            color: $select-label-color;
+            font-weight: $font-weight-600;
+            height: 2rem;
+            padding-top: 3px !important;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        .mat-icon {
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: $select-label-color;
+        }
+    }
+}
+
+.location-input-field {
+    &.mat-form-field-appearance-fill {
+        .mat-form-field-flex {
+            padding: 0rem 0.5rem;
+            background: $white !important;
+            border: none;
+            width: 8rem;
+            height: 2rem;
+            border-radius: 4px;
+        }
+
+        .mat-form-field-wrapper {
+            padding: 0rem;
+        }
+
+        .mat-form-field-infix {
+            padding: 0rem;
+            width: 100%;
+            border: $none;
+        }
+
+        .mat-form-field-label {
+            font-size: $base-font-size;
+            color: $select-label-color;
+            text-transform: capitalize;
+            font-weight: 400;
+        }
+
+        .mat-select-trigger {
+            height: auto;
+        }
+
+        .mat-form-field-label-wrapper {
+            top: 0rem;
+            padding-top: 0rem;
+        }
+
+        .mat-form-field-underline {
+            display: $none;
+        }
+
+        .mat-input-element {
+            font-size: $base-font-size;
+            color: $select-label-color;
+            font-weight: $font-weight-600;
+            height: 2rem;
+            padding: 0px;
+            margin: 0;
+            box-sizing: border-box;
+        }
+    }
+}
+
+
+/* search mat box */
+
+
+/* select dropdown */
+
+.selectfilter {
+    &.mat-form-field-appearance-fill {
+        width: 100%;
+        //max-width: 280px;
+
+        .mat-form-field-flex {
+            padding: 0rem 1rem;
+            height: 2rem;
+            background-color: $bg-table-row;
+            box-shadow: $box-shadow-color;
+            border-radius: 4px;
+        }
+
+        .mat-form-field-wrapper {
+            padding: 0px;
+        }
+
+        .mat-form-field-infix {
+            padding: 0px;
+            width: 100%;
+            border: $none;
+
+            .mat-select {
+                height: 2rem;
+            }
+        }
+
+        .mat-form-field-label {
+            font-size: $base-font-size;
+            color: $base-font-color;
+            text-transform: capitalize;
+            font-weight: $font-weight-700;
+        }
+
+        .mat-select-trigger {
+            height: auto;
+            display: block;
+        }
+
+        .mat-select-value {
+            font-size: $base-font-size;
+            color: $base-font-color;
+            text-transform: capitalize;
+            font-weight: $font-weight-700;
+            height: 2rem;
+            padding-top: $base-font-size;
+        }
+
+        .mat-form-field-label-wrapper {
+            top: 1px;
+            padding: 0rem;
+        }
+
+        .mat-form-field-underline {
+            display: $none;
+        }
+
+        .mat-select-arrow-wrapper {
+            transform: inherit;
+            background: transparent;
+            background-repeat: no-repeat;
+            //background-position: center 14px;
+            position: relative;
+
+
+            &:after {
+                position: absolute;
+                top: 0px;
+                right: -0.5rem;
+                content: '\e5cf';
+                font-family: 'Material Icons';
+                font-size: 1.25rem;
+                bottom: 0px;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                color: $white ;
+            }
+
+            .mat-select-arrow {
+                border: $none;
+                margin: 0 0.5rem;
+            }
+        }
+    }
+}
+
+.dashboardFilter {
+    .sortby-filter {
+        label {
+            width: 4.4rem;
+
+            @include media-breakpoint-down(xl) {
+                width: auto;
+            }
+        }
+    }
+
+    .selectfilter {
+        &.mat-form-field-appearance-fill {
+            width: 100% !important;
+            max-width: 100%;
+            line-height: 10px;
+
+            .mat-form-field-infix {
+                width: 100%;
+            }
+        }
+    }
+}
+
+
+/* white color dropdown */
+
+.whiteselect.selectfilter {
+    &.mat-form-field-appearance-fill {
+        .mat-form-field-flex {
+            background-color: $light-blue-bg;
+        }
+
+        .mat-form-field-label {
+            color: $select-label-color;
+        }
+
+        .mat-select-value {
+            color: $select-option-color;
+        }
+
+        .mat-select-arrow-wrapper {
+            &:after {
+                color: $select-option-color
+            }
+        }
+    }
+}
+
+.input-control {
+    &.mat-form-field-appearance-fill {
+        width: 100%;
+        display: block;
+
+        .mat-form-field-flex {
+            background-color: $white;
+            padding: 0 0.75rem;
+            border-radius: 4px;
+        }
+
+        .mat-form-field-wrapper {
+            padding-bottom: 0;
+        }
+
+        .mat-form-field-underline {
+            display: none;
+        }
+
+        .mat-form-field-infix {
+            border-top: none;
+            padding: 0.75rem 0;
+        }
+
+        .mat-form-field-suffix {
+            align-self: center;
+        }
+
+        input {
+            color: $black-color;
+        }
+
+        .suffix-color {
+            color: $gray-color;
+        }
+
+        .mat-icon {
+            color: $gray-color;
+        }
+    }
+}
+
+
+/*** tab section ***/
+
+.button-card-area {
+    display: flex;
+    height: 3.5rem;
+
+    @include media-breakpoint-down(md) {
+        height: auto;
+    }
+
+    button {
+        background-color: $select-label-color;
+        border-radius: 0.5rem;
+        text-transform: uppercase;
+        height: 2.5rem;
+        margin-right: 1rem;
+        padding: 0 1.5rem;
+        box-shadow: none !important;
+        opacity: 0.8;
+
+        @include media-breakpoint-down(sm) {
+            font-size: $size-12;
+            white-space: normal;
+            line-height: 1rem;
+        }
+
+        @include transition(all 0.8s ease 0s);
+
+        &.select-btn-active {
+            background-color: $tab-bg-color;
+            border-radius: $border-radius-divide;
+            height: 3.5rem;
+            opacity: 1;
+        }
+
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+}
+
+.mat-tab-section {
+    .mat-tab-body-content {
+        background-color: $tab-bg-color;
+        padding: 0 1.5rem 4rem;
+        border-radius: 0rem 0.5rem 0.5rem 0.5rem;
+    }
+
+    .mat-tab-header {
+        border-bottom: 0rem;
+
+        .mat-tab-label {
+            background-color: $select-label-color;
+            border-radius: 0.5rem;
+            font-weight: $font-weight-700;
+            text-transform: capitalize;
+            opacity: 1;
+            height: 2.5rem;
+            margin-right: 1rem;
+            @include transition(all 0.8s ease 0s);
+
+            .mat-tab-label-content {
+                opacity: 0.8;
+            }
+
+            &.mat-tab-label-active {
+                background-color: $tab-bg-color;
+                border-radius: $border-radius-divide;
+                height: 3.5rem;
+
+                .mat-tab-label-content {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+
+    &.mat-primary {
+        .mat-ink-bar {
+            background-color: transparent;
+        }
+    }
+}
+
+
+/*** tab section ***/
+
+
+/* pagination */
+
+.mat-paginator,
+.ls-paginator {
+    background-color: transparent;
+
+    button {
+        box-shadow: $none;
+    }
+
+    .mat-icon-button.mat-custom-page {
+        height: $size-20;
+        width: $size-20;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 0.5rem !important;
+        background-color: transparent !important;
+    }
+}
+
+
+/* pagination */
+
+
+/***** Manage Group section *****/
+
+.manage-group {
+    span {
+        cursor: pointer;
+
+        .mat-icon {
+            font-size: $size-12;
+        }
+
+        &.delete-icon {
+            height: $size-20;
+            width: $size-20;
+            display: flex;
+            align-items: center;
+
+            .mat-icon {
+                font-size: $size-20;
+                height: $size-20;
+                width: $size-20;
+                line-height: $size-20;
+            }
+        }
+
+        &.edit-icon {
+            height: 1rem;
+            width: 1rem;
+            display: flex;
+            align-items: center;
+
+            .mat-icon {
+                font-size: 1rem;
+                height: 1rem;
+                width: 1rem;
+                line-height: 1rem;
+            }
+        }
+
+        /*&:hover {
+            color: $color-code-new;
+        }*/
+    }
+
+    .group-listing {
+        .manage-card {
+            background-color: $bg-manage-strip-color;
+            height: 2.5rem;
+            display: flex;
+            align-items: center;
+            color: $base-font-color;
+            font-size: 1rem;
+            border-left: 4px solid $color-code-new;
+            box-shadow: none;
+            border-radius: 0px;
+            padding-right: 3rem;
+
+            &:hover {
+                background-color: $bg-table-row;
+            }
+
+            h2 {
+                font-size: 1rem;
+                letter-spacing: 0.05em;
+                font-weight: 400;
+                margin: 0 1rem;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+                padding-right: 1rem;
+            }
+        }
+
+
+        .level1 {
+            .manage-card {
+                border-left: 4px solid $default-manage-button-level-1
+            }
+        }
+
+        .level2 {
+            .manage-card {
+                border-left: 4px solid $default-manage-button-level-2;
+            }
+        }
+
+        .level3 {
+            .manage-card {
+                border-left: 4px solid $default-manage-button-level-3;
+            }
+        }
+
+        .level4 {
+            .manage-card {
+                border-left: 4px solid $default-manage-button-level-4;
+            }
+        }
+
+        .level5 {
+            .manage-card {
+                border-left: 4px solid $default-manage-button-level-5;
+            }
+        }
+
+        .level6 {
+            .manage-card {
+                border-left: 4px solid $default-manage-button-level-1;
+            }
+        }
+
+    }
+
+    .expand-boxed-btn.btn-sml-boxed {
+        background-color: transparent;
+        box-shadow: none !important;
+        position: absolute;
+        right: 1rem;
+
+        .mat-icon {
+            font-size: 2rem;
+            width: 2.2rem;
+
+        }
+
+    }
+}
+
+
+/***** Manage Group section *****/
+
+
+/***** dashboard section *****/
+
+//Patient Details Summary Carousel
+.info-slider-bar {
+    .slick-arrow {
+        display: $none !important;
+    }
+}
+
+//Patient Details Summary Carousel
+
+/* Heart beat animation */
+
+@keyframes beat {
+    to {
+        transform: scale(1.1);
+    }
+}
+
+
+/* Heart beat animation */
+
+
+/***** dashboard section *****/
+
+
+/*** modal header list **/
+
+.assign-header {
+    display: flex;
+    align-items: center;
+
+    .list-item {
+        font-weight: 300;
+        font-size: $size-12;
+        letter-spacing: 0.25px;
+        border-right: 0.6px solid $border-separate-color;
+        margin-left: 1rem;
+        padding-right: 1rem;
+        line-height: 1rem;
+
+        strong {
+            font-weight: $font-weight-700;
+            display: block;
+        }
+
+        span {
+            display: block;
+        }
+
+        &:last-child {
+            border: none;
+        }
+
+        &.patient-group {
+            span {
+                color: $time-color;
+                font-size: 0.5rem;
+            }
+        }
+    }
+}
+
+// add patient //
+.add-Biosensor-Id {
+    .formfield-control {
+        margin: 0;
+    }
+
+    .mat-form-field-wrapper {
+        padding-bottom: 0;
+    }
+
+    .mat-form-field-underline {
+        bottom: 0;
+    }
+}
+
+.btn-transparent-bg {
+    width: 100%;
+    height: 100%;
+    @include displayflex();
+    box-shadow: none;
+}
+
+
+/** card section ***/
+
+// history modal dialog
+.calendar-item {
+    // max-width: 27rem;
+    //float: right;
+
+    .control-inputs {
+        display: block;
+        margin: 4px;
+
+        .mat-form-field-flex {
+            padding: 0px;
+            background-color: transparent;
+        }
+
+        .mat-form-field-wrapper {
+            padding-bottom: 0;
+        }
+
+        .mat-form-field-infix {
+            padding: 0px;
+            border: none !important;
+            width: 13.75rem;
+        }
+
+        .mat-form-field-underline {
+            display: none;
+        }
+
+        input {
+            width: 100%;
+            box-sizing: border-box;
+            height: 2.5rem;
+            padding: 0.5rem 0.5rem 0;
+            color: $base-font-color;
+            background: $bg-button-color;
+            border-radius: 4px;
+        }
+
+        .mat-form-field-suffix {
+            position: initial;
+        }
+
+        .mat-datepicker-toggle {
+            position: absolute;
+            top: 3px;
+            right: 2rem;
+
+            button {
+                box-shadow: none !important;
+            }
+        }
+
+        .mat-form-field-label-wrapper {
+            top: 0px;
+            padding-top: 0px;
+
+            .mat-form-field-label {
+                top: 12px;
+                margin-top: 0px;
+                padding-left: 12px;
+                text-transform: inherit;
+                color: $base-font-color;
+                font-weight: $font-weight-600;
+                font-size: $size-12;
+            }
+        }
+    }
+}
+
+// history modal dialog
+.mat-datepicker-content {
+    .mat-datepicker-close-button {
+        display: $none;
+    }
+}
+
+
+/*sixteen-grid-view*/
+
+.sixteen-grid-view {
+    .patient-card {
+        height: 224px !important;
+    }
+
+    .empty-card {
+        .patient-card {
+            height: 224px !important;
+        }
+    }
+}
+
+
+/** dropmenu ***/
+
+.setting-card-menu {
+    &.mat-menu-panel {
+        background-color: $primary-color;
+        padding: 0px 0.7rem;
+        min-width: 9rem;
+
+        button {
+            &.mat-menu-item {
+                padding: 0.5rem 0 0.5rem;
+                height: 2.5rem;
+                border-bottom: 0.2px solid rgba(255, 255, 255, 0.25);
+                color: $white;
+                text-align: center;
+                text-transform: capitalize;
+            }
+
+            &:last-child {
+                border: none;
+            }
+        }
+    }
+
+    &.summary-timer-menu {
+        &.mat-menu-panel {
+            min-width: 86px;
+        }
+
+    }
+}
+
+
+/** clinical-facility-management ***/
+
+.check-authentication {
+    top: -1.2rem;
+    position: relative;
+
+    @media (max-width: 767px) {
+        top: 0;
+    }
+
+    span {
+        white-space: normal;
+        line-height: 1rem !important;
+    }
+}
+
+.group-accordion {
+
+    /*** alert arrow color ***/
+    .parameter-alerts {
+
+        .mat-expansion-panel-header-title,
+        .mat-expansion-indicator::after {
+            color: $alert-low;
+        }
+    }
+
+    .technical-alerts {
+
+        .mat-expansion-panel-header-title,
+        .mat-expansion-indicator::after {
+            color: $alert-tech;
+        }
+    }
+
+    .mat-expansion-panel-body {
+        padding: 1rem 0 0 0;
+    }
+}
+
+.mat-dialog-popup {
+    .dialog-form {
+        .mat-error {
+            //display: inline-block;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            line-height: 1rem;
+            font-size: $size-12;
+
+            @include media-breakpoint-down(md) {
+                display: block;
+            }
+        }
+    }
+}
+
+
+/*** BP condition ***/
+
+@media (max-width: 479px) {
+    .bp-card {
+        .patient-card {
+            height: auto !important;
+
+            .signal-info-list {
+                flex-wrap: wrap;
+                padding-bottom: 0.8rem;
+
+                li {
+                    width: 33.33%;
+                    padding-bottom: 0.8rem;
+
+                    .signal-block {
+                        figure {
+                            min-height: auto;
+                        }
+                    }
+                }
+            }
+        }
+
+        .empty-card {
+            .patient-card {
+                height: 11rem !important;
+            }
+        }
+    }
+}
+
+
+/*** BP condition ***/
+
+
+/****** Alert destination ****/
+
+.alert-destination-table {
+    .selectfilter {
+        &.mat-form-field-appearance-fill {
+            width: 14rem;
+            margin-right: 1rem;
+
+            .mat-form-field-infix {
+                .mat-select {
+                    background-color: transparent;
+                    display: block;
+                }
+            }
+        }
+
+
+    }
+}
+
+.selectfilter {
+    &.drop-down-selectfilter {
+        &.mat-form-field-appearance-fill {
+            width: 14rem;
+
+            @media (max-width: 399px) {
+                width: 8.75rem
+            }
+
+            .mat-form-field-infix {
+                .mat-select {
+                    background-color: transparent;
+                    display: block;
+                }
+            }
+        }
+
+        .mat-select-value {
+            padding-top: 10px;
+        }
+    }
+}
+
+
+/*** table css ***/
+
+.mat-discharge-table {
+    table {
+        thead {
+            th {
+                &:last-child {
+                    padding-right: 0.5rem;
+                }
+            }
+        }
+
+        tbody {
+            tr[mat-row] {
+                td.manage-data-row {
+                    vertical-align: top !important;
+                    padding-top: 1rem;
+                    padding-bottom: 1rem;
+
+                    .box-text {
+                        height: 2.2rem;
+                        display: flex;
+                        align-items: center;
+                        margin-bottom: 0.9rem;
+                    }
+
+                    .mat-checkbox {
+                        margin-top: 6px;
+                    }
+                }
+            }
+        }
+
+    }
+}
+
+
+/*** add events ***/
+
+.time-input {
+    &.mat-form-field-appearance-fill {
+        .mat-form-field-wrapper {
+            padding-bottom: 0;
+
+            .mat-form-field-flex {
+                border-radius: 4px;
+            }
+
+            .mat-form-field-infix {
+                padding: 0.8rem 0 0.6rem;
+            }
+        }
+
+        .mat-form-field-underline {
+            display: none;
+        }
+    }
+}
+
+.whiteselect.selectfilter.add-select {
+    &.mat-form-field-appearance-fill {
+        .mat-form-field-flex {
+            background-color: $white;
+            height: 2.5rem;
+        }
+
+        .mat-select-arrow-wrapper {
+            background-position: center 19px;
+        }
+    }
+}
+
+
+/*** nested select dropdown ***/
+/** blue color background ***/
+.nested-selectfilter.bg-selectfilter {
+    .nested-select.d-flex {
+        background-color: $bg-table-row;
+
+        .menu-column {
+            .normal-label {
+                color: $white
+            }
+
+            mat-label {
+                color: $white
+            }
+
+            .select-value {
+                color: $white
+            }
+
+        }
+
+        .mat-icon {
+            color: $white;
+        }
+    }
+}
+
+/** blue color background ***/
+.nested-selectfilter {
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+
+    .nested-select.d-flex {
+        background-color: $light-blue-bg;
+        max-width: 280px;
+
+        @include media-breakpoint-down(md) {
+            max-width: 100%;
+            margin-top: 0.5rem;
+        }
+
+        .menu-column {
+            .normal-label {
+                color: $select-label-color;
+                text-transform: capitalize;
+                font-weight: $font-weight-700;
+                font-size: $base-font-size;
+            }
+
+            mat-label {
+                @extend .normal-label;
+                font-size: $size-10;
+            }
+
+            .select-value {
+                @extend .normal-label;
+            }
+        }
+
+        .mat-icon {
+            color: $select-option-color;
+            line-height: 26px;
+            font-size: 1.25rem;
+        }
+
+    }
+}
+
+/*** nested Menu ****/
+.nested-menu {
+    max-height: 300px !important;
+
+    &.mat-menu-panel {
+        background: $light-blue-bg;
+
+    }
+
+    button.mat-menu-item {
+        line-height: 2rem;
+        height: 2rem;
+        color: $select-option-color !important;
+        font-size: 0.8rem;
+        font-weight: 700 !important;
+        width: 100%;
+        min-width: 200px;
+        max-width: 280px;
+        text-transform: capitalize !important;
+
+        &:hover {
+            background-color: $white;
+        }
+    }
+}
+
+
+.whiteselect.selectfilter.posture-select {
+    &.mat-form-field-appearance-fill {
+        .mat-sel {
+            background-color: transparent
+        }
+
+        .mat-select-value {
+            padding-top: 0;
+        }
+
+        .mat-select-arrow-wrapper {
+            background-position: center 6px;
+        }
+    }
+}
+
+/**** patient more info ***/
+.add-Biosensor-Id {
+    .mat-form-field-subscript-wrapper {
+        position: relative;
+        top: 4px;
+        margin: 0px;
+    }
+}
+
+.default-cursor {
+    cursor: default !important;
+}
+
+.cannotEdit {
+    text-transform: none;
+    font-size: 10px;
+}
+
+.clear-icon {
+    position: absolute;
+    margin-top: 0.3rem;
+    right: 0rem;
+}
+
+/*** button actions ***/
+.action-menu {
+    button {
+        box-shadow: none !important;
+        width: auto;
+    }
+}
+
+.action-card-menu {
+
+    &.mat-menu-panel {
+        min-width: 13rem;
+    }
+
+    .mat-menu-content:not(:empty) {
+        padding: 0;
+    }
+
+    .mat-menu-item {
+        height: auto;
+        line-height: inherit;
+        padding: 10px 12px;
+        font-weight: 500;
+        font-size: 12px;
+
+        &.heading-action {
+            font-size: $base-font-size;
+            font-weight: $font-weight-700;
+            background: $light-blue-bg;
+            color: $select-label-color;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            cursor: text;
+
+            .mat-icon {
+                color: $select-label-color;
+                height: auto;
+                width: auto;
+                margin: 0;
+                line-height: 20px;
+                position: absolute;
+                top: 0.5rem;
+                right: 0.5rem;
+            }
+
+        }
+
+        &:nth-child(odd) {
+            background: $light-blue-bg;
+        }
+
+        &:hover {
+            background: $light-blue-bg;
+        }
+    }
+
+}
+
+/*** department filed for dashboard ****/
+.department-field.nested-selectfilter {
+    .nested-select.d-flex {
+        max-width: 100%;
+        position: relative;
+        padding-left: 1rem;
+        //padding-right: 2rem;
+        margin-top: 0;
+
+        .menu-column {
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+
+            mat-label {
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+                width: 100%;
+                font-size: 10px;
+            }
+
+            .select-value {
+
+                width: 100%;
+                padding-right: 1rem;
+            }
+        }
+
+        .mat-icon {
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+    }
+}
+
+/**** group selected on admit patient ****/
+.groupselectfilter {
+    position: relative;
+
+    .select-value {
+        line-height: 1rem;
+        margin-top: -4px;
+    }
+
+    .mat-icon {
+        font-size: 0 !important;
+
+        &:after {
+            position: absolute;
+            top: 0px;
+            right: 0;
+            content: '\e5c5';
+            font-family: 'Material Icons';
+            font-size: 1.5rem;
+            bottom: 0px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            color: $select-label-color;
+            width: 2.5rem;
+            justify-content: center;
+        }
+    }
+}
+
+
+@include media-breakpoint-only(md) {
+    .groupselectfilter {
+        position: relative;
+
+        .mat-icon {
+            position: absolute;
+            top: 0px;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+
+        }
+
+    }
+}
+
+@include media-breakpoint-down(sm) {
+
+    .selectfilter-comman,
+    .selectfilter-dropdown {
+
+        .nested-selectfilter {
+            position: relative;
+
+            .nested-select {
+                padding-left: 0.5rem;
+            }
+
+            /*.mat-icon {
+                position: absolute;
+                top: 0.8rem;
+                right: 0;
+                margin: auto;
+            }*/
+        }
+
+    }
+
+
+
+
+}
+
+.selectfilter-comman,
+.selectfilter-dropdown {
+
+    .nested-selectfilter {
+        .select-value {
+            line-height: 1rem;
+        }
+
+    }
+}
+
+/**** discharge patient *****/
+.discharge-select-dropdown {
+    .menu-column {
+        display: block !important;
+        overflow: hidden;
+
+        mat-label {
+            display: block;
+            @include text-truncate();
+        }
+
+        .select-value {
+            display: block;
+        }
+
+
+    }
+
+}
+
+.department-field {
+    position: relative;
+
+    @media (min-width: 992px) and (max-width: 1200px) {
+        .mat-icon {
+            position: absolute;
+            top: 0px;
+            width: 2rem;
+            right: 0;
+            height: 100%;
+            @include displayflex();
+        }
+
+        .menu-column {
+            display: block !important;
+            overflow: hidden;
+            padding-right: 1rem;
+
+            .normal-label {
+                //display: block;
+                @include text-truncate();
+            }
+
+            .select-value {
+                display: block;
+                padding-right: 1rem;
+            }
+
+        }
+    }
+}
+
+/*** calender time color ***/
+.owl-dt-container-info .owl-dt-container-range.owl-dt-container-info-active {
+    color: #3f51b5
+}
+
+.owl-dt-container-info .owl-dt-container-range {
+    border-top: 1px solid rgba(0, 0, 0, .12);
+    color: rgba(0, 0, 0, .6);
+}
+
+/*** pagination page set on position top to use css to patient app management ***/
+.custom-position-pagination {
+    position: relative;
+
+    .comman-table-users {
+        .col-12.col-sm-12.col-md-5.col-lg-5.col-xl-6.px-2 {
+            position: absolute;
+            top: -0.6rem;
+            right: 0px;
+            width: 60%;
+
+            @include media-breakpoint-down(md) {
+                position: relative;
+                width: 100%;
+                top: 0
+            }
+
+        }
+    }
+}
+
+
+/** alert modal dialog > destination ***/
+.destination-search-filter {
+    position: relative;
+
+    .mat-select {
+        background-color: $select-option-bg;
+        width: 14rem;
+        height: 2.1rem;
+        padding: 0px 0px;
+        text-align: left;
+
+        .mat-select-value {
+            padding-right: 0.5rem;
+        }
+    }
+
+    .mat-select-arrow-wrapper {
+        position: relative;
+
+        .mat-select-arrow {
+            &:after {
+                position: absolute;
+                top: 0px;
+                right: 0;
+                content: '\e5cf';
+                font-family: 'Material Icons';
+                font-size: 1.5rem;
+                bottom: 0px;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                color: $select-label-color;
+                width: 2rem;
+                justify-content: center;
+                pointer-events: none;
+            }
+
+        }
+
+    }
+
+
+
+    .mat-select-trigger {
+        padding: 0px 10px;
+
+        span {
+            color: $select-label-color;
+            font-weight: $font-weight-700;
+            line-height: 1rem;
+        }
+
+    }
+
+    .mat-select-arrow {
+        border: none;
+    }
+}
+
+/*** text clipping  manage ***/
+
+.selectnested {
+    .menu-column {
+        .select-value {
+            line-height: 18px;
+            margin-top: -0.8rem;
+        }
+    }
+
+}
+
+
+.department-field {
+    .nested-select {
+        .menu-column {
+            .select-value {
+                font-size: $base-font-size !important;
+                line-height: 17px;
+            }
+        }
+    }
+}
+
+/***** nested label hide *****/
+.nested-selectfilter,
+.department-field {
+    .menu-column {
+        mat-label {
+            display: none;
+        }
+
+    }
+}
+
+.toplabel-no.nested-selectfilter {
+    mat-label {
+        display: block;
+    }
+
+    flex-direction: row;
+
+    .toplabel {
+        display: none !important;
+    }
+}
+
+.filter-area {
+    .mat-form-field-appearance-fill {
+        .mat-select-value {
+            padding-top: $size-12;
+        }
+    }
+}
+
+/** active filter add ****/
+
+.filter-label {
+    height: 3rem;
+    width: 3.75rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding-top: 0.8rem;
+
+    @media (max-width:991px) {
+        position: relative;
+        width: 100%;
+        margin-bottom: 0;
+        height: auto;
+        display: none;
+    }
+
+}
+
+/* EWS Colors */
+.ews-blank {
+    color: $white-text;
+}
+
+.ews-low {
+    color: #3FFF91;
+}
+
+.ews-med {
+    color: #FF983A;
+}
+
+.ews-high {
+    color: #ff5841;
+}
+
+/* EWS Colors */
+
+@include media-breakpoint-down(lg) {
+    .dashboardFilter {
+        .filter-col {
+            .toplabel {
+                margin-bottom: 0.5rem;
+                padding-top: 0 !important;
+            }
+        }
+    }
+
+}
+
+
+/**** EWS Popup ****/
+.EWS-modal-dialog {
+
+    button.mat-close {
+        position: absolute;
+        top: 1.5rem;
+        right: 1rem;
+        padding: 0;
+        z-index: 2;
+        min-width: auto;
+        margin: 0;
+        line-height: 18px;
+        box-shadow: none !important;
+
+        .mat-icon {
+            height: auto;
+            width: auto;
+        }
+
+    }
+
+    .mat-tab-header {
+        background-color: $primary-color;
+        padding: 0.8rem 1.5rem 0;
+        min-height: 68px;
+        border-radius: 4px 4px 0 0;
+
+        .mat-tab-list {
+            min-height: 56px;
+        }
+
+        .mat-tab-labels {
+            align-items: center;
+        }
+
+        .mat-tab-label {
+            text-transform: uppercase;
+        }
+
+    }
+
+    .mat-ripple-element {
+        display: none !important;
+    }
+
+}
+
+/**** parameter alerts *****/
+.selectfilter {
+    &.labelselectfilter {
+        .mat-select-value {
+            padding-top: 10px;
+        }
+    }
+}
+
+/**** background color ****/
+.whitebackground {
+    &.mat-tooltip {
+        background-color: $white;
+        font-size: $size-12;
+        color: $primary-color;
+        font-weight: $font-weight-700;
+    }
+}
+.spo2-select {
+    .mat-form-field-subscript-wrapper {
+        display: none;
+    }
+}

@@ -1,0 +1,53 @@
+{
+  "login": {
+    "user_name_required": "Please provide a valid User Name.",
+    "user_password_required": "Please provide a valid Password."
+  },
+  "home_alerts": {
+    "label_manage_relays": "Manage Relays",
+    "label_manage_users": "Manage Users",
+    "label_manage_patients": "Manage Patients",
+    "label_parameter_alerts": "Recent Alerts",
+    "label_technical_alerts": "Technical Alerts",
+    "label_all_streaming_patches": "All Current Patients",
+    "label_completed": "Completed Biosensors",
+    "label_unused_patches": "Aborted Biosensors",
+    "label_patients": "Patients",
+    "label_view": "VIEW",
+    "label_manage_reviews_number": "6h",
+    "label_manage_users_number": "6h",
+    "label_parameter_alerts_number": "6h",
+    "label_technical_alerts_number": "6h",
+    "label_all_streaming_patches_number": "6h",
+    "label_completed_number": "30d",
+    "label_unused_patches_number": "6h",
+    "label_patches": "Biosensors",
+    "label_alerts": "Alerts",
+    "label_manage_groups": "Manage Groups",
+    "label_default_alert_congiguration": "Default Alert Configuration",
+    "label_miscelaneous": "Miscelaneous",
+    "label_active_patients": "Current Patients",
+    "label_parameter_alert": "Parameter Alerts",
+    "label_discharged_patients": "Discharged Patients"
+  },
+  "all_streaming_patches": {
+    "label_home": "Summary",
+    "label_find": "Find",
+    "label_alert_settings": "Alert Settings",
+    "label_delete": "Delete"
+  },
+  "all_streaming_patches_table": {
+    "label_patient_id": "Patient ID",
+    "label_patient_name": "Patient Name",
+    "label_patch_id": "Biosensor ID",
+    "label_relay_id": "Relay ID",
+    "label_started_on": "Started on",
+    "label_clinical_alert": "Clinical Alert",
+    "label_technical_alert": "Technical Alert",
+    "label_action": "Action"
+  },
+  "home_cards": {
+    "card_sub_title_users": "Users",
+    "card_sub_title_patients": "Patients"
+  }
+}

@@ -1,0 +1,62 @@
+<div id="addGroup">
+  <mat-card class="dialog-header">
+    <h1 mat-dialog-title>
+      {{ "manage_users_module.addgroup.add_group" | translate }}
+    </h1>
+   <!--<button mat-icon-button mat-dialog-close>
+      <mat-icon>close</mat-icon>
+    </button>--> 
+  </mat-card>
+  <mat-dialog-content class="mat-dialog-popup">
+    <div class="dialog-form">
+      <div class="row mx-n2">
+        <div class="col-sm-6 px-2 mb-2 mb-md-0">
+<!--          <mat-form-field appearance="fill" class="formfield-control">-->
+<!--            <mat-select placeholder="Location" [(ngModel)]="selectedLocationGroup" (ngModelChange)="groupChange()">-->
+<!--              <mat-option *ngFor="let location of locationGroups" [value]="location">-->
+<!--                {{ location.name }}-->
+<!--              </mat-option>-->
+<!--            </mat-select>-->
+<!--          </mat-form-field>-->
+          <app-nested-dropdown class="nested-selectfilter select toplabel-no" [selectedValue]="selectedLocationGroup" key="groupId" displayKey="name"
+                               [label]="'alert_config_module.location' | translate" (selected)="groupChange($event, 'LOCATION')"
+                               [options]="locationGroups" [showSelect]="true" [assignGroup]="true">
+          </app-nested-dropdown>
+          <mat-error class="required my-2" *ngIf="locationGroupExists">
+            {{ "manage_users_module.addgroup.location_group_exits" | translate }}
+          </mat-error>
+        </div>
+        <div class="col-sm-6 px-2 mb-2 mb-md-0">
+<!--          <mat-form-field appearance="fill" class="formfield-control">-->
+<!--            <mat-select placeholder="Clinical condition" [(ngModel)]="selectedClinicalGroup" (ngModelChange)="groupChange()">-->
+<!--              <mat-option *ngFor="let group of clinicalGroups" [value]="group">-->
+<!--                {{ group.name }}-->
+<!--              </mat-option>-->
+<!--            </mat-select>-->
+<!--          </mat-form-field>-->
+          <app-nested-dropdown class="nested-selectfilter select toplabel-no" [selectedValue]="selectedClinicalGroup" key="groupId" displayKey="name"
+                               [label]="'alert_config_module.medical_condition' | translate" (selected)="groupChange($event, 'CLINICAL')"
+                               [options]="clinicalGroups" [showSelect]="true" [assignGroup]="true">
+          </app-nested-dropdown>
+
+          <mat-error class="required my-2" *ngIf="clinicalGroupExists">
+            {{ "manage_users_module.addgroup.clinical_group_exits" | translate }}
+          </mat-error>
+        </div>
+      </div>
+      <mat-error *ngIf="submitted && isBlank(selectedClinicalGroup) && isBlank(selectedLocationGroup)" class="required">
+        {{ "manage_users_module.addgroup.error_group_required" | translate }}
+      </mat-error>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-flat-button mat-dialog-close class="fill-btn" color="warn">
+      {{ "manage_users_module.addgroup.cancelbutton" | translate }}
+    </button>
+    <button mat-flat-button class="fill-btn" [disabled]="clinicalGroupExists || locationGroupExists" (click)="save()" color="primary"
+    [class.disabled]="clinicalGroupExists || locationGroupExists">
+      {{ "manage_users_module.addgroup.addbutton" | translate }}
+    </button>
+  </mat-dialog-actions>
+</div>

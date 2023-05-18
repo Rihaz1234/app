@@ -1,0 +1,65 @@
+<div class="loading-indicator" *ngIf="loader">
+  <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>
+<div *ngIf="!loader">
+  <div class="table-responsive-md py-4">
+    <table class="table" aria-label="Table">
+      <tbody class="border-0">
+        <tr class="m-0">
+          <td>
+            <div class="row">
+              <div class="col-6 col-md-8 text-start d-flex align-items-center">
+                <mat-slide-toggle
+                        class="px-2"
+                        *ngIf="editAccess"
+                        [(ngModel)]="relayConfiguration.sprDeletionDate.isActive"
+                        (change)="updateSettings()"
+                >
+                  {{
+                  "manage_relays_module.single_patient_relay_auto_deletion_date"
+                          | translate
+                  }}
+                </mat-slide-toggle>
+                <span *ngIf="!editAccess">
+              <span *ngIf="relayConfiguration.sprDeletionDate.isActive">
+                {{
+                "manage_relays_module.single_patient_relay_auto_deletion_date"
+                        | translate
+                }}
+                {{ "additional_devices.enabled_txt" | translate }}
+              </span>
+              <span *ngIf="!relayConfiguration.sprDeletionDate.isActive">
+                {{
+                "manage_relays_module.single_patient_relay_auto_deletion_date"
+                        | translate
+                }}
+                {{ "additional_devices.disabled_txt" | translate }}
+              </span>
+            </span>
+              </div>
+              <div class="col-6 col-md-4 text-end">
+                <mat-select
+                        (ngModelChange)="updateSettings()"
+                        placeholder="Settings"
+                        class="mat-sel select text-start p-2 m-0"
+                        [(ngModel)]="relayConfiguration.sprDeletionDate.value"
+                        [disabled]="
+                !relayConfiguration.sprDeletionDate.isActive || !editAccess
+              "
+                >
+                  <mat-option
+                          *ngFor="let setting of settings"
+                          [value]="setting.value.toString()"
+                  >
+                    {{ setting.name }}
+                  </mat-option>
+                </mat-select>
+              </div>
+            </div>
+
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

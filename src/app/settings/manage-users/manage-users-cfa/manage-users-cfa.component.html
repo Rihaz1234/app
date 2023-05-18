@@ -1,0 +1,100 @@
+<ls-page-header type="manage_users">
+    <ng-container page-actions>
+        <div class="d-flex justify-content-end me-4">
+            <div class="d-lg-flex d-md-none d-sm-none d-none button-group my-2" *ngIf="userEditAccess">
+                <button mat-flat-button color="primary" type="button" class="mx-2" (click)="renameRoles()" [disabled]="true">
+                    {{ "manage_users_module.rename_roles_button" | translate }}
+                </button>
+                <button mat-flat-button color="accent" type="button" class="mx-2" (click)="addUser()">
+                    {{ "manage_users_module.add_user_button" | translate }}
+                </button>
+            </div>
+            <div class="d-block d-lg-none my-2 ">
+                <button mat-icon-button [matMenuTriggerFor]="menu" class="border" *ngIf="userEditAccess">
+                    <mat-icon class="justify-content-center">more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu" class="mobile-menu overflow-hidden d-block d-lg-none">
+                    <button mat-menu-item (click)="renameRoles()" [disabled]="true">
+                        {{ "manage_users_module.rename_roles_button" | translate }}
+                    </button>
+                    <button mat-menu-item (click)="addUser()">
+                        {{ "manage_users_module.add_user_button" | translate }}
+                    </button>
+                </mat-menu>
+            </div>
+        </div>
+    </ng-container>
+</ls-page-header>
+<div class="table-container table-responsive-md px-3">
+
+    <div class="table-scroll comman-table-users without-tab-table head-border">
+        <ls-table [(config)]="config" [columns]="columns" [data]="usersList$ | async" (sortChange)="sort($event)" (page)="onPage($event)">
+            <ng-container table-header>
+                <div class="my-3 row">
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-5 col-xxl-4">
+                        <mat-form-field class="search-form-field" appearance="fill">
+                            <mat-label>{{ "manage_users_module.search" | translate }}</mat-label>
+                            <input [(ngModel)]="searchText" matInput [placeholder]="'manage_users_module.search' | translate" type="search" (keyup)="search()" id="searchString" autocomplete="off" />
+                            <mat-icon class="clear-icon" *ngIf="searchText" (click)="clear()">close
+                            </mat-icon>
+                            <mat-icon matSuffix class="default-cursor">search</mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </ng-container>
+            <ng-template lsWidgetName="enabled" let-user>
+                <span class="d-flex align-items-center">
+                    <mat-slide-toggle [checked]="user?.isActive" (change)="confirmEnableDisable(user, $event)"
+                        [(ngModel)]="user.isActive" [disabled]="!userEditAccess">
+                    </mat-slide-toggle>
+                </span>
+            </ng-template>
+            <ng-template lsWidgetName="userId" let-user>
+                {{ user?.id }}
+            </ng-template>
+            <ng-template lsWidgetName="firstName" let-user>
+                <div class="d-flex"><span   [matTooltip]="user?.firstName" matTooltipPosition="below" class="text-truncate d-block pe-1" [matTooltipDisabled]="user?.firstName?.length < 15 ">{{ user?.firstName }}</span>
+                <span [matTooltip]="user.lastName" matTooltipPosition="below" class="text-truncate d-block" [matTooltipDisabled]="user?.lastName?.length < 15 ">{{ user?.lastName }}</span></div>
+            </ng-template>
+            <ng-template lsWidgetName="email" let-user>
+                {{ user?.email || "-"}}
+            </ng-template>
+            <ng-template lsWidgetName="phoneNo" let-user>
+                {{ user?.phoneNo || "-"}}
+            </ng-template>
+            <ng-template lsWidgetName="roles" let-user>
+                <span *ngFor="let role of user?.roles">
+                <label *ngIf="role === 'CFAC'" class="roleslabels me-2" style="background: rgba(106, 56, 206, 0.56) !important"><span
+                        class="roleslabelscontent">Admin</span></label>
+                <label *ngIf="role === 'PHY'" class="roleslabels me-2" style="background: rgba(75, 164, 5, 0.56) !important"><span
+                        class="roleslabelscontent">Physician</span></label>
+                <label *ngIf="role === 'GC'" class="roleslabels me-2" style="background: rgba(90, 219, 255, 0.56) !important"><span
+                        class="roleslabelscontent">Clinician</span></label>
+                <label *ngIf="role === 'SC'" class="roleslabels me-2" style="background: rgba(202, 140, 98, 0.56) !important"><span class="roleslabelscontent">Supervisory
+                        Clinician</span></label>
+                <label *ngIf="role!== 'GC' && role !== 'SC' && role !== 'PHY' && role !== 'CFAC'" class="roleslabels me-2" style="background: rgba(222, 210, 78, 0.56) !important">
+                    <span class="roleslabelscontent">{{ role}}</span></label>
+                </span>
+            </ng-template>
+            <ng-template lsWidgetName="actions_col" let-user>
+                <span *ngIf="userEditAccess">
+                    <button mat-mini-fab class="me-3 btn-boxed btn-no-shadow" color="primary"
+                        (click)="editUser(user.id)">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-flat-button color="primary" class="me-2 reset-btn" [disabled]="!user.isActive"
+                        (click)="confirmResetPassword(user.id)">
+                        <mat-icon>refresh</mat-icon>
+                        {{ "manage_users_module.reset_password" | translate }}
+                    </button>
+                </span>
+                <span *ngIf="!userEditAccess">
+                    <button mat-flat-button color="primary" class="me-2" [disabled]="!user.isActive || (user?.roles?.indexOf('SC')>-1)"
+                        (click)="editUser(user.id)">
+                        {{ "manage_users_module.manage_group" | translate }}
+                    </button>
+                </span>
+            </ng-template>
+        </ls-table>
+    </div>
+</div>

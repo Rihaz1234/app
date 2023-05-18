@@ -1,0 +1,42 @@
+@import "src/assets/scss/modules/variables";
+
+/* top header */
+.topbar-card {
+  background: $bg-topbar-color;
+  box-shadow: $box-shadow-card;
+  position: relative;
+  z-index: 9;
+  border-radius: 0px;
+
+  .button-row {
+    button {
+      width: 20px;
+      padding: 0;
+      min-width: auto;
+    }
+
+    .title-bar {
+      font-size: $size-20;
+      letter-spacing: $letter-spacing-size;
+      line-height: $size-20;
+      font-weight: 700;
+      text-transform: capitalize;
+      color: $light-blue-color;
+
+      @media only screen and (max-width: 767px) {
+        padding: 0;
+        font-size: $base-font-size;
+      }
+    }
+  }
+
+  .rightside-image {
+    // display: flex;
+    //justify-content: flex-end;
+    margin: 0px;
+    @media only screen and (max-width: 767px) {
+      img{max-width: 40px;}
+    }
+  }
+}
+/* top header */

@@ -1,0 +1,39 @@
+<div class="table-responsive text-nowrap container-fluid admin-table-layout clinical-table custom-table head-border">
+    <ls-table [config]="config" [data]="clinicalFacilityData" [columns]="columns" [tableSort]="true">
+        <ng-template lsWidgetName="actionsHeading" let-row>
+            <button mat-flat-button color="accent" type="button" (click)="openAddFacilityDialog()">
+        <mat-icon>add</mat-icon> {{ "buttons.btn_add_facility" | translate }}
+      </button>
+        </ng-template>
+        <ng-template lsWidgetName="dataStorageMode" let-row>
+            <span class="storage-type" *ngIf="row.dataStorageMode !== '';else hyphen">{{ row["dataStorageMode"] }}</span>
+            <ng-template #hyphen>-</ng-template>
+        </ng-template>
+        <ng-template lsWidgetName="facilityName" let-row>
+            <span [matTooltip]="row.facilityName" matTooltipPosition="below" class="text-truncate d-block" [matTooltipDisabled]="row.facilityName.length < 40">
+              {{row.facilityName}}
+            </span>
+        </ng-template>
+        <ng-template lsWidgetName="contactName" let-row>
+            <span [matTooltip]="row.contactName" matTooltipPosition="below" class="text-truncate d-block" [matTooltipDisabled]="row.contactName.length < 40">
+              {{row.contactName}}
+            </span>
+        </ng-template>
+        <ng-template lsWidgetName="location" let-row>
+            <strong>{{row?.location }}</strong><span class="d-block">{{ row?.state || "-" }}</span>
+        </ng-template>
+        <ng-template lsWidgetName="contactDetails" let-row>
+            <div class="pt-1">{{ row["email"] }}</div>
+            <div class="pt-1">{{ row["phoneNo"] }}</div>
+            <span *ngIf="!row.email && !row.phoneNo">{{(row.email || row.phoneNo)?"":"-"}}</span>
+        </ng-template>
+        <ng-template lsWidgetName="actions" let-row>
+            <button mat-mini-fab color="primary" (click)="openEditFacility(row)" class="btn-boxed btn-no-shadow me-4">
+        <mat-icon class="justify-content-center">edit</mat-icon>
+      </button>
+            <button mat-flat-button type="button" class="me-3" color="primary" (click)="openManageAdmin(row)">
+        {{ "buttons.btn_manage_admin" | translate }}
+      </button>
+        </ng-template>
+    </ls-table>
+</div>

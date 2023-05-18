@@ -1,0 +1,9 @@
+<mat-select [placeholder]="placeholder ? (placeholder | translate) : 'Select'" class="search-select whiteselect selectfilter" [(ngModel)]="selected" (ngModelChange)="updated()"
+             [disabled]="disabled" (opened)="clearFilter()">
+    <div class="searchbar-top" *ngIf="!backendSearch"><input matInput placeholder="search" [(ngModel)]="searchText" class="search-option" autocomplete="off"></div>
+    <div class="searchbar-top" *ngIf="backendSearch"><input matInput placeholder="search" [(ngModel)]="searchText" (keyup)="reloadItems(searchText)" class="search-option" autocomplete="off"></div>
+    <mat-option disabled *ngIf="backendSearch? !items?.length :!filteredResults(items, key, searchText)?.length">{{backendSearch && !searchText ? ("profile-module.search_users" | translate) : "profile-module.no_results" | translate}}</mat-option>
+    <mat-option *ngFor="let item of backendSearch? items : filteredResults(items, key, searchText)" [value]="value ? item[value]: item">
+        {{ item[key] }}
+    </mat-option>
+</mat-select>

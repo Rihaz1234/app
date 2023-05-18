@@ -1,0 +1,16 @@
+@import "src/assets/scss/modules/variables";
+
+/* SPA Info Text */
+
+.spa-info-text {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 15px;
+    color: $white;
+}
+
+@media (max-width: 767px) {
+    .email-label {
+        padding-top: 0.8rem;
+    }
+}

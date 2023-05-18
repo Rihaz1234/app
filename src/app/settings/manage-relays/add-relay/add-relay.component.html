@@ -1,0 +1,56 @@
+<div id="addRelay">
+<mat-card class="dialog-header">
+  <h1 mat-dialog-title>
+    {{ "manage_relays_module.add_relay" | translate }}
+  </h1>
+  <!--<button mat-button mat-dialog-close>
+    <mat-icon>close</mat-icon>
+  </button>-->
+</mat-card>
+<mat-dialog-content class="py-2 mat-dialog-popup">
+  <div class="dialog-form addRelayForm">
+    <mat-label class="matlabel"
+    >{{ "manage_relays_module.location_label" | translate }}
+      <span class="required-star">* </span>
+  </mat-label>
+    
+    <mat-form-field class="formfield-control mt-2" appearance="fill" >
+<!--      <mat-label>{{-->
+<!--        "manage_relays_module.location_label" | translate-->
+<!--      }}</mat-label>-->
+      <input
+        matInput autocomplete="off"
+        maxlength="32"
+        type="text"
+        placeholder="Location"
+        [(ngModel)]="location" #location_ctrl="ngModel"
+        (keypress)="service.alphaNumericsOnly($event)" (paste)="onPaste($event)"
+      />
+    </mat-form-field>
+    <mat-error  *ngIf="submitted && !location_ctrl?.value" class="d-block mt-n2 ">
+      {{ "manage_relays_module.add_location" | translate }}
+    </mat-error>
+    <mat-error *ngIf="!locationValid(location) && location_ctrl.touched && location_ctrl?.value">
+        {{ "manage_relays_module.invalid_location" | translate }}
+    </mat-error>
+  </div>
+</mat-dialog-content>
+<div matDialogActions align="right">
+  <button
+    mat-flat-button
+    mat-dialog-close
+    class="fill-btn"
+    color="warn"
+  >
+    {{ "manage_users_module.addgroup.cancelbutton" | translate }}
+  </button>
+  <button
+    mat-flat-button
+    class="fill-btn"
+    (click)="save()"
+    color="primary"
+  >
+    {{ "manage_relays_module.create_relay" | translate }}
+  </button>
+</div>
+</div>

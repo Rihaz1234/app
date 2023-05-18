@@ -1,0 +1,76 @@
+/*Modal two css (this css is addition with modal css)*/
+body {
+  background-color: $bg-dashboard-color;
+}
+
+ul li {
+  list-style-type: none;
+}
+/*dashboard monitor model CSS*/
+
+/*dashboard model monitor CSS  ends*/
+
+.patient-tag input {
+  background: #28527a;
+  border: 1px solid #05315e;
+  box-shadow: inset 0px 2px 4px rgba(255, 255, 255, 0.25);
+  border-radius: 0.25rem;
+  font-size: 14px;
+  line-height: 20px;
+  padding: 6px 0px 3px 10px;
+  margin-right: 0px;
+  color: $white;
+  width: 90%;
+  margin-left: 2.5%;
+}
+
+.patient-tag input::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  font-size: 14px;
+  line-height: 20px;
+  /* or 143% */
+
+  display: flex;
+  align-items: flex-end;
+  letter-spacing: 0.25px;
+
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.save_btn {
+  background: $bg-button-color;
+  box-shadow: $box-shadow-button;
+  border-radius: 0.25rem;
+  font-size: 14px;
+  padding: 1% 10% 0% 10%;
+  border: none;
+  color: $white;
+  margin-bottom: 10px;
+}
+
+.dropdown {
+  text-align: right;
+}
+
+.role {
+  font-size: 16px;
+  color: $white-text;
+}
+
+.dropdown label {
+  margin-right: 20px;
+}
+
+/*Modal two css ends(this css is addition with modal css)*/
+
+@media only screen and (max-width: 600px) {
+  .dropdown {
+    text-align: left !important;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .dropdown {
+    text-align: left !important;
+  }
+}

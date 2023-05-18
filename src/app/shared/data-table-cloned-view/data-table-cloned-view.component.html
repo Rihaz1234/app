@@ -1,0 +1,33 @@
+<div class="heading ps-4 mb-2">
+  <h2>{{ "clinical_facility.manage_admin_cfa.headingadministrators" | translate }}</h2>
+</div>
+<div class="table-container scroll-assist table-responsive">
+  <table class="mat-table custom-table" aria-label="Table">
+    <tbody class="border-0">
+      <tr class="mat-row" *ngFor="let admin of adminUsers">
+        <td style="width: 163px;">
+          <div style="width: 163px;">
+            <span *ngIf="!admin?.isActive" class="status-tag inactive">Inactive</span>
+            <span *ngIf="admin?.isActive" class="status-tag">Active</span>
+          </div>
+        </td>
+        <td style="width: 240px;">
+          <div class="" style="width: 240px;">
+            <strong class="name d-block font-size-16 text-truncate">{{admin?.firstName}} {{admin?.lastName}}</strong>
+            <span class="creator-name">Created by <b>{{admin?.createdBy}}</b></span>
+          </div>
+        </td>
+        <td style="width: 240px;">
+          <div class="" style="width: 240px;">
+            <span class="phone-number">{{admin?.phoneNo || '-'}}</span>
+          </div>
+        </td>
+        <td>
+          <div>
+            <span class="email">{{admin?.email || '-'}}</span>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,27 @@
+@import "src/assets/scss/modules/variables";
+
+.text-input-box {  
+  color: black;
+  border-radius: 0.25rem;
+  border-color: $white;
+  width: 55px;
+  text-align: center;
+  background-color: $white;
+}
+/*.inside-div {
+  height: 300px;
+}*/
+
+.reset_btn_bg {
+  background: $bg-reset-btn;
+}
+/*.text-value{
+  width: 60px;
+  text-align: right;
+}*/
+.alert-dialog-content{padding: 0;}
+.search-form-field { 
+  input {
+    text-transform: uppercase;
+  }
+}

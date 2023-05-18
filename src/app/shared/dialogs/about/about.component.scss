@@ -1,0 +1,45 @@
+@import "src/assets/scss/modules/variables";
+
+/** modal popup */
+
+.mat-dialog-popup {
+    &.about-group-dialog {
+        .about-group-content {
+            .modal-version-list {
+                margin: 1rem -0.8rem 0;
+                padding: 0;
+                max-width: 14rem;
+                @media only screen and (max-width: 767px) {
+                    margin: 1rem auto 1.5rem;
+                }
+                li {
+                    list-style: none;
+                    display: flex;
+                    margin-bottom: 1rem;
+                    justify-content: space-between;
+                    padding: 0 0.8rem;
+                }
+            }
+            .group-content {
+                p {
+                    line-height: 1.3rem;
+                }
+            }
+
+            a {
+                color: $white;
+            }
+            img {
+                max-width: 100%;
+            }
+            @media only screen and (max-width: 767px) {
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+            }
+        }
+
+        @media only screen and (max-width: 767px) {
+            padding: 0 0.8rem;
+        }
+    }
+}

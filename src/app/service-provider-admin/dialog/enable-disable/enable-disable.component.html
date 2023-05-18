@@ -1,0 +1,25 @@
+<mat-card class="dialog-header">
+  <h1 mat-dialog-title>
+    {{ "shared_label.active_inactive.label_are_you_sure" | translate }}
+  </h1>
+  <button mat-button mat-dialog-close (click)="onCancel()">
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-card>
+
+<mat-dialog-content class="mat-dialog-popup">
+  <div class="my-4">
+    <label class="info-text">
+      Are you sure you want to make this User {{ mode }}?
+      <!--                All the Admins created by them will also become INACTIVE.-->
+    </label>
+  </div>
+</mat-dialog-content>
+<div mat-dialog-actions align="end">
+  <button mat-flat-button type="button" class="fill-btn" color="warn" (click)="onCancel()">
+    Cancel
+  </button>
+  <button mat-flat-button type="button" class="fill-btn" color="primary" (click)="onConfirm()">
+    Confirm
+  </button>
+</div>

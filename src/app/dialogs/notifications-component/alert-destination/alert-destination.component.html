@@ -1,0 +1,185 @@
+
+<table mat-table *ngIf="alertDestinationSettings" class="table destination-table" aria-label="Table">
+        <thead>
+        <tr><th colspan="3" class="ps-4">{{alertType}}</th></tr>
+        </thead>
+      <tbody>
+        <tr>
+          <td>
+            <span class="d-flex align-items-center">
+            <mat-slide-toggle [disabled]="!isEditAccess" class="mx-3" (change)="toggle($event)"
+              [(ngModel)]="alertDestinationSettings.AlertSMSEnabled">
+              <span class="ms-3 fw-700">{{ "alert-destination.sms" | translate }}</span>
+            </mat-slide-toggle>
+            </span>
+          </td>
+          <td class="text-end pt-1">
+            <span *ngFor="let contact of contactListsSMS; let i = index">
+              <mat-form-field class="input-icon-field me-2 mb-1" appearance="fill"
+                              [ngClass]="!alertDestinationSettings.AlertSMSEnabled? 'disabled':''">
+                <mat-label *ngIf="contact?.isActive === false">{{"alert-destination.user_disabled" | translate}}</mat-label>
+                <input matInput disabled [value]="contact.displayName" />
+                <mat-icon (click)="openDialog('sms',i)" *ngIf="isEditAccess" class="mr-1" matSuffix>delete_outline</mat-icon>
+              </mat-form-field>
+            </span>
+          </td>
+          <td *ngIf="isEditAccess" class="text-center py-1">
+            <form [formGroup]="alertDestinationForm">
+              <div formArrayName="smsContactList" class="d-flex align-items-center justify-content-end">
+                <span *ngFor="let product of smsContactList.controls; let i = index" [formGroupName]="i">
+<!--                  <mat-select [placeholder]="'alert-destination.select_user'| translate" class="msg-select me-3" formControlName="user"-->
+<!--                    [disabled]="!alertDestinationSettings.Setting.AlertSMSEnabled">-->
+<!--                    <mat-option *ngFor="let contact of activePhoneNoLists" [value]="contact">-->
+<!--                      {{ contact.displayName }}-->
+<!--                    </mat-option>-->
+<!--                  </mat-select>-->
+                  <div class="msg-select me-3" [class.disabled]="!alertDestinationSettings.AlertSMSEnabled">
+                  <app-matselect-withsearch class="destination-search-filter" [placeholder]="'alert-destination.select_user'" [disabled]="!alertDestinationSettings.AlertSMSEnabled" [key]="'displayName'"
+                                            (valueUpdated)="userSelected('sms', $event)" [items]="activePhoneNoLists" [backendSearch]="true" (reload)="reloadContactList($event)"></app-matselect-withsearch>
+                  </div>
+                </span>
+                <button mat-mini-fab color="primary" class="btn-boxed me-3 btn-no-shadow"
+                  (click)="addContactDropdownList('sms')"  [disabled]="!alertDestinationSettings.AlertSMSEnabled">
+                  <mat-icon>add</mat-icon>
+                </button>
+              </div>
+            </form>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="d-flex align-items-center">
+            <mat-slide-toggle [disabled]="!isEditAccess" class="mx-3" (change)="toggle($event)"
+              [(ngModel)]="alertDestinationSettings.AlertWhatsAppEnabled">
+              <span class="ms-3 fw-700">{{ "alert-destination.whatsapp" | translate }}</span>
+            </mat-slide-toggle>
+            </span>
+          </td>
+          <td class="text-end pt-1">
+            <span *ngFor="let contact of contactListsWhatsApp; let i = index">
+              <mat-form-field class="input-icon-field me-2 mb-1" appearance="fill"
+                              [ngClass]="!alertDestinationSettings.AlertWhatsAppEnabled? 'disabled':''">
+                <mat-label *ngIf="contact?.isActive === false">{{"alert-destination.user_disabled" | translate}}</mat-label>
+                <input matInput disabled [value]="contact.displayName" />
+                <mat-icon (click)="openDialog('whatsapp', i)" *ngIf="isEditAccess" class="mr-1" matSuffix>delete_outline
+                </mat-icon>
+              </mat-form-field>
+            </span>
+          </td>
+          <td *ngIf="isEditAccess" class="text-center py-1">
+            <form [formGroup]="alertDestinationForm">
+              <div formArrayName="whatsAppContactList" class="d-flex align-items-center justify-content-end">
+                <span *ngFor="
+                  let product of whatsAppContactList.controls;
+                  let i = index
+                " [formGroupName]="i">
+<!--                  <mat-select [placeholder]="'alert-destination.select_user'| translate" class="me-3 msg-select" formControlName="user"-->
+<!--                    [disabled]="!alertDestinationSettings.Setting.AlertWhatsAppEnabled">-->
+<!--                    <mat-option *ngFor="let contact of activePhoneNoLists" [value]="contact">-->
+<!--                      {{ contact.displayName }}-->
+<!--                    </mat-option>-->
+<!--                  </mat-select>-->
+                  <div class="msg-select me-3" [class.disabled]="!alertDestinationSettings.AlertWhatsAppEnabled">
+                  <app-matselect-withsearch class="destination-search-filter" [placeholder]="'alert-destination.select_user'" [disabled]="!alertDestinationSettings.AlertWhatsAppEnabled" [key]="'displayName'"
+                                            (valueUpdated)="userSelected('whatsapp', $event)" [items]="activePhoneNoLists" [backendSearch]="true" (reload)="reloadContactList($event)"></app-matselect-withsearch>
+                  </div>
+                </span>
+                <button mat-mini-fab color="primary" class="btn-boxed me-3 btn-no-shadow"
+                  (click)="addContactDropdownList('whatsapp')"  [disabled]="!alertDestinationSettings.AlertWhatsAppEnabled">
+                  <mat-icon>add</mat-icon>
+                </button>
+              </div>
+            </form>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="d-flex align-items-center">
+            <mat-slide-toggle [disabled]="!isEditAccess" class="mx-3" (change)="toggle($event)"
+              [(ngModel)]="alertDestinationSettings.AlertEmailEnabled">
+              <span class="ms-3 fw-700">{{ "alert-destination.email" | translate }}</span>
+            </mat-slide-toggle>
+            </span>
+          </td>
+          <td class="text-end pt-1">
+            <span *ngFor="let contact of contactListsEMAIL; let i = index">
+              <mat-form-field class="input-icon-field me-2 mb-1" appearance="fill"
+                              [ngClass]="!alertDestinationSettings.AlertEmailEnabled? 'disabled':''">
+                <mat-label *ngIf="contact?.isActive === false">{{"alert-destination.user_disabled" | translate}}</mat-label>
+                <input matInput disabled [value]="contact.displayName" />
+                <mat-icon (click)="openDialog('email', i)" *ngIf="isEditAccess" class="mr-1" matSuffix>delete_outline</mat-icon>
+              </mat-form-field>
+            </span>
+          </td>
+          <td *ngIf="isEditAccess" class="text-center py-1">
+            <form [formGroup]="alertDestinationForm">
+              <div formArrayName="emailContactList" class="d-flex align-items-center justify-content-end">
+                <span *ngFor="let product of emailContactList.controls; let i = index" [formGroupName]="i">
+<!--                  <mat-select [placeholder]="'alert-destination.select_user'| translate" class="msg-select me-3" formControlName="user"-->
+<!--                    [disabled]="!alertDestinationSettings.Setting.AlertEmailEnabled">-->
+<!--                    <mat-option *ngFor="let contact of activeEmailLists" [value]="contact">-->
+<!--                      {{ contact.displayName }}-->
+<!--                    </mat-option>-->
+<!--                  </mat-select>-->
+                  <div class="msg-select me-3" [class.disabled]="!alertDestinationSettings.AlertEmailEnabled">
+                  <app-matselect-withsearch class="destination-search-filter" [placeholder]="'alert-destination.select_user'" [disabled]="!alertDestinationSettings.AlertEmailEnabled" [key]="'displayName'"
+                                            (valueUpdated)="userSelected('email', $event)" [items]="activeEmailLists" [backendSearch]="true" (reload)="reloadContactList($event)"></app-matselect-withsearch>
+                  </div>
+                </span>
+                <button mat-mini-fab color="primary" class="btn-boxed me-3 btn-no-shadow"
+                  (click)="addContactDropdownList('email')"  [disabled]="!alertDestinationSettings.AlertEmailEnabled">
+                  <mat-icon>add</mat-icon>
+                </button>
+              </div>
+            </form>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="d-flex align-items-center">
+            <mat-slide-toggle [disabled]="!isEditAccess" class="mx-3" (change)="toggle($event)" [(ngModel)]="
+              alertDestinationSettings.AlertCaregiverAppEnabled
+            ">
+              <span class="ms-3 fw-700">{{ "alert-destination.capp" | translate }}</span>
+            </mat-slide-toggle>
+            </span>
+          </td>
+          <td class="text-end pt-1">
+            <span *ngFor="let contact of contactListsCaregiverApp; let i = index">
+              <mat-form-field class="input-icon-field me-2 mb-1" appearance="fill"
+                              [ngClass]="!alertDestinationSettings.AlertCaregiverAppEnabled? 'disabled':''">
+                <mat-label *ngIf="contact?.isActive === false">{{"alert-destination.user_disabled" | translate}}</mat-label>
+                <input matInput disabled [value]="contact.displayName" />
+                <mat-icon (click)="openDialog('caregiver', i)" *ngIf="isEditAccess" class="mr-1" matSuffix>delete_outline
+                </mat-icon>
+              </mat-form-field>
+            </span>
+          </td>
+          <td *ngIf="isEditAccess" class="text-center py-1">
+            <form [formGroup]="alertDestinationForm">
+              <div formArrayName="caregiverAppContactList" class="d-flex align-items-center justify-content-end">
+                <span *ngFor="
+                  let product of caregiverAppContactList.controls;
+                  let i = index
+                " [formGroupName]="i">
+<!--                  <mat-select [placeholder]="'alert-destination.select_user'| translate" class="msg-select me-3" formControlName="user"-->
+<!--                    [disabled]="!alertDestinationSettings.Setting.AlertCaregiverAppEnabled">-->
+<!--                    <mat-option *ngFor="let contact of activeContactLists" [value]="contact">-->
+<!--                      {{ contact.displayName }}-->
+<!--                    </mat-option>-->
+<!--                  </mat-select>-->
+                  <div class="msg-select me-3" [class.disabled]="!alertDestinationSettings.AlertCaregiverAppEnabled">
+                  <app-matselect-withsearch class="destination-search-filter" [placeholder]="'alert-destination.select_user'" [disabled]="!alertDestinationSettings.AlertCaregiverAppEnabled" [key]="'displayName'"
+                                            (valueUpdated)="userSelected('caregiver', $event)" [items]="activeContactLists" [backendSearch]="true" (reload)="reloadContactList($event)"></app-matselect-withsearch>
+                  </div>
+                </span>
+                <button mat-mini-fab color="primary" class="btn-boxed me-3 btn-no-shadow"
+                  (click)="addContactDropdownList('caregiver')"  [disabled]="!alertDestinationSettings.AlertCaregiverAppEnabled">
+                  <mat-icon>add</mat-icon>
+                </button>
+              </div>
+            </form>
+          </td>
+        </tr>
+      </tbody>
+    </table>

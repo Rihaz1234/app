@@ -1,0 +1,24 @@
+<div class="table-container table-responsive-sm">
+    <table>
+        <tbody>
+            <tr>
+                <td class="alert_msg my-2">
+                    <br>
+                    <mat-label class="matlabel mx-2 py-2 pb-2"> {{ "alert_config_module.notification" | translate }}:
+                    </mat-label>
+                    <mat-form-field class="notification-textarea">
+                        <textarea matInput cdkTextareaAutosize class="p-2" [(ngModel)]="alertDestinationSettings.NotificationMessage" [disabled]="iseditDisabled" (keyup)="updated()">
+                        </textarea>
+                        <button *ngIf="iseditDisabled" mat-mini-fab color="primary" class="btn-boxed btn-no-shadow msgbtn" (click)="
+                iseditDisabled = !iseditDisabled;" matSuffix>
+                    <mat-icon>edit</mat-icon>
+                </button>
+                        <button *ngIf="!iseditDisabled" mat-mini-fab color="primary" class="btn-boxed btn-no-shadow msgbtn" (click)="iseditDisabled = !iseditDisabled" matSuffix>
+                    <mat-icon>done</mat-icon>
+                </button>
+                    </mat-form-field>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,34 @@
+/*mixins */
+
+@mixin transition($animation) {
+  -ms-transition: $animation;
+  -moz-transition: $animation;
+  -o-transition: $animation;
+  -webkit-transition: $animation;
+  transition: $animation;
+}
+
+@mixin transformRotate() {
+  -ms-transform: rotate(-180deg);
+  -moz-transform: rotate(-180deg);
+  -webkit-transform: rotate(-180deg);
+  -o-transform: rotate(-180deg);
+  transform: rotate(-180deg);
+}
+
+@mixin displayflex() {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flexvertical() {
+  display: flex;
+  align-items: center;
+}
+
+@mixin text-truncate() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

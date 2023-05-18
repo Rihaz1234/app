@@ -1,0 +1,313 @@
+@import "src/assets/scss/modules/variables";
+
+.span1 {
+  margin-left: 10px;
+  position: fixed;
+  color: white;
+}
+
+.span2 {
+  position: fixed;
+  color: white;
+  margin-left: 95px;
+
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 20px;
+  /* or 143% */
+
+  letter-spacing: 0.25px;
+}
+
+.span3 {
+  font-style: italic;
+  font-weight: normal;
+  font-size: 8px;
+  line-height: 20px;
+  /* identical to box height, or 250% */
+
+  letter-spacing: 0.25px;
+
+  color: $time-color;
+}
+
+.span4 {
+  font-style: normal;
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 20px;
+}
+
+.vl {
+  position: fixed;
+  margin-left: 80px;
+  border-left: 0.1px solid white;
+  height: 38px;
+}
+
+/*.inside-div {
+  height: 350px;
+}*/
+.last-updated {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: right;
+  letter-spacing: 0.25px;
+  color: $white;
+  opacity: 0.8;
+}
+
+.label-top {
+  font-style: normal;
+  font-size: 14px;
+  line-height: 20px;
+  /* identical to box height */
+
+  text-align: center;
+
+  color: $white;
+}
+
+.number-top {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 30px;
+  color: $white;
+}
+
+.hourtxt {
+  font-style: normal;
+  font-weight: bold !important;
+  font-size: 14px;
+  line-height: 16px;
+  text-transform: capitalize;
+}
+
+.btn-class {
+  text-align: right !important;
+  padding-right: 32px;
+}
+
+.btn-table-row-header {
+  width: 173px;
+  height: 32px;
+  padding: 8px 10px;
+  /* left: 1076px; */
+  /* top: 109px; */
+  background: $bg-button-color;
+  box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
+  border-radius: 3px;
+  border: none;
+
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 16px;
+}
+
+.btn-table-row-header1 {
+  width: 134px !important;
+  height: 40px;
+  padding: 8px 10px;
+  /* left: 1076px; */
+  /* top: 109px; */
+  background: $bg-button-color;
+  box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
+  border-radius: 3px;
+  border: none;
+
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+
+.alert-level {
+  width: auto !important;
+  background: #42709a;
+  box-shadow: $box-shadow-button;
+  border-radius: 0.25rem;
+
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 16px;
+  color: $white;
+  padding: 7px;
+  margin-left: 10px;
+  margin-right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+}
+
+.example-margin {
+  margin: 0 12px;
+}
+
+.time-interval-text {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 16px;
+  /* identical to box height, or 89% */
+  color: $white;
+}
+
+.active-inactive {
+  padding: 5px;
+  background: #f4f76f;
+  border: 1px solid #fcff5e;
+  box-sizing: border-box;
+  border-radius: 2px;
+
+  font-style: normal;
+  font-weight: 800;
+  font-size: 10px;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 0.05em;
+  color: $gray-color;
+  display: inline-grid;
+  margin-left: 14px;
+  /* flex-grow: 0; */
+  /* margin: 0px 10px;*/
+}
+
+.time-duration {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 16px;
+  letter-spacing: 0.05em;
+  color: $white;
+}
+
+.priority-text {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 16px;
+  /* identical to box height, or 114% */
+  letter-spacing: 0.05em;
+
+  color: $white;
+}
+
+/*thead th {
+  border-bottom: 0.5px solid white !important;
+}*/
+.disabled {
+  opacity: 0.5;
+}
+
+.patient-id {
+  border-right: 1px solid $white;
+}
+
+.patient-details {
+  line-height: $size-18;
+}
+
+.time-group {
+  font-size: $size-10;
+}
+
+.alert-count {
+  font-size: $size-18;
+}
+
+/*** alert Modal Dialog *****/
+.pid {
+  font-size: $size-10;
+}
+
+.patient-id strong {
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.time-stamp {
+  font-weight: 400;
+  opacity: 0.8;
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    font-size: $size-12;
+  }
+}
+
+.patient-name {
+  font-size: 1rem;
+  font-weight: $font-weight-700;
+}
+
+.small-tag {
+  font-size: $base-font-size;
+  color: $blue-color-group;
+  @media only screen and (max-width: 1200px) {
+    display: block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+
+  }
+}
+
+/*** alert Modal Dialog *****/
+.w-max-20 {
+  max-width: 20rem;
+  @media (min-width: 992px) and (max-width: 1199px) {
+    max-width: 14rem;
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    max-width: 8rem;
+  }
+
+}
+
+
+@media only screen and (max-width: 767px) {
+  .patient-details {
+    justify-content: center;
+    padding: 0;
+
+    .me-auto {
+      margin: 0 !important;
+    }
+    .w-max-20 {
+      max-width: 60%;
+
+
+    }
+  }
+}
+
+.alert-acknowledged-btn {
+  line-height: 1.5rem;
+}
+
+.comman-table-users {
+  table {
+    tbody {
+      tr.tbody-row-head {
+        height: 2.75rem;
+        td:first-child {
+          border-radius: 0px;
+      }
+      }
+
+    }
+
+  }
+}
+
+/*.alert-scroll-assist {
+  max-height: 22rem;
+  overflow-y: auto;
+}*/

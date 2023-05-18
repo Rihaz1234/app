@@ -1,0 +1,83 @@
+<div class="loading-indicator" *ngIf="loader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>
+
+<div *ngIf="!loader" class="scrolltab-height bg-thead-color comman-table-users head-border">
+    <ls-table [config]="config" [columns]="columns" (page)="onPage($event)" (sortChange)="onSortChange($event)"
+        [data]="relayList$ | async" (selected)="relaysSelected($event)" [isSelected]="isSelected" [Id]="'relayId'">
+        <ng-template lsWidgetName="relayId" let-data>
+            <div class="py-2">{{ data?.relayId }}</div>
+        </ng-template>
+        <ng-template lsWidgetName="contactInfo" let-data>
+            <div class="pt-1">{{ data?.email }}</div>
+            <div class="pt-1">{{ data?.phoneNo }}</div>
+        </ng-template>
+        <ng-template lsWidgetName="createdBy" let-data>
+            {{data?.createdBy}}
+        </ng-template>
+        <ng-template lsWidgetName="location" let-data>
+            <div class="d-flex align-items-center  location-info ">
+            <ng-container>
+                
+                <span class="text-truncate" *ngIf="!editLocation[data?.index]">
+                    {{ data.location }}
+                </span>
+                <span class="location-info" *ngIf="editLocation[data?.index]">
+                    <mat-form-field class="location-input-field">
+                        <input matInput autocomplete="off" placeholder="Location" [(ngModel)]="data.location"
+                            maxlength="32" (ngModelChange)="locationEdit(data?.index)" class="text-center"
+                            (keypress)="relayService.alphaNumericsOnly($event)" (paste)="onPaste($event)" />
+                    </mat-form-field>
+                    <mat-error *ngIf="!locationValid(data.location)">
+                        *{{ "additional_devices.invalid" | translate }}
+                    </mat-error>
+                </span>
+           
+            </ng-container>
+            <ng-container *ngIf="editAccess">
+                <span class="ms-2">
+                    <span *ngIf="!editLocation[data?.index]">
+                        <button mat-mini-fab color="primary" class="btn-boxed btn-no-shadow"
+                            (click)="showEdit(data?.index)">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                    </span>
+                    <span *ngIf="editLocation[data?.index]">
+                        <button mat-mini-fab color="primary" *ngIf="locationValid(data.location)"
+                            class="btn-boxed btn-no-shadow" (click)="save(data)">
+                            <mat-icon>check</mat-icon>
+                        </button>
+                    </span>
+                </span>
+            </ng-container>
+        </div>
+        </ng-template>
+        <ng-template lsWidgetName="editLocation" let-data>
+        </ng-template>
+        <ng-template lsWidgetName="createdBy" let-row>
+            {{row?.createdBy}}
+            <mat-icon fontSet="material-icons-outlined" style="cursor: pointer;">info</mat-icon>
+        </ng-template>
+        <ng-template lsWidgetName="createdDateTime" let-row>
+            {{ row?.createdDateTime | date: "MMM d, yyyy" : timeZone }} /
+            <span class="bold-text">{{ row?.createdDateTime+ '+0000' | date: timeFmt : timeZone }}</span>
+        </ng-template>
+        <ng-template lsWidgetName="lastActive" let-row>
+            {{ row?.lastActive | date: "MMM d, yyyy" : timeZone }} /
+            <span class="fw-bold">{{ row?.lastActive | date: timeFmt : timeZone }}</span>
+        </ng-template>
+        <ng-template lsWidgetName="status" let-data>
+            <span class="text-capitalize">{{ data?.status?.toLowerCase() }}</span>
+        </ng-template>
+        <ng-template lsWidgetName="actions_col" let-data *ngIf="editAccess">
+            <button mat-mini-fab color="primary" class="btn-no-shadow btn-boxed mx-auto me-2" (click)="confirmSingleRelayDelete(data.relayId)">
+               <mat-icon>delete_outline</mat-icon>
+            </button>
+            <button mat-mini-fab  mat-flat-button color="primary"  class="btn-boxed download-btn mx-auto btn-no-shadow"
+                    (click)="resendOtp(data)">
+                <img class="downloadicon" src="assets/icons/download-icon.svg" alt="Download" />
+            </button>
+
+        </ng-template>
+    </ls-table>
+</div>

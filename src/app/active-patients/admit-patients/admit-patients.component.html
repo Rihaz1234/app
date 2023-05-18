@@ -1,0 +1,104 @@
+<ls-page-header type="admit_patients">
+    <ng-container page-actions>
+        <div class="d-flex justify-content-end me-4">
+            <div class="d-lg-flex d-md-none d-sm-none d-none button-group my-2">
+              <button mat-flat-button color="accent" class="mx-1" (click)="openAdmitPatientModalWith({key: 'Active Patient', value: ''})" *ngIf="isClinicianCheck()"
+                        [disabled]="selectedPatients?.selected?.length !== 0">
+                    {{ "admit-patients-module.button.admit_patient" | translate }}
+                </button>
+<!--                <button mat-flat-button color="primary" class="mx-1" disabled>-->
+<!--                    {{ "admit-patients-module.button.add_to_dashboard" | translate }}-->
+<!--                </button>-->
+            </div>
+              <div class="d-block d-lg-none my-2 ">
+                 <button mat-icon-button [matMenuTriggerFor]="menu" class="border">
+                    <mat-icon class="justify-content-center">more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu" class="mobile-menu overflow-hidden d-block d-lg-none">
+                    <button mat-menu-item (click)="openAdmitPatientModalWith({key: 'Active Patient', value: ''})" *ngIf="isClinicianCheck()"
+                            [disabled]="selectedPatients?.selected?.length !== 0">
+                        {{ "admit-patients-module.button.admit_patient" | translate }}
+                    </button>
+<!--                    <button mat-menu-item disabled>-->
+<!--                        {{ "admit-patients-module.button.add_to_dashboard" | translate }}-->
+<!--                    </button>-->
+                </mat-menu>
+            </div>
+        </div>
+    </ng-container>
+</ls-page-header>
+<!-- active patient topheader after-->
+
+<!-- <div class="row align-items-center justify-content-between">
+        <div class="col-10 col-sm-10 col-md-10 col-lg-5">
+
+        </div>
+        <div class="col-2 col-sm-2 col-md-2 col-lg-7">
+            <div class="d-flex justify-content-end">
+                <div class="d-lg-flex d-md-none d-sm-none d-none my-2">
+
+                </div>
+                <div class="d-block d-lg-none my-2 ">
+                    <button mat-icon-button [matMenuTriggerFor]="menu" class="border">
+                        <mat-icon class="justify-content-center">more_vert</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu" class="mobile-menu overflow-hidden d-block d-lg-none">
+
+                    </mat-menu>
+                </div>
+            </div>
+        </div>
+    </div>-->
+<div class="px-3">
+
+    <div class="table-scroll without-tab-table comman-table-users head-border">
+        <ls-table (sortChange)="onSortChange($event)" [config]="config" [selection]="selectedPatients" [data]="unassignedPatients" [columns]="assignPatient_Columns" (page)="onPageChange($event)" [error]="error" [isSelected]="isSelected" [Id]="'patchId'" (selected)="onPatientsSelected($event)"
+            [selectOnlyActive]="false">
+            <ng-container table-header>
+                <div class="my-3 row">
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-5 col-xxl-4">
+                        <mat-form-field class="search-form-field" appearance="fill">
+                            <mat-label>{{ "admit-patients-module.search" | translate }}
+                            </mat-label>
+                            <input autocomplete="off" [(ngModel)]="searchObject.string" matInput type="text" (ngModelChange)="search()" id="searchString" (keypress)="alphaNumericsOnly($event)"/>
+                            <mat-icon class="clear-icon" *ngIf="searchObject.string" (click)="clear()">close
+                            </mat-icon>
+                            <mat-icon matSuffix (click)="search()">search</mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </ng-container>
+            <ng-template lsWidgetName="status" let-row>
+               <div class="d-flex justify-content-center align-items-center" *ngIf="!row.patchId">-</div> 
+                <div class="d-flex justify-content-center align-items-center" *ngIf="row.patchId && row?.patchDetails?.length">
+                    <mat-icon color="warn" class="mx-1 btn-boxed btn-no-shadow" *ngIf="row?.patchDetails[0]?.status !== monitoringStatus.STREAMING">
+                        close</mat-icon>
+                    <mat-icon class="tick-icon mx-1 btn-boxed btn-no-shadow" *ngIf="row?.patchDetails[0]?.status === monitoringStatus.STREAMING">
+                        check</mat-icon>
+                    <button mat-mini-fab color="primary" class="monitoring-icon mx-1 btn-boxed btn-no-shadow" [disabled]="!isSCorGC" (click)="openStopMonitoringDialog(row.patchId)" *ngIf="row?.patchDetails[0]?.status === monitoringStatus.STREAMING">
+                        <mat-icon>stop</mat-icon>
+                    </button>
+                </div>
+            </ng-template>
+            <ng-template lsWidgetName="patchIdHeading">
+                <img alt="bio sensor icon" src="assets/icons/biosensor.svg" class="me-2" /> {{'active-patients-module.table.activePatch' | translate}}
+            </ng-template>
+            <ng-template lsWidgetName="patchId" let-row>
+                <div class="d-flex justify-content-center align-items-center ps-3">
+                    <img alt="bio sensor icon" src="assets/icons/biosensor.svg"  class="me-2" />
+                    <div class="me-2 biosensor-id">
+                        {{ row.patchId || "-" }}
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template lsWidgetName="actions" let-row>
+                <button *ngIf="row.patchDetails?.length && row?.patchDetails[0]?.status !== monitoringStatus.STREAMING && isSCorGC" mat-flat-button color="primary" class="btn-boxed px-2 btn-no-shadow me-2" (click)="deleteBiosensor(row.patchDetails[0])">
+                    <mat-icon class="justify-content-center">delete_outline</mat-icon>
+                </button>
+                <button mat-flat-button color="accent" class="btn-no-shadow me-2" *ngIf="isClinicianCheck()" (click)="openAdmitPatientModalWith({key:'edit-assign-patient', value:row})">
+                    {{ "admit-patients-module.button.assign_patient" | translate }}
+                </button>
+            </ng-template>
+        </ls-table>
+    </div>
+</div>

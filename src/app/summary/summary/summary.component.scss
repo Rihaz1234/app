@@ -1,0 +1,17 @@
+@import "src/assets/scss/modules/variables";
+
+/*.child{
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}*/
+
+.grid-fluid-container {
+    background-color: $bg-dashboard-color;
+    height: calc(100vh - 64px);
+    overflow-y: auto;
+
+    @media(max-width:767px) {
+        height: auto;
+    }
+
+}

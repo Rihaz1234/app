@@ -1,0 +1,14 @@
+@import "src/assets/scss/modules/variables";
+
+.for-spacing {
+  margin-bottom: 1rem;
+}
+/*.scroll-assist {
+  max-height: calc(100vh - 240px);
+  overflow-y: auto;
+}*/
+.sticky-paginator {
+  position: sticky;
+  bottom: 0;
+  // background-color: $tab-bg-color;
+}

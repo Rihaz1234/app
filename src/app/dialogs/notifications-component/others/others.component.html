@@ -1,0 +1,188 @@
+<mat-dialog-content class="alert-dialog-content">
+<app-patient-details [patientData]="patientData" [updated]="lastUpdated"></app-patient-details>
+  <div class="loading-indicator" *ngIf="loader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+  </div>
+  <div class="px-3 py-4 table-container" *ngIf="!loader">
+    <table class="mat-table" aria-label="Table">
+      <thead>
+        <tr>
+          <th
+            scope="col"
+            *ngFor="let col of headerColumnsSpo2"
+            class="fw-bold py-3 pe-2 text-center"
+            [colSpan]="
+              col === 'additional_devices.on_time' && editAccess||
+              col === 'additional_devices.off_time' && editAccess
+                ? 2
+                : 1
+            "
+          >
+            {{ col | translate }}
+          </th>
+        </tr>
+      </thead>
+      <tbody class="border-0">
+        <tr
+          *ngFor="
+            let deviceSettings of miscellaneousSettings?.thirdPartyDeviceSettings;
+            let i = index
+          "
+          [ngClass]="!deviceSettings.isActive ? 'row-disabled' : ''"
+        >
+          <td class="text-start align-middle py-2">
+            <span class="">
+              <mat-slide-toggle
+                class="align-middle"
+                [(ngModel)]="deviceSettings.isActive"
+                (change)="disableEdit($event, i)"
+                [disabled]="!editAccess"
+              ></mat-slide-toggle>
+            </span>
+            <span class="text-center ms-3"
+              >{{
+                "additional_devices." + deviceSettings?.type | translate
+              }}
+              {{ "additional_devices.settings_txt" | translate }}
+            </span>
+          </td>
+          <td>{{ deviceSettings?.defaultDevice || "-" }}</td>
+          <td class="align-middle text-end" [ngClass]="editAccess ? 'text-end': 'text-center'">
+            <span *ngIf="!editOnTime[i]">
+              <span>{{ deviceSettings?.onTime }}</span> Mins
+            </span>
+            <span *ngIf="editOnTime[i]" class="d-flex align-items-center justify-content-end">
+              <input matInput
+                onkeydown="if(event.key==='.'){event.preventDefault();}"
+                onpaste="pasteData = event.clipboardData.getData('text'); if(pasteData){pasteData.replace(/[^0-9]*/g,'');} "
+                placeholder="Enter"
+                type="number"
+                min="1"
+                max="7200"
+                class="edit-box py-1"
+                [(ngModel)]="deviceSettings.onTime"
+                 (ngModelChange)="updated()"
+              /><span class="mx-1"> Mins </span>
+            </span>
+          </td>
+          <td *ngIf="editAccess">
+            <span *ngIf="!editOnTime[i]">
+              <button mat-mini-fab
+                color="primary"
+                [disabled]="!deviceSettings?.isActive"
+                class="btn-boxed btn-no-shadow"
+                (click)="showEditOnTime(i)"
+                
+              >
+                <mat-icon class="fw-normal">edit</mat-icon>
+              </button>
+            </span>
+            <span *ngIf="editOnTime[i]">
+              <button mat-mini-fab
+                color="primary"
+                *ngIf="onTimeValid(deviceSettings.onTime, i)"
+                class="btn-boxed btn-no-shadow"
+                (click)="hideEditOnTime(i)"
+              >
+              <mat-icon class="fw-normal">done</mat-icon>
+              </button>
+              <span
+                *ngIf="!onTimeValid(deviceSettings.onTime, i)"
+               class="required"
+              >
+                *{{ "additional_devices.invalid" | translate }}
+              </span>
+            </span>
+          </td>
+          <td></td>
+          <td class="align-middle" [ngClass]="editAccess ? 'text-end': 'text-center'">
+            <span *ngIf="!editOffTime[i]">
+              <span>{{
+                deviceSettings?.offTime
+              }}</span> Mins
+            </span>
+            <span *ngIf="editOffTime[i]" class="d-flex align-items-center justify-content-end">
+              <input
+                onkeydown="if(event.key==='.'){event.preventDefault();}"
+                onpaste="pasteData = event.clipboardData.getData('text'); if(pasteData){pasteData.replace(/[^0-9]*/g,'');} "
+                matInput
+                placeholder="Enter"
+                type="number"
+                min="1"
+                max="7200"
+                class="edit-box"
+                [(ngModel)]="deviceSettings.offTime"
+                (ngModelChange)="updated()"
+              /> <span class="mx-1">Mins</span>
+            </span>
+          </td>
+          <td class="align-left" *ngIf="editAccess">
+            <span *ngIf="!editOffTime[i]">
+              <button mat-mini-fab
+                color="primary"
+                [disabled]="!deviceSettings?.isActive"
+                class="btn-boxed btn-no-shadow"
+                (click)="showEditOffTime(i)"
+                
+              >
+                  <mat-icon class="fw-normal">edit</mat-icon>
+              </button>
+            </span>
+            <span *ngIf="editOffTime[i]">
+              <button mat-mini-fab
+                color="primary"
+                *ngIf="offTimeValid(deviceSettings.offTime, i)"
+                class="btn-boxed btn-no-shadow"
+                (click)="hideEditOffTime(i)"
+              >
+                  <mat-icon class="fw-normal">done</mat-icon>
+              </button>
+              <span
+                *ngIf="!offTimeValid(deviceSettings.offTime, i)"
+               class="required"
+              >
+                *{{ "additional_devices.invalid" | translate }}
+              </span>
+            </span>
+          </td>
+          <td class="align-middle ps-4">{{ deviceSettings?.dutyCycle }}%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions class="row py-1 px-2 mx-2" *ngIf="!loader && editAccess">
+    <div class="col-md-6">
+      <button
+              mat-flat-button
+              class="reset-btn px-2 my-1"
+              (click)="confirmReset()"
+      >
+        <mat-icon class="fw-normal pe-2"> refresh </mat-icon>
+        <span class="ps-1">{{
+          "additional_devices.reset_to_default" | translate
+          }}</span>
+      </button>
+    </div>
+    <div class="col-md-6 text-end">
+    <span *ngIf="valuesUpdated">
+      <button
+              mat-flat-button
+              class="mx-2 px-4 my-1"
+              color="warn"
+              (click)="cancel()"
+      >
+        {{ "additional_devices.cancel" | translate }}
+      </button>
+      <button
+              mat-flat-button
+              [disabled]="invalidonoff()"
+              class="mx-2 px-4 my-1"
+              color="primary"
+              (click)="updateSettings()"
+      >
+        {{ "additional_devices.save" | translate }}
+      </button>
+    </span>
+    </div>
+  </mat-dialog-actions>

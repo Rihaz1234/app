@@ -1,0 +1,22 @@
+<mat-card class="dialog-header">
+  <h1 mat-dialog-title>
+    {{ data.body?.title | translate }}
+  </h1>
+  <!--<button mat-button mat-dialog-close>
+    <mat-icon>close</mat-icon>
+  </button>-->
+</mat-card>
+<mat-dialog-content class="mat-dialog-popup">
+  <div class="py-4">
+    <p class="m-0">{{ data.body?.text | translate }}</p>
+    <p *ngIf="data.body?.message">{{ data.body.message | translate}}</p>
+  </div>
+</mat-dialog-content>
+<div mat-dialog-actions>
+  <button mat-flat-button mat-dialog-close color="warn" class="fill-btn">
+    {{ "manage_users_module.cancel" | translate }}
+  </button>
+  <button mat-flat-button color="primary" class="fill-btn" (click)="confirm()">
+    {{ "manage_users_module.confirm" | translate }}
+  </button>
+</div>

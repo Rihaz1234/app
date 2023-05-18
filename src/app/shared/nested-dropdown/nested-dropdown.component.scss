@@ -1,0 +1,56 @@
+@import "src/assets/scss/modules/variables";
+
+$select-width : 280px;
+.selectfilter {
+    width: 100%;
+    //max-width: $select-width;
+}
+.selectfilter.mat-form-field-appearance-fill {
+    width: 100%;
+    //max-width: $select-width !important;
+    background-color: transparent;
+}
+.nested-select {
+    //@debug: 0rem !important;
+    min-height: 2rem;
+    cursor: pointer;
+    width: 100%;
+    border-radius: 3px;
+    background-color: $bg-table-row;
+    box-shadow: $box-shadow-color;
+    //box-shadow: 0px 1px 5px rgb(0 0 0 / 15%);
+    padding: 0.2rem 0.5rem 0.2rem 1rem;
+    mat-label {
+        font-size: 0.7rem;
+        font-weight: 600;
+    }
+    mat-label.normal-label{
+        font-size: 0.9rem;
+    }
+    .select-value {
+        font-size: 1rem;
+        font-weight: 600;
+        width: 100%;
+        margin-top: -0.1rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        line-height: 17px;
+        display: block;
+        //text-transform: capitalize !important;
+    }
+    mat-icon{
+        font-size: 1rem;
+        text-align: center;
+        line-height: 1.5rem;
+    }
+    &.disabled{
+        opacity: 0.6;
+    }
+}
+
+.toplabel{font-size: $size-12; color:$white;}
+
+
+
+
